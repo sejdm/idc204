@@ -48,19 +48,14 @@
 <li><span class="math inline">\(P \land (P \lor Q) = P\)</span></li>
 <li><span class="math inline">\(P \lor (\neg P \land Q) = P \lor Q\)</span></li>
 </ol></li>
-<li>Simplify the following boolean expressions:
-<ol type="a">
-<li><span class="math inline">\((\neg P \lor \neg Q) \land (\neg P \lor Q)\)</span></li>
-<li><span class="math inline">\(\neg P \land \neg (P \lor Q)\)</span></li>
-</ol></li>
-<li>Find a boolean expression for the following truth table and then simplify it:</li>
+<li>Find a boolean expression for the following truth table in terms of <span class="math inline">\(\land\)</span>, <span class="math inline">\(\lor\)</span>, and <span class="math inline">\(\neg\)</span> and then simplify it:</li>
 </ol>
 <table>
 <thead>
 <tr class="header">
-<th>P</th>
-<th>Q</th>
-<th>R</th>
+<th><span class="math inline">\(P\)</span></th>
+<th><span class="math inline">\(Q\)</span></th>
+<th><span class="math inline">\(R\)</span></th>
 <th></th>
 </tr>
 </thead>
@@ -115,6 +110,21 @@
 </tr>
 </tbody>
 </table>
+<ol start="4" type="1">
+<li>Define the <span class="math inline">\(\mathrm{NOR}\)</span> operator by the rule, <span class="math inline">\(P\ \mathrm{NOR}\ Q\)</span> is true if and only if <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> are both false.
+<ol type="a">
+<li>Write a truth table for <span class="math inline">\(\mathrm{NOR}\)</span>.</li>
+<li>Find an expression for <span class="math inline">\(P\ \mathrm{NOR}\ Q\)</span> in terms of <span class="math inline">\(\land\)</span>, <span class="math inline">\(\lor\)</span>, and <span class="math inline">\(\neg\)</span>.</li>
+<li>Prove that <span class="math inline">\(\neg P\)</span> can be defined completely in terms of <span class="math inline">\(\mathrm{NOR}\)</span> <em>(Hint: since <span class="math inline">\(\mathrm{NOR}\)</span> takes two arguments but <span class="math inline">\(\neg P\)</span> involves just one variable, there is only one thing you can do!).</em></li>
+<li>Prove that <span class="math inline">\(P \lor Q\)</span> can be expressed using only the <span class="math inline">\(\mathrm{NOR}\)</span> operator. <em>(Hint: <span class="math inline">\(\lor\)</span> is the negation of <span class="math inline">\(\mathrm{NOR}\)</span> and part c. shows how to express negation in terms of <span class="math inline">\(\mathrm{NOR}\)</span>).</em></li>
+<li>Prove that <span class="math inline">\(P \land Q\)</span> can be expressed using only the <span class="math inline">\(\mathrm{NOR}\)</span> operator, and therefore, by c. and d. you can express any boolean function using only the <span class="math inline">\(\mathrm{NOR}\)</span> operator. <em>(Hint: compare the truth tables of <span class="math inline">\(\land\)</span> and <span class="math inline">\(\mathrm{NOR}\)</span>. How do you get one from the other?)</em></li>
+</ol></li>
+<li>Simplify the following boolean expressions:
+<ol type="a">
+<li><span class="math inline">\((\neg P \lor \neg Q) \land (\neg P \lor Q)\)</span></li>
+<li><span class="math inline">\(\neg P \land \neg (P \lor Q)\)</span></li>
+</ol></li>
+</ol>
 <p><em>To be completed…</em></p>
 </section>
 </article>

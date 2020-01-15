@@ -8,6 +8,32 @@
         <name>Shane</name>
         <email>shane.dmello@gmail.com</email>
     </author>
-    <updated>Unknown</updated>
-    
+    <updated>2020-01-15T00:00:00Z</updated>
+    <entry>
+    <title>Boolean operator precedence</title>
+    <link href="http://blog.shane/posts/2020-01-15-operator-precedence.html" />
+    <id>http://blog.shane/posts/2020-01-15-operator-precedence.html</id>
+    <published>2020-01-15T00:00:00Z</published>
+    <updated>2020-01-15T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<article>
+<header>
+<h1>Boolean operator precedence</h1>
+<p class="date"><strong>15 January, 2020</strong></p>
+</header>
+
+<section>
+<p>Since some of you requested, here is the order in which boolean operators are given precedence:</p>
+<ol type="1">
+<li><span class="math inline">\(\neg\)</span></li>
+<li><span class="math inline">\(\land\)</span></li>
+<li><span class="math inline">\(\lor\)</span></li>
+<li><span class="math inline">\(\Rightarrow\)</span>, <span class="math inline">\(\Leftrightarrow\)</span></li>
+</ol>
+<p>The convention allows us to drop parentheses in many cases, even if they involve different types of operators, to make the expressions more readable.</p>
+<p>Therefore, in the expression, <span class="math inline">\(\neg P \land Q \lor R \Leftrightarrow S \land T\)</span>, the parentheses are implied and the expression means, <span class="math inline">\(((\neg P \land Q) \lor R) \Leftrightarrow (S \land T)\)</span>. On the other hand, <span class="math inline">\(\neg P \land (Q \lor R) \Leftrightarrow S \land T\)</span> is a different expression and the parenthesis is essential because despite <span class="math inline">\(\lor\)</span> having a lower precedence than <span class="math inline">\(\land\)</span>, we are evaluating <span class="math inline">\(Q \lor R\)</span> <em>before</em> combining it with <span class="math inline">\(\neg P\)</span> using <span class="math inline">\(\land\)</span>.</p>
+</section>
+</article>
+]]></summary>
+</entry>
+
 </feed>

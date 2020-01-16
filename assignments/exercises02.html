@@ -49,7 +49,29 @@
 <li><span class="math inline">\(P \land Q \Rightarrow P\)</span></li>
 <li><span class="math inline">\(((P \Rightarrow Q) \land (Q \Rightarrow R)) \Rightarrow (P \Rightarrow R)\)</span></li>
 <li><span class="math inline">\(((P_0 \Rightarrow P_1) \land (P_1 \Rightarrow P_2) \land \ldots \land (P_{n-1} \Rightarrow P_n)) \Rightarrow (P_0 \Rightarrow P_n)\)</span></li>
+<li><span class="math inline">\((P \Rightarrow Q) \land (Q \Rightarrow P) \Rightarrow (P \Leftrightarrow Q)\)</span></li>
 </ol></li>
+<li>Consider the predicate <span class="math inline">\(P(x,y,z) := ``2x + 5y - 6z = 1&quot;\)</span>. Which of the following propositions are true:
+<ol type="a">
+<li><span class="math inline">\(\forall x \forall y \forall z P(x, y, z)\)</span></li>
+<li><span class="math inline">\(\forall x \forall y \exists z P(x, y, z)\)</span></li>
+<li><span class="math inline">\(\forall x \exists y \exists z P(x, y, z)\)</span></li>
+<li><span class="math inline">\(\exists x \exists y \exists z P(x, y, z)\)</span></li>
+</ol></li>
+<li>Let <span class="math inline">\(Q(x, y)\)</span> denote the predicate “x is a question from Quiz y”. Let <span class="math inline">\(D(x)\)</span> denote the predicate “x is difficult”. Write expressions for the following statements using quantifiers, <span class="math inline">\(Q\)</span>, and <span class="math inline">\(D\)</span>:
+<ol type="a">
+<li>“Quiz 3 will have exactly one difficult question”</li>
+<li>“Every quiz will have at least one difficult question”</li>
+<li>“For some quizzes, every question will be difficult”</li>
+<li>“For some quizzes, <em>at most one</em> question will be easy”</li>
+</ol></li>
+<li>Which of these are true no matter what the predicate <span class="math inline">\(P(x, y)\)</span> is. For each of the others, find an example for which it does not hold.
+<ol type="a">
+<li><span class="math inline">\(\forall x \exists y P(x,y) \equiv \exists y \forall x P(x,y)\)</span>.</li>
+<li><span class="math inline">\(\forall x \forall y P(x,y) \equiv \forall y \forall x P(x,y)\)</span>.</li>
+<li><span class="math inline">\(\exists x \exists y P(x,y) \equiv \exists y \exists x P(x,y)\)</span>.</li>
+</ol></li>
+<li>One can define a new quantifier <span class="math inline">\(\exists! x P(x)\)</span> to mean that “there exists a <em>unique</em> x such that <span class="math inline">\(P(x)\)</span> is true”. Show that this can always be expressed by an expression involving only the usual two quantifiers, <span class="math inline">\(\exists\)</span>, and <span class="math inline">\(\forall\)</span>. <em>(Hint: you want to say that it exists <strong>and</strong> is unique. What does it mean to say that there is a unique x satisfying a predicate? Try considering its negation if that helps. You may assume that there is some notion of equality between the objects under consideration so that it makes sense to ask if “<span class="math inline">\(a = b\)</span>” for any given <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>)</em></li>
 </ol>
 <p><strong>To be completed</strong></p>
 </section>

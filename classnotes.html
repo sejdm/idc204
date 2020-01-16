@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>All the exercise sheets - IDC 204</title>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="./css/my.css">
+<link rel="stylesheet" href="./css/syntax.css">
+  <link rel="alternate" type="application/atom+xml" title="MTH 410" href="./atom.xml" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <div class="navbar">
+
+    <header>
+      <hgroup>
+        <h1><a href="./index.html" id="titlelink">The Theory of Computation <br /> (IDC 204)</a></h1>
+      </hgroup>
+    </header>
+
+    <nav id="mainnav">
+      <div id="topmenu">
+        <menu>
+          <a href="./index.html">Course information</a>
+
+
+          <a href="./assignments.html">Exercise sheets</a>
+
+
+          <a href="./posts.html">Comments</a>
+
+        </menu>
+	</div>
+    </nav>
+    </div>
+    <section id="pagecontent">
+        <h1>All the Class Notes</h1>
+		<ul id="list">
+		    <li>
+		    	<a href="./assignments/01-16.pdf">16th January</a>
+			</li>
+		</ul>
+    </section>
+
+<script type="text/javascript">
+function loadNotes() {
+    var array;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            str = this.responseText;
+            array = str.split(";")
+            for (i=0; i<array.length; i++) {
+                ul = document.getElementById("list");
+                li = document.createElement('li');
+                anc = document.createElement('a');
+				anc.href = "classnotes/"+array[i].trim();
+                arc.innerHTML = array[i].trim();
+				li.appendChild(anc)
+                ul.appendChild(li);
+            }
+        }
+    };
+    xhttp.open("GET", "./classnotes/list.txt", true);
+    xhttp.send();
+}
+loadNotes();
+</script>
+
+</body>
+</html>

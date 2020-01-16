@@ -38,9 +38,6 @@
     <section id="pagecontent">
         <h1>All the Class Notes</h1>
 		<ul id="list">
-		    <li>
-		    	<a href="./assignments/01-16.pdf">16th January</a>
-			</li>
 		</ul>
     </section>
 
@@ -57,7 +54,7 @@ function loadNotes() {
                 li = document.createElement('li');
                 anc = document.createElement('a');
 				anc.href = "classnotes/"+array[i].trim();
-                arc.innerHTML = array[i].trim();
+                anc.innerHTML = array[i].trim();
 				li.appendChild(anc)
                 ul.appendChild(li);
             }

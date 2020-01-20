@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>All the exercise sheets - IDC 204</title>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="./css/my.css">
+<link rel="stylesheet" href="./css/syntax.css">
+  <link rel="alternate" type="application/atom+xml" title="MTH 410" href="./atom.xml" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <div class="navbar">
+
+    <header>
+      <hgroup>
+        <h1><a href="./index.html" id="titlelink">The Theory of Computation <br /> (IDC 204)</a></h1>
+      </hgroup>
+    </header>
+
+    <nav id="mainnav">
+      <div id="topmenu">
+        <menu>
+          <a href="./index.html">Course information</a>
+
+
+          <a href="./assignments.html">Exercise sheets</a>
+
+
+          <a href="./posts.html">Comments</a>
+
+        </menu>
+	</div>
+    </nav>
+    </div>
+    <section id="pagecontent">
+        <h1>Class Notes</h1>
+		<ul id="list">
+		</ul>
+    </section>
+	<section id="posts" class="sidenav">
+
+
+	    <h2>Disclaimer</h2>
+
+	    <p>
+			All class notes are uploaded for the advantage of people from other courses who may want to also keep track of this course. Notes may not be complete and may be incorrect in some places. Let Dhruva know if so. Neither the instructor nor the uploader will be responsible for any marks lost, any PhD papers written (though expect to be cited), any Artificial Intelligence created or any unreceived research funds due to any inadvertant mistake in any of the notes. Others are more than welcome to also share their notes to Dhruva (dhruvasambrani19 at gmail com) if they wish to. He'll upload them at some convinient time.
+		</p>
+
+
+	</section>
+<script type="text/javascript">
+function loadNotes() {
+    var array;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            str = this.responseText;
+            array = str.split(";")
+            for (i=0; i<array.length; i++) {
+                ul = document.getElementById("list");
+                li = document.createElement('li');
+                anc = document.createElement('a');
+				anc.href = "classnotes/"+array[i].trim();
+                anc.innerHTML = array[i].trim();
+				li.appendChild(anc)
+                ul.appendChild(li);
+            }
+        }
+    };
+    xhttp.open("GET", "./classnotes/list.txt", true);
+    xhttp.send();
+}
+loadNotes();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Quantifiers - IDC 204</title>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../css/my.css">
+<link rel="stylesheet" href="../css/syntax.css">
+  <link rel="alternate" type="application/atom+xml" title="MTH 410" href="../atom.xml" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <div class="navbar">
+
+    <header>
+      <hgroup>
+        <h1><a href="../index.html" id="titlelink">The Theory of Computation <br /> (IDC 204)</a></h1>
+      </hgroup>
+    </header>
+
+    <nav id="mainnav">
+      <div id="topmenu">
+        <menu>
+          <a href="../index.html">Course information</a>
+	  
+	  
+          <a href="../assignments.html">Exercise sheets</a>
+	  
+	  
+          <a href="../posts.html">Comments</a>
+	  
+	  
+          <a href="../lecturenotes.html">Dhruva Sambrani's notes</a>
+	  
+        </menu>
+	</div>
+    </nav>
+    </div>
+    <section id="pagecontent">
+      <a href="../lecturenotes/pdfs/lecture01.pdf">PDF version</a>
+        <article>
+<header>
+<h1>Quantifiers
+
+<p class="author">by Dhruva Sambrani<p>
+
+
+</h1>
+
+<p class="date"><strong>16 January, 2020</strong></p>
+
+</header>
+
+<section>
+<h2 id="quantifiers">Quantifiers</h2>
+<h3 id="existential-quantifier--">Existential quantifier ∃ -</h3>
+<p>There exists some x in the domain of discourse where P(x) = True</p>
+<p>∃ x P(x)</p>
+<h3 id="universal-quantifier--">Universal Quantifier ∀ -</h3>
+<p>For every x in domain in discourse, P(x) = True</p>
+<p>∀ xP(x)</p>
+<h3 id="negation-of-quantifiers">Negation of Quantifiers ¬</h3>
+<p>¬( ∀x P(x) ) ≡ ∃x ( ¬P(x) ) ¬( ∃x P(x) ) ≡ ∀x ( ¬P(x) )</p>
+<h3 id="example---only-to-illustrate">Example - * Only to illustrate *</h3>
+<h4 id="what-is-a-limit">What is a limit?</h4>
+<p>Suppose a<sub>n</sub> → l</p>
+<p>≡ ∃ l ( ∀ϵ&gt;0 ∃N ∈ ℕ ( n&gt;N ⟹ |a<sub>n</sub> - l|&lt;ϵ ) )</p>
+<p>≡ ∃ l ( ∀ϵ∈ℝ ∃N ∈ ℕ ( n&gt;N ⩓ ϵ&gt;0 ⟹ |a<sub>n</sub> - l|&lt;ϵ ) )</p>
+<p>P(n) = “n &gt; N”</p>
+<p>Q(ϵ) = “ϵ &gt; 0”</p>
+<p>R(l,ϵ,n) = |a<sub>n</sub> - l|&lt;ϵ</p>
+<p>Hence -</p>
+<p>∃l(∀ϵ∈ℝ ∃ N∈ℕ ∀ n( P(n)⩓Q(ϵ) ⟹ R(l,ϵ,n) ))</p>
+<h4 id="negation-of-above">Negation of Above</h4>
+<p>If a<sub>n</sub> does not converge,</p>
+<p>¬( ∃l ( ∀ϵ∈ℝ ∃N∈ℕ ∀n ( P(n)⩓Q(ϵ) ⟹ R(l,ϵ,n) ) ) )</p>
+<p>∀l ¬( ∀ϵ∈ℝ ∃N∈ℕ ∀n∈ℕ ( P(n)⩓Q(ϵ) ⟹ R(l,ϵ,n) ) )</p>
+<p>∀l ∃ϵ∈ℝ ¬( ∃N∈ℕ ∀n∈ℕ ( P(n)⩓Q(ϵ) ⟹ R(l,ϵ,n) ) )</p>
+<p>∀l ∃ϵ∈ℝ ∀N∈ℕ ¬( ∀n∈ℕ ( P(n)⩓Q(ϵ) ⟹ R(l,ϵ,n) ) )</p>
+<p>∀l ∃ϵ∈ℝ ∀N∈ℕ ∃n∈ℕ ¬( P(n)⩓Q(ϵ) ⟹ R(l,ϵ,n) ) )</p>
+<p>∀l ∃ϵ∈ℝ ∀N∈ℕ ∃n∈ℕ ( P(n) ⩓ Q(ϵ) ⩓ ¬R(l,ϵ,n) ) )</p>
+<p>In English, for all l, there exists ϵ in ℝ and there exists n and N in ℕ such that n&gt;N and ϵ &gt; 0 and | a<sub>n</sub> - l | NOT &lt; ϵ</p>
+<h2 id="proofs-only-to-illustrate">Proofs * only to illustrate *</h2>
+<h3 id="general-domains">General Domains</h3>
+<ul>
+<li>To disprove ∀xP(x) just find an x.</li>
+<li>To prove ∃xP(x), just find an x.</li>
+</ul>
+<h3 id="finite-domains">Finite Domains</h3>
+<p>One could potentially just run through all to either prove or disprove.</p>
+<h3 id="enumeratable-domains">Enumeratable Domains</h3>
+<p>∀ is easy to show by induction.</p>
+<h3 id="contradiction">Contradiction</h3>
+<p>If either ∀ or ∃ is difficult to show, or if ¬P(x) is more well known, you can disprove the negation of the predicate.</p>
+<h2 id="full-adder-only-to-illustrate">Full Adder * only to illustrate *</h2>
+<p>Truth Table -</p>
+<table>
+<thead>
+<tr class="header">
+<th>in1</th>
+<th>in2</th>
+<th>out</th>
+<th>carry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Hence out is the XOR (¬P⩓Q) ⩔ (¬Q⩓P)</p>
+<p>Carry is the And P⩓Q</p>
+<blockquote>
+<p>Tangential remark: While we can always derive an expression from a truth table, in practice it may be better to conceptualize the function as combinations of simpler ones. So, to realize an adder as compositions of basic boolean operations, using the truth table approach is not feasible, since it will be too big. Instead, one can realize it as a combination of two types of functions: one that outputs the sum of two bits, and the other that outputs the carry over. These two functions are small enough to use the truth table approach and realize it as a combination of AND, OR, and NOT</p>
+</blockquote>
+</section>
+</article>
+
+    </section>
+<section id="posts" class="sidenav">
+
+
+    <h2>Latest exercise sheet</h2>
+    <ul>
+	  
+          <li><a href="../assignments/exercises02.html">Exercise sheet 2</a>
+&nbsp;    (<a href="../assignments/pdfs/exercises02.pdf">PDF version</a>)
+	  </li>
+	  
+    </ul>
+    <p><a href="../assignments.html">All exercise sheets&hellip;</a></p>
+
+
+
+    <h2>Recent comments</h2>
+    <ul>
+	  
+          <li><a href="../posts/2020-01-15-operator-precedence.html">Boolean operator precedence</a>
+	    &nbsp; 
+          </li>
+	  
+    </ul>
+    <p><a href="../posts.html">All comments&hellip;</a></p>
+
+
+
+    
+
+    <h2>Dhruva Sambrani's recent notes</h2>
+    <ul>
+	  
+          <li><a href="../lecturenotes/lecture01.html">Quantifiers</a>
+    
+    - <emph class="date">16 January, 2020
+    
+	    &nbsp; <a href="../lecturenotes/pdfs/lecture01.pdf">PDF version</a>
+          </li>
+	  
+    </ul>
+    <p><a href="../lecturenotes.html">All lecture notes&hellip;</a></p>
+
+
+    
+</section>
+</body>
+</html>

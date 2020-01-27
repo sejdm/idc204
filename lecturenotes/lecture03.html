@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Boolean operator precedence - IDC 204</title>
+  <title>Finite State Automatons - IDC 204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -39,23 +39,45 @@
     </nav>
     </div>
     <section id="pagecontent">
-      
+      <a href="../lecturenotes/pdfs/lecture03.pdf">PDF version</a>
         <article>
 <header>
-<h1>Boolean operator precedence</h1>
-<p class="date"><strong>15 January, 2020</strong></p>
+<h1>Finite State Automatons
+
+<p class="author">by Dhruva Sambrani<p>
+
+
+</h1>
+
+<p class="date"><strong>27 January, 2020</strong></p>
+
 </header>
 
 <section>
-<p>Since some of you requested, here is the order in which boolean operators are given precedence:</p>
+<h2 id="finite-state-automaton">Finite State Automaton</h2>
+<p>M = (Q, Σ, δ, q<sub>0</sub>, f) There is a set of states Q which M manipulates by δ over Σ and the string is accepted if it lies in f ⊂ Q, starting from q<sub>0</sub>.</p>
+<p>q<sub>0</sub> ∈ Q, f ⊂ Q</p>
+<blockquote>
+<p>M always reads the entire input.</p>
+</blockquote>
+<h3 id="accepting-a-string">Accepting a string</h3>
+<p>Given a string, S = c<sub>0</sub>,c<sub>1</sub>…c<sub>n</sub>, M accepts S iff ∃ r<sub>0</sub>, r<sub>1</sub>, … r<sub>n+1</sub> ∈ Q, st 1. r<sub>0</sub> = q<sub>0</sub> 2. r<sub>i + 1</sub> = δ(r<sub>i</sub>, c<sub>i</sub>) 3. r<sub>n+1</sub> ∈ f</p>
+<p>A language is recognized by M, iff L = {s | M accepts s}.</p>
+<h3 id="example">Example</h3>
 <ol type="1">
-<li><span class="math inline">\(\neg\)</span></li>
-<li><span class="math inline">\(\land\)</span></li>
-<li><span class="math inline">\(\lor\)</span></li>
-<li><span class="math inline">\(\Rightarrow\)</span>, <span class="math inline">\(\Leftrightarrow\)</span></li>
+<li>Define a Finite State Automaton that recognizes the language L = 101, Σ = {0,1}. Look at Fig 1 for implementation.</li>
 </ol>
-<p>The convention allows us to drop parentheses in many cases, even if they involve different types of operators, to make the expressions more readable.</p>
-<p>Therefore, in the expression, <span class="math inline">\(\neg P \land Q \lor R \Leftrightarrow S \land T\)</span>, the parentheses are implied and the expression means, <span class="math inline">\(((\neg P \land Q) \lor R) \Leftrightarrow (S \land T)\)</span>. On the other hand, <span class="math inline">\(\neg P \land (Q \lor R) \Leftrightarrow S \land T\)</span> is a different expression and the parenthesis is essential because despite <span class="math inline">\(\lor\)</span> having a lower precedence than <span class="math inline">\(\land\)</span>, we are evaluating <span class="math inline">\(Q \lor R\)</span> <em>before</em> combining it with <span class="math inline">\(\neg P\)</span> using <span class="math inline">\(\land\)</span>.</p>
+<figure>
+<img src="../files/fsa.jpeg" alt="FSA" /><figcaption>FSA</figcaption>
+</figure>
+<p><strong>Side note</strong></p>
+<p>FSAs can be <em>implemented</em> in more than one ways. Is there a <em>minimal</em> implementation?</p>
+<ol start="2" type="1">
+<li>Define a Finite State Automaton that recognizes the language L = {s | s has equal 0s and 1s}, Σ = {0,1}</li>
+</ol>
+<p><a href="https://en.wikipedia.org/wiki/Pigeonhole_principle">Pigeonhole Principle</a></p>
+<p>r<sub>0</sub> → r<sub>1</sub> → … → r<sub>i</sub> → … → r<sub>n</sub></p>
+<p>Continued in next class…</p>
 </section>
 </article>
 

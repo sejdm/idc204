@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Boolean operator precedence - IDC 204</title>
+  <title>Exercise sheet 3 - IDC 204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -39,23 +39,42 @@
     </nav>
     </div>
     <section id="pagecontent">
-      
+      <a href="../assignments/pdfs/exercises03.pdf">PDF version</a>
         <article>
 <header>
-<h1>Boolean operator precedence</h1>
-<p class="date"><strong>15 January, 2020</strong></p>
+<h1>Exercise sheet 3</h1>
+
 </header>
 
 <section>
-<p>Since some of you requested, here is the order in which boolean operators are given precedence:</p>
 <ol type="1">
-<li><span class="math inline">\(\neg\)</span></li>
-<li><span class="math inline">\(\land\)</span></li>
-<li><span class="math inline">\(\lor\)</span></li>
-<li><span class="math inline">\(\Rightarrow\)</span>, <span class="math inline">\(\Leftrightarrow\)</span></li>
+<li>Design a deterministic finite state automaton over the alphabet <span class="math inline">\(\Sigma=\{0,1\}\)</span> that will accept a string if and only if it
+<ol type="a">
+<li>is the empty string</li>
+<li>iS not the empty string</li>
+<li>is precisely the string <span class="math inline">\(111\)</span></li>
+<li>begins with the substring <span class="math inline">\(111\)</span></li>
+<li>is the empty string or begins with the substring <span class="math inline">\(111\)</span></li>
+<li>ends with the substring <span class="math inline">\(111\)</span></li>
+<li>begins with <span class="math inline">\(0\)</span> and ends with <span class="math inline">\(1\)</span></li>
+<li>contains the substring <span class="math inline">\(111\)</span></li>
+</ol></li>
+<li>We will be discsussing this in the lecture, but try to think about it yourself first. Suppose we have an automaton that recognizes a language <span class="math inline">\(L_1\)</span>, and another that recognizes a language <span class="math inline">\(L_2\)</span>.
+<ol type="a">
+<li>How will you design an automaton that recognizes <span class="math inline">\(L_1 \cup L_2\)</span>?</li>
+<li>How will you design an automaton that recognizes <span class="math inline">\(L_1 \cap L_2\)</span>?</li>
+</ol></li>
+<li>For which of the following languages over the alphabet <span class="math inline">\(\Sigma=\{0, 1\}\)</span> do you feel it is impossible to design a deterministic finite state automaton that recognizes it. For each of the rest, design an automaton to recognize it.
+<ol type="a">
+<li><span class="math inline">\(L = \{ ss\ |\ s is a string over \Sigma \}\)</span></li>
+<li>The language consisting of precisely those strings that have an even number of 0s and 1s</li>
+<li>a language consisting of strings with only 1s and that too a prime number of 1s</li>
+<li>The language of all strings with 2 consecutive 0s anywhere in the string</li>
+<li>The language consisting of strings with equal number of 0s and 1s</li>
+<li>The language consisting of precisesly those strings with more 1s than 0s.</li>
+</ol></li>
 </ol>
-<p>The convention allows us to drop parentheses in many cases, even if they involve different types of operators, to make the expressions more readable.</p>
-<p>Therefore, in the expression, <span class="math inline">\(\neg P \land Q \lor R \Leftrightarrow S \land T\)</span>, the parentheses are implied and the expression means, <span class="math inline">\(((\neg P \land Q) \lor R) \Leftrightarrow (S \land T)\)</span>. On the other hand, <span class="math inline">\(\neg P \land (Q \lor R) \Leftrightarrow S \land T\)</span> is a different expression and the parenthesis is essential because despite <span class="math inline">\(\lor\)</span> having a lower precedence than <span class="math inline">\(\land\)</span>, we are evaluating <span class="math inline">\(Q \lor R\)</span> <em>before</em> combining it with <span class="math inline">\(\neg P\)</span> using <span class="math inline">\(\land\)</span>.</p>
+<p><strong>To be completed</strong></p>
 </section>
 </article>
 

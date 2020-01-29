@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>More on Languages - IDC 204</title>
+  <title>Regular Languages, Pumping Lemma and existance of an FSA for a Language - IDC 204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -39,62 +39,35 @@
     </nav>
     </div>
     <section id="pagecontent">
-      <a href="../lecturenotes/pdfs/lecture03.pdf">PDF version</a>
+      <a href="../lecturenotes/pdfs/lecture05.pdf">PDF version</a>
         <article>
 <header>
-<h1>More on Languages
+<h1>Regular Languages, Pumping Lemma and existance of an FSA for a Language
 
 <p class="author">by Dhruva Sambrani<p>
 
 
 </h1>
 
-<p class="date"><strong>22 January, 2020</strong></p>
+<p class="date"><strong>29 January, 2020</strong></p>
 
 </header>
 
 <section>
-<h2 id="languages-continued">Languages Continued</h2>
-<p>Σ* = set of all strings over the alphabet Σ</p>
-<p>A language L<sub>1</sub> is a subset of Σ*</p>
-<p>ϵ is an empty string.</p>
-<p>If ω Σ*, |ω| = length of the string.</p>
-<h3 id="examples-of-languages">Examples of languages</h3>
+<p>Continued -</p>
+<p>Q. Find an automaton which accepts a string from L where L on Σ = {0,1} where #0 == #1.</p>
+<p>Let the automaton is finite and size N. A string that is accepted with no repetition of state must be of less than N length. Any longer string must have a repeated state.</p>
+<p>0<sup>N</sup>1<sup>N</sup> must be accepted. Suppose it is accepted. Then there must be a repetition of states in the first N characters. Suppose r<sub>i</sub> = r<sub>j</sub>. Then 0<sup>i</sup> takes it to r<sub>i</sub> and 0<sup>j-i</sup> then takes it <em>back</em> to r<sub>i</sub>. If we add (0<sup>j-i</sup>)<sup>k</sup> after 0<sup>i</sup>, the resulting string will also be accepted by the automaton. But this string has more 0s than 1s. Hence ∄ a finite automaton.</p>
+<h2 id="proposition">Proposition</h2>
+<p><strong>Regular Language</strong> A language is said to be a regular if there exists a deterministic FSA, that recognizes it.</p>
+<h2 id="pumping-lemma">Pumping Lemma</h2>
+<p>If L is a regular language, then ∃ a natural number <em>N</em> called the pumping length such that if w is a string in L (i.e. w∈L) &amp; |w| ≥ N, then we can write w=xyz such that</p>
 <ol type="1">
-<li>∅</li>
-<li>Σ* &gt; English is a language where the strings are all words in a dictionary and punctuation marks and the collection is <em>grammatically</em> correct &gt; &gt; C++ any string of characters the compiler accepts</li>
-<li>Σ = {a,b}, L = {x∈Σ* st x begins with a &amp; ends with b}</li>
-<li>Σ = {0,1,..,9}, L={x | x is the decimal representation of a prime}</li>
+<li>y is not empty</li>
+<li>|xy| ≤ N</li>
+<li>xy<sup>i</sup>z also belogs to L ∀ i=0,1,2,3…</li>
 </ol>
-<h3 id="equality-of-languages">Equality of Languages</h3>
-<p>Languages are equal if the set of strings are equal.</p>
-<h3 id="encoding-informal">Encoding (<em>informal</em>)</h3>
-<p>A bijective mapping from one set to another. - Pictures are colours encoded as numbers - Similarly movies</p>
-<h2 id="ordering-of-a-language">Ordering of a language</h2>
-<p>Σ is finite, hence can be ordered.</p>
-<p>Σ* can then be ordered by length first and then the lexographic order on Σ</p>
-<h2 id="existance-of-a-string-in-a-language">Existance of a string in a Language</h2>
-<h3 id="graph-of-a-function">Graph of a function</h3>
-<p>G(f) = {x,y | y=f(x)}</p>
-<p>A string exists in the language if it exists in G(f) where f is the defining function of the Language.</p>
-<blockquote>
-<p>There are uncountable languages but a countable set of strings. So we cannot hope to describe all the languages using strings.</p>
-</blockquote>
-<h3 id="deterministic-finite-state-automaton">Deterministic Finite State Automaton</h3>
-<p>Solve the existance of string problem - Read the string one char at a time - Remember something, and react to the next char accordingly. - Do this again and again</p>
-<p>Consider -</p>
-<p>Σ = {0,1}</p>
-<p>l = {x|x consists of an even number of 1s}</p>
-<p>Given a string, what do you do?</p>
-<p>Go char by char, switching between an “even state” and an “odd state”</p>
-<p><strong>DEFN:</strong> Deterministic Finite State Automaton is a 5 tuple (Q, Σ, δ, q<sub>0</sub>, F) where</p>
-<ul>
-<li>Q = A finite set called the set of states</li>
-<li>Σ = Alphabet</li>
-<li>δ = is a function Q×Σ → Q</li>
-<li>q<sub>0</sub> ∈ Q and is called the initial state</li>
-<li>F ⊆ Q and is the set of accepted states.</li>
-</ul>
+<p>L is a set of strings over {0,1} st the number of 0s exceeds the number of 1s. Not regular. Pumping lemma on 1<sup>N</sup>0<sup>N+1</sup> proves it.</p>
 </section>
 </article>
 

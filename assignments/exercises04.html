@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Regular Languages, Pumping Lemma and existance of an FSA for a Language - IDC 204</title>
+  <title>Exercise sheet 4 - IDC 204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -39,35 +39,30 @@
     </nav>
     </div>
     <section id="pagecontent">
-      <a href="../lecturenotes/pdfs/lecture05.pdf">PDF version</a>
+      
         <article>
 <header>
-<h1>Regular Languages, Pumping Lemma and existance of an FSA for a Language
-
-<p class="author">by Dhruva Sambrani<p>
-
-
-</h1>
-
-<p class="date"><strong>29 January, 2020</strong></p>
+<h1>Exercise sheet 4</h1>
 
 </header>
 
 <section>
-<p>Continued -</p>
-<p>Q. Find an automaton which accepts a string from L where L on Σ = {0,1} where #0 == #1.</p>
-<p>Let the automaton is finite and size N. A string that is accepted with no repetition of state must be of less than N length. Any longer string must have a repeated state.</p>
-<p>0<sup>N</sup>1<sup>N</sup> must be accepted. Suppose it is accepted. Then there must be a repetition of states in the first N characters. Suppose r<sub>i</sub> = r<sub>j</sub>. Then 0<sup>i</sup> takes it to r<sub>i</sub> and 0<sup>j-i</sup> then takes it <em>back</em> to r<sub>i</sub>. If we add (0<sup>j-i</sup>)<sup>k</sup> after 0<sup>i</sup>, the resulting string will also be accepted by the automaton. But this string has more 0s than 1s. Hence ∄ a finite automaton.</p>
-<h2 id="proposition">Proposition</h2>
-<p><strong>Regular Language</strong> A language is said to be a regular if there exists a deterministic FSA, that recognizes it.</p>
-<h2 id="pumping-lemma">Pumping Lemma</h2>
-<p>If L is a regular language, then ∃ a natural number <em>N</em> called the pumping length such that if w is a string in L (i.e. w∈L) &amp; |w| ≥ N, then we can write w=xyz such that</p>
 <ol type="1">
-<li>y is not empty</li>
-<li>|xy| ≤ N</li>
-<li>xy<sup>i</sup>z also belogs to L ∀ i=0,1,2,3…</li>
+<li>Design a non-deterministic finite state automaton over the alphabet <span class="math inline">\(\Sigma=\{0,1\}\)</span> that will recognize the following languages (try to design a deterministic one too to get a feel for how much easier it is to design a non-deterministic one).
+<ol type="a">
+<li>Strings with the <span class="math inline">\(n\)</span>th last character 0, for any natural number <span class="math inline">\(n\)</span>.</li>
+<li>Strings that begin with <span class="math inline">\(01\)</span>.</li>
+<li>… <strong>to be completed</strong></li>
+</ol></li>
+<li>If <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span> are regular languages, design a non-deterministic finite state automaton that recognizes:
+<ol type="a">
+<li><span class="math inline">\(L_1 \cup L_2\)</span></li>
+<li><span class="math inline">\(L_1 \circ L_2 := \{xy \ |\ x\in L_1,\ y\in L_2\}\)</span> (i.e. the concatentation of a string from <span class="math inline">\(L_1\)</span> with a string from <span class="math inline">\(L_2\)</span>)</li>
+<li><span class="math inline">\(L_1^* := \{x_1x_2\ldots x_n \ |\ x_i\in L_1\}\)</span> (i.e. concatenation of finitely many strings from the language)</li>
+</ol></li>
+<li>Prove that any language that can be recognized by a non-deterministic finite state automaton can also be recognized by a deterministic one. Therefore, a language is regular if and only if it can be recognized by a non-deterministic finite state automaton.</li>
 </ol>
-<p>L is a set of strings over {0,1} st the number of 0s exceeds the number of 1s. Not regular. Pumping lemma on 1<sup>N</sup>0<sup>N+1</sup> proves it.</p>
+<p><strong>to be completed</strong></p>
 </section>
 </article>
 

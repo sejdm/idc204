@@ -67,8 +67,14 @@
 </ol></li>
 <li><p>Prove that any language that can be recognized by a non-deterministic finite state automaton can also be recognized by a deterministic one. Therefore, a language is regular if and only if it can be recognized by a non-deterministic finite state automaton.</p></li>
 <li><p>Prove that if a language, <span class="math inline">\(L\)</span>, is regular then the language, <span class="math inline">\(L'\)</span>, obtained by reversing every string of <span class="math inline">\(L\)</span> is also regular.</p></li>
+<li><p>If <span class="math inline">\((Q_1,\Sigma,\delta_1,q_1, F_1)\)</span> and <span class="math inline">\((Q_2,\Sigma,\delta_2,q_2, F_2)\)</span> are non-deterministic finite state automata that recognize the languages <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span> respectively, then we have already seen that we can design an automaton <span class="math inline">\((Q,\Sigma,\delta,q_0, F)\)</span> to recognize <span class="math inline">\(L_1 \cup L_2\)</span> by taking <span class="math inline">\(Q=Q_1\cup Q_2\cup \{q_0\}\)</span>, where <span class="math inline">\(q_0\)</span> is a new state, <span class="math inline">\(F= F_1\cup F_2\)</span>, and <span class="math display">\[ \delta(q,c) = \begin{cases} 
+   \delta_1(q,c) &amp; q\in Q_1\\
+   \delta_2(q,c) &amp; q\in Q_2\\
+   \{q_1,q_2\} &amp; q = q_0, c = \epsilon \\
+   \emptyset &amp; \mathrm{otherwise}
+\end{cases}
+\]</span> Why did we need an entirely new initial state? What if we took either <span class="math inline">\(q_1\)</span> or <span class="math inline">\(q_2\)</span> to be the initial state? Does it then accept or reject more strings than it should?</p></li>
 </ol>
-<p><strong>to be completed</strong></p>
 </section>
 </article>
 

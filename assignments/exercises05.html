@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Regular Languages, Pumping Lemma and existance of an FSA for a Language - IDC 204</title>
+  <title>Exercise sheet 5 - IDC 204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -39,35 +39,31 @@
     </nav>
     </div>
     <section id="pagecontent">
-      <a href="../lecturenotes/pdfs/lecture05.pdf">PDF version</a>
+      <a href="../assignments/pdfs/exercises05.pdf">PDF version</a>
         <article>
 <header>
-<h1>Regular Languages, Pumping Lemma and existance of an FSA for a Language
-
-<p class="author">by Dhruva Sambrani<p>
-
-
-</h1>
-
-<p class="date"><strong>29 January, 2020</strong></p>
+<h1>Exercise sheet 5</h1>
 
 </header>
 
 <section>
-<p>Continued -</p>
-<p>Q. Find an automaton which accepts a string from L where L on Σ = {0,1} where #0 == #1.</p>
-<p>Let the automaton is finite and size N. A string that is accepted with no repetition of state must be of less than N length. Any longer string must have a repeated state.</p>
-<p>0<sup>N</sup>1<sup>N</sup> must be accepted. Suppose it is accepted. Then there must be a repetition of states in the first N characters. Suppose r<sub>i</sub> = r<sub>j</sub>. Then 0<sup>i</sup> takes it to r<sub>i</sub> and 0<sup>j-i</sup> then takes it <em>back</em> to r<sub>i</sub>. If we add (0<sup>j-i</sup>)<sup>k</sup> after 0<sup>i</sup>, the resulting string will also be accepted by the automaton. But this string has more 0s than 1s. Hence ∄ a finite automaton.</p>
-<h2 id="proposition">Proposition</h2>
-<p><strong>Regular Language</strong> A language is said to be a regular if there exists a deterministic FSA, that recognizes it.</p>
-<h2 id="pumping-lemma">Pumping Lemma</h2>
-<p>If L is a regular language, then ∃ a natural number <em>N</em> called the pumping length such that if w is a string in L (i.e. w∈L) &amp; |w| ≥ N, then we can write w=xyz such that</p>
 <ol type="1">
-<li>y is not empty</li>
-<li>|xy| ≤ N</li>
-<li>xy<sup>i</sup>z also belogs to L ∀ i=0,1,2,3…</li>
+<li>Find deterministic finite automata to recognize the following languages
+<ol type="a">
+<li>The empty language, i.e. <span class="math inline">\(\emptyset\)</span></li>
+<li>The language consisting of only the empty string, <span class="math inline">\(\epsilon\)</span> (note the difference with the previous one)</li>
+<li>A singleton</li>
+</ol></li>
+<li><p>Use the previous question and the theorems proved during the lecture to prove that every regular expression describes a language that is a regular language.</p></li>
+<li>Find regular expressions to describe the following languages
+<ol type="a">
+<li>Strings with the <span class="math inline">\(n\)</span>th last character 0, for a given natural number <span class="math inline">\(n\)</span>.</li>
+<li>Strings that begin with <span class="math inline">\(01\)</span>.</li>
+</ol></li>
+<li><p>Prove that every any regular language can be recognized by a finite state automaton that has only one accept state.</p></li>
+<li><p>Problem 1.31 from Sipser’s book.</p></li>
 </ol>
-<p>L is a set of strings over {0,1} st the number of 0s exceeds the number of 1s. Not regular. Pumping lemma on 1<sup>N</sup>0<sup>N+1</sup> proves it.</p>
+<p><strong>to be completed…</strong></p>
 </section>
 </article>
 

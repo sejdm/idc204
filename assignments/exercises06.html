@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Sets - IDC 204</title>
+  <title>Exercise sheet 6 - IDC 204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -39,64 +39,25 @@
     </nav>
     </div>
     <section id="pagecontent">
-      <a href="../lecturenotes/pdfs/lecture02.pdf">PDF version</a>
+      
         <article>
 <header>
-<h1>Sets
-
-<p class="author">by Dhruva Sambrani<p>
-
-
-</h1>
-
-<p class="date"><strong>20 January, 2020</strong></p>
+<h1>Exercise sheet 6</h1>
 
 </header>
 
 <section>
-<h2 id="sets">Sets</h2>
-<p>Set is a well defined collection of objects. <em>Well defined</em> here means that an element of the Domain x should be <strong>unambigiously</strong> belong to or not belong to set S.</p>
-<p>x∈A ≡ “x belongs to set A”</p>
-<p>x∉A ≡ “x does not belong to set A”</p>
-<h3 id="properties">Properties</h3>
-<ul>
-<li>All elements unique.</li>
-<li>Unordered.</li>
-</ul>
-<h3 id="types">Types</h3>
-<p>Sets need not be of a particular “type” - {{1,2,3},6,7} May also be infinite. {1,2,3,4….} Null/Empty set = {} = ∅</p>
-<h3 id="operations-on-sets">Operations on sets</h3>
-<ul>
-<li>Subset: A⊆B. “A is a subset of B.” x∈A<b>⟹</b>x∈B.</li>
-<li>Equality: A=B iff A⊆B ⩓ B⊆A. “A is equal to B.” x∈A ⟹ x∈B ⩓ x∉A ⟹ x∉B</li>
-<li>Proper Subset: A⊂B x∈A ⟹ x∈B ⩓ A≠B.</li>
-<li>Complement: U∖A <strong>OR</strong> A<sup>c</sup>. Exactly all x’s in U NOT in A.</li>
-<li>Union: A∪B. “A union B”. Exactly all elements in A ⩔ B.
-<ul>
-<li>If {A<sub>α</sub>} is a collection of sets indexed by I, then ⋃A<sub>α</sub> = set of x st x∈<sub>α<sub>0</sub></sub> for some α ∈ I.</li>
-</ul></li>
-<li>Intersection: A∩B “A intersection B”. Contains exactly all elements in A <strong>AND</strong> B.
-<ul>
-<li>x∈ ⋂A<sub>α</sub> iff x ∀α∈I, x∈A<sub>α</sub></li>
-</ul></li>
-<li>Cartesian Product: A×B “Cartesian Product of A and B”. Its the collection of all 2 element sequences (a,b) st a∈A, b∈B
-<ul>
-<li>A<sub>1</sub>×A<sub>2</sub>×…×A<sub>n</sub> is the collection of all n element sequences (a<sub>i</sub>) st a<sub>i</sub>∈A<sub>i</sub></li>
-</ul></li>
-<li>Relation operator: aRb “a is related to b”. A relation is a subset of A×B.</li>
-<li>Function: f: A → B. It is a relation such that
 <ol type="1">
-<li>∀a∈A, ∃b st aRb.</li>
-<li>aRb and aRc ⟹ b=c.</li>
+<li><p>For each language that you proved was regular in the previous exercise sets, find a context free grammar to generate it. Is every regular language a context free language?</p></li>
+<li>Find a context-free grammar to generate the following languages over <span class="math inline">\(\Sigma:= \{0, 1\}\)</span>:
+<ol type="a">
+<li><span class="math inline">\(\{0^n 1^n \ |\ n =0,1,\ldots \}\)</span></li>
+<li>The complement of the previous language</li>
+<li><span class="math inline">\(\{0^m 1^n \ |\ m &gt; n, m,n =0,1,\ldots \}\)</span></li>
+</ol></li>
+<li><p>What language does the context free grammar <span class="math inline">\(G := (\{X\}, \{(,)\}, R, X)\)</span>, where <span class="math inline">\(R = \{X \to (X) \ |\ XX \ |\ \epsilon\}\)</span> generate?</p></li>
+<li><p>Find a context free grammar that generates the language consisting of precisely those strings that are polynomials in <span class="math inline">\(x\)</span> with integer coefficients.</p></li>
 </ol>
-<ul>
-<li>Equality of functions - f=g ⟹ f⊆g ⩓ g⊆f.</li>
-</ul></li>
-</ul>
-<h2 id="languages">Languages</h2>
-<p>Σ is a finite set called an “alphabet”.</p>
-<p>The finite sequence is called a string.</p>
-<p>A language over Σ is <em>a</em> set of strings.</p>
 </section>
 </article>
 

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Solutions to mid-semester 2 - IDC 204</title>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../css/my.css">
+<link rel="stylesheet" href="../css/syntax.css">
+  <link rel="alternate" type="application/atom+xml" title="MTH 410" href="../atom.xml" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <div class="navbar">
+
+    <header>
+      <hgroup>
+        <h1><a href="../index.html" id="titlelink">The Theory of Computation <br /> (IDC 204)</a></h1>
+      </hgroup>
+    </header>
+
+    <nav id="mainnav">
+      <div id="topmenu">
+        <menu>
+          <a href="../index.html">Course information</a>
+	  
+	  
+          <a href="../assignments.html">Exercise sheets</a>
+	  
+	  
+          <a href="../posts.html">Comments</a>
+	  
+	  
+          <a href="../lecturenotes.html">Dhruva Sambrani's notes</a>
+	  
+        </menu>
+	</div>
+    </nav>
+    </div>
+    <section id="pagecontent">
+      <a href="../posts/pdfs/2020-03-16-midsem2-solutions.pdf">PDF version</a>
+        <article>
+<header>
+<h1>Solutions to mid-semester 2</h1>
+<p class="date"><strong>16 March, 2020</strong></p>
+</header>
+
+<section>
+<h3 id="question-1">Question 1</h3>
+<p><em>Consider the language over the alphabet <span class="math inline">\(\Sigma=\{a, b, c, d\}\)</span> recognized by the following non-deterministic finite state automaton.</em></p>
+<p><img src="../files/ndfa.png" /></p>
+<h4 id="part-a">Part a)</h4>
+<p><em>Find a regular expression that describes the language.</em></p>
+<p><strong>Answer:</strong> <span class="math inline">\(ac^*d \cup b\)</span></p>
+<p>The usual method of adding “empty” arrows is useful to shorten the proof that every regular language can be defined by a regular expression, but unnecessarily long in this situation. There are no arrows going into the initial state and no arrows coming out of the final state, and the loop is responsible for the <span class="math inline">\(c^*\)</span>.</p>
+<h4 id="part-b">Part b)</h4>
+<p><em>Convert the automaton to a deterministic automaton that recognizes the same language but which has at most one extra state.</em></p>
+<p>Remember that in a deterministic automaton, one must have a unique new state for each state and <em>each</em> letter of the alphabet. The automaton is non-deterministic because some states do not have arrows corresponding to certain letters coming out it. Reading such a letter when it is in that state should make it die out. So all one needs to do is to add one “reject” state to which all such letters are redirected.</p>
+<h4 id="part-c">Part c)</h4>
+<p><em>Find a context free grammar that generates the language.</em></p>
+<p>Since the language may be thought of as a union of two languages, we can use a variable to branch out, leading to the following rules:</p>
+<ol type="1">
+<li><span class="math display">\[S \to A \ |\  b\]</span> (The variable <span class="math inline">\(A\)</span> will take care of strings of the form <span class="math inline">\(ac^*d\)</span>, but the string may also be a single <span class="math inline">\(b\)</span>. Some of you added an extra variable <span class="math inline">\(B\)</span>, which then led to the terminal <span class="math inline">\(b\)</span>. That is fine, but not necessary in this case).</li>
+<li><span class="math display">\[A \to aCd\]</span> (Only the <span class="math inline">\(C\)</span> is repeated, so we need an extra variable to take care of the repetition; the <span class="math inline">\(a\)</span> and <span class="math inline">\(d\)</span> may be added immediately.</li>
+<li><span class="math display">\[C \to cC \ |\ \epsilon\]</span> (The variable on the right hand side allows the C to be repeated indefinitely. When it needs to stop, one can use the empty string. Several variations here are also fine, including replacing the empty string with a single <span class="math inline">\(c\)</span> or <span class="math inline">\(C \to CC \ |\ c\)</span>).</li>
+</ol>
+<p>Some of you have done it by following the general algorithm to convert a finite state automaton recognizing a language into a context free grammar recognizing the same language. Then you would get a rule for each state. The method is longer than needed when applied to this case but more general and also perfectly fine.</p>
+<h3 id="question-2">Question 2</h3>
+<p>Find regular expressions to describe the following languages, each over the alphabet <span class="math inline">\(\{0, 1\}\)</span>.</p>
+<h4 id="part-a-1">Part a)</h4>
+<p><em>All strings except the string 10.</em></p>
+<p><strong>Answer:</strong> <span class="math inline">\(\epsilon\cup \Sigma\cup \Sigma\Sigma\Sigma^* \cup 00 \cup 01 \cup 11\)</span></p>
+<p>Note that this is a complement of a finite (in fact singleton) language. So strings that avoid certain fixed lengths (in this case, 2) are definitely in the language, and the rest are finite in number. Therefore, the regular expression may involve <span class="math inline">\(\epsilon \cup \Sigma\cup \Sigma\Sigma\Sigma^*\)</span> to ensure that all strings of lengths 0, 1, or 3 and above are included. Now among the four possible length 2 strings, we only need to add <span class="math inline">\(00\)</span>, <span class="math inline">\(11\)</span>, and <span class="math inline">\(10\)</span>. Some of you have given minor variations of this by explicitly including everything of lengths 0, 1, and 2, which are all fine as long as you observed that you could split the problem into an infinite part which is easy to tackle because it includes all strings of lengths greater than 2, and a finite part that can be tackled explicitly (but in some cases, shortened).</p>
+<h4 id="part-b-1">Part b)</h4>
+<p>Strings for which the third last character is 0.</p>
+<p><strong>Answer:</strong> <span class="math inline">\(\Sigma^*0\Sigma\Sigma\)</span></p>
+<p>Some of you have tackled the problem by noting that the last three characters can have only finitely many variations so <span class="math inline">\(\Sigma^*000 \cup \Sigma^*001\ldots\)</span>, which is also fine.</p>
+<h3 id="question-3">Question 3</h3>
+<p><em>If a <strong>non</strong>-deterministic finite state automaton, <span class="math inline">\(N:=(Q, \Sigma, \delta, q_0, F)\)</span> with <strong>at most two states</strong> recognizes a language <span class="math inline">\(L\)</span>, is it necessary that <span class="math inline">\(N':=(Q, \Sigma, \delta, q_0, F^c)\)</span> must recognize <span class="math inline">\(L^c\)</span>? If you think it is </em>always* true, then explain why, otherwise, give an explicit example of an <span class="math inline">\(N\)</span> and a string which is either accepted by both <span class="math inline">\(N\)</span> and <span class="math inline">\(N'\)</span> or rejected by both.*</p>
+<p>This need not be true; it is only true for a deterministic finite state automaton. Any non-deterministic finite state automaton that has no looping arrows can only recognize a finite language. Even after flipping the accept and non-accept states, it will have to accept another <em>finite</em> language which cannot possibly exhaust the complement of a finite language because <span class="math inline">\(\Sigma^*\)</span> is infinite. From this is it is straightforward to construct an example and there are many possibilities. In fact, it is quite easy to come up with examples; almost any truly non-deterministic one with the possibility of dying out would have worked.</p>
+<p><strong>Question 4</strong> <em>Consider the context free grammars <span class="math inline">\(G_1=(V_1, \Sigma_1, R_1, S_1)\)</span> and <span class="math inline">\(G_2=(V_2, \Sigma_2, R_2, S_2)\)</span> generating <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span>, respectively.</em></p>
+<h5 id="part-a-2">Part a)</h5>
+<p><em>How will you define a context free grammar <span class="math inline">\(G = (V, \Sigma, R, S)\)</span> that recognizes <span class="math inline">\(L_1\cup L_2\)</span>?</em> The new rules should be <span class="math inline">\(R_1\cup R_2 \cup \{S \to S_1 \ |\ S_2\}\)</span>, where <span class="math inline">\(S\)</span> is a <em>new</em> variable. We need a <em>new</em> start state <span class="math inline">\(S\)</span> and the rule, <span class="math inline">\(S \to S_1 \ |\ S_2\)</span>. If one chooses <span class="math inline">\(S_1\)</span> during the deduction, then one can generate all the strings in the first language, and similarly, if one chooses <span class="math inline">\(S_2\)</span>, then one can generate all the strings in the second language. You therefore also need the original rules <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>.</p>
+<p>Some of you combined each rule from <span class="math inline">\(R_1\)</span> with a rule from <span class="math inline">\(R_2\)</span> by using <span class="math inline">\(|\)</span>. This will include all strings in the union of the two languages but will also include many more that are not intended (try to think of an example!).</p>
+<p><strong>IMPORTANT</strong>: <span class="math inline">\(S = S_1 \cup S_2\)</span> is a completely nonsensical expression! <span class="math inline">\(S_1\)</span> and <span class="math inline">\(S_2\)</span> are not sets; taking their union makes no sense! Similalry, wrting <span class="math inline">\(A_1 \to B_1 \cup B_2\)</span> is completely meaningless.</p>
+<h4 id="part-b-2">Part b)</h4>
+<p><em>How will you define a context free grammar <span class="math inline">\(G = (V, \Sigma, R, S)\)</span> that recognizes <span class="math inline">\(L_1 \circ L_2\)</span>?</em></p>
+<p>The new rules can be <span class="math inline">\(R_1\cup R_2 \cup \{S \to S_1 S_2\}\)</span>. The new start state triggers the generation of two blocks of strings, where the first one is in <span class="math inline">\(L_1\)</span> and the second one is in <span class="math inline">\(L_2\)</span>.</p>
+<p>Once again, <span class="math inline">\(R_1\circ R_2\)</span> is complete nonsense. You can concatenate strings, not rules!</p>
+<h4 id="part-c-1">Part c)</h4>
+<p><em>How will you define a context free grammar <span class="math inline">\(G = (V, \Sigma, R, S)\)</span> that recognizes <span class="math inline">\(L_1^*\)</span>?</em></p>
+<p>The new rules can be <span class="math inline">\(R_1 \cup \{S_1\to S_1S_1 \ |\ \epsilon\}\)</span>. <span class="math inline">\(L^*\)</span> contains strings of the form <span class="math inline">\(w_1w_2\ldots w_n\)</span>. The rule <span class="math inline">\(S_1 \to S_1S_1\)</span> allows the start variable to replicate itself the required number of times, say <span class="math inline">\(n\)</span> times. So we can derive <span class="math inline">\(S_1S_1 \ldots S_1\)</span>. Now each of these <span class="math inline">\(S_1\)</span> can be replaced eventually by a string in <span class="math inline">\(L\)</span> using the previous rules.</p>
+</section>
+</article>
+
+    </section>
+<section id="posts" class="sidenav">
+
+
+    <h2>Latest exercise sheet</h2>
+    <ul>
+	  
+          <li><a href="../assignments/exercises06.html">Exercise sheet 6</a>
+&nbsp;    (<a href="../assignments/pdfs/exercises06.pdf">PDF version</a>)
+	  </li>
+	  
+    </ul>
+    <p><a href="../assignments.html">All exercise sheets&hellip;</a></p>
+
+
+
+    <h2>Recent comments</h2>
+    <ul>
+	  
+          <li><a href="../posts/2020-03-16-midsem2-solutions.html">Solutions to mid-semester 2</a>
+	    &nbsp; <a href="../posts/pdfs/2020-03-16-midsem2-solutions.pdf">PDF version</a>
+          </li>
+	  
+          <li><a href="../posts/2020-01-29-pumping-lemma.html">The Pumping Lemma</a>
+	    &nbsp; 
+          </li>
+	  
+          <li><a href="../posts/2020-01-15-operator-precedence.html">Boolean operator precedence</a>
+	    &nbsp; 
+          </li>
+	  
+    </ul>
+    <p><a href="../posts.html">All comments&hellip;</a></p>
+
+
+
+    
+
+    <h2>Dhruva Sambrani's recent notes</h2>
+    <ul>
+	  
+          <li><a href="../lecturenotes/lecture05.html">Regular Languages, Pumping Lemma and existance of an FSA for a Language</a>
+    
+    - <emph class="date">January 29, 2020
+    
+	    &nbsp; <a href="../lecturenotes/pdfs/lecture05.pdf">PDF version</a>
+          </li>
+	  
+          <li><a href="../lecturenotes/lecture04.html">Finite State Automata</a>
+    
+    - <emph class="date">January 27, 2020
+    
+	    &nbsp; <a href="../lecturenotes/pdfs/lecture04.pdf">PDF version</a>
+          </li>
+	  
+    </ul>
+    <p><a href="../lecturenotes.html">All lecture notes&hellip;</a></p>
+
+
+    
+</section>
+</body>
+</html>

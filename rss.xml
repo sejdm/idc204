@@ -7,8 +7,449 @@
         <description><![CDATA[Some thoughts]]></description>
         <atom:link href="http://blog.shane/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Mon, 16 Mar 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Mon, 23 Mar 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Turing machines</title>
+    <link>http://blog.shane/posts/2020-03-23-turing.html</link>
+    <description><![CDATA[<article>
+<header>
+<h1>Turing machines</h1>
+<p class="date"><strong>23 March, 2020</strong></p>
+</header>
+
+<section>
+<h2 id="why-study-them">Why study them?</h2>
+<p>Before we motivate and define Turing machines, let us see why we care about them.</p>
+<p>Turing machines will turn out to be more powerful than all the previous computation models that we have seen: any language that can be recognized by a finite state automaton or a push down automaton, can also be recognized by a Turing machine. Some languages cannot be recognized by automata but can be recognized by a Turing machine. In fact, despite their simple definition, Turing machines are really powerful: if you can write a program for any computation, no matter how complex, you can build a Turing machine to perform the same computation! Attempts at alternatives that can perform computations that a Turing machine cannot, have so far failed (although they may be more efficient). In this course, we will see how some attempts to “enhance” a Turing machine fail to make it more powerful, i.e. anything that the “enhanced” machine can compute, the original one can too. This is similar to the situation with non-deterministic vs deterministic automata.</p>
+<p>Despite their power, Turing machines are merely abstract models of computation and though you can actually build a physical model of it, it would be too inefficient to use in practice. But we will soon see that we can use the concept of a Turing machine to prove certain very fundamental questions about computability. For instance, we will show that some natural problems cannot be solved by any Turing machine, however complex it may be. Therefore, it cannot be done by any program either. This is why we will study Turing machines. Furthermore, if you can write a program in your favourite programming langauge that can simulate any Turing machine, given its designs, then you know that it is equivalent to a Turing machine and, therefore, what you can do in another programming language can also be done in your favourite one <a href="http://blog.shane#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<h2 id="motivation">Motivation</h2>
+<p>This section is not meant to be very formal and may be skipped if you are annoyed by this sort of thing. The purpose is to reflect upon what characterizes a computation and how that leads to the definition of a Turing machine.</p>
+<p>The tables below show the steps of a common algorithm used to add two numbers (in this example, 2356 and 4579).</p>
+<p>Step 0</p>
+<table>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td><strong>.</strong></td>
+<td><strong>.</strong></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td><strong>6</strong></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>4</td>
+<td>5</td>
+<td>7</td>
+<td><strong>9</strong></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>.</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Step 1</p>
+<table>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td><strong>.</strong></td>
+<td><strong>1</strong></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2</td>
+<td>3</td>
+<td><strong>5</strong></td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>4</td>
+<td>5</td>
+<td><strong>7</strong></td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td><strong>.</strong></td>
+<td><em>5</em></td>
+</tr>
+</tbody>
+</table>
+<p>Step 2</p>
+<table>
+<tbody>
+<tr class="odd">
+<td></td>
+<td><strong>.</strong></td>
+<td><strong>1</strong></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2</td>
+<td><strong>3</strong></td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>4</td>
+<td><strong>5</strong></td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td><strong>.</strong></td>
+<td><em>3</em></td>
+<td><em>5</em></td>
+</tr>
+</tbody>
+</table>
+<p>Step 3</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><strong>.</strong></td>
+<td><strong>0</strong></td>
+<td>1</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><strong>2</strong></td>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><strong>4</strong></td>
+<td>5</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><strong>.</strong></td>
+<td><em>9</em></td>
+<td><em>3</em></td>
+<td><em>5</em></td>
+</tr>
+</tbody>
+</table>
+<p>Step 4</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><strong>0</strong></td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>.</strong></td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td><strong>.</strong></td>
+<td>4</td>
+<td>5</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td><strong>.</strong></td>
+<td><em>6</em></td>
+<td><em>9</em></td>
+<td><em>3</em></td>
+<td><em>5</em></td>
+</tr>
+</tbody>
+</table>
+<p>Step 5</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>4</td>
+<td>5</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><em>6</em></td>
+<td><em>9</em></td>
+<td><em>3</em></td>
+<td><em>5</em></td>
+</tr>
+</tbody>
+</table>
+<p>Note that in every step, we have only made use of symbols from the alphabet, <span class="math inline">\(\Sigma := \{0, 1, \ldots, 9, blankspace\}\)</span>.</p>
+<p>The same algorithm works no matter how large the input, because each step need focus on only a small part (five cells of the table) at a time (shown in bold and with a dot when the cell is empty). Since each cell can have at most 10 possible entries, the number of possible variations of what is in focus form a <em>finite</em> set, which we will denote by <span class="math inline">\(\Gamma\)</span>.</p>
+<p>In each step, based on what is in focus, we alter its contents and shift focus in a new direction (in this example, we always shift left). If we denote the set of directions by <span class="math inline">\(D\)</span>, then we are essentially applying a function <span class="math inline">\(F : \Gamma \to \Gamma \times D\)</span>. The function takes as input the string that is in focus and outputs the new string that is to replace it as well as the direction to shift focus to.</p>
+<p>Since <span class="math inline">\(\Gamma\)</span>, which is the domain of <span class="math inline">\(F\)</span>, is finite, the entire function <span class="math inline">\(F\)</span> can be defined using a finite table of mappings:</p>
+<p><span class="math display">\[ x_1 \to (y_1, d_1)\\
+x_2 \to (y_2, d_2)\\
+\cdots\]</span></p>
+<p>One would normally evaluate the output of <span class="math inline">\(F\)</span> by performing a tiny little calculation, however, to simplify this discussion, let us note that we can also do it by simply referring to that table. The table may be big, but is finite and of fixed size no matter how big the input is.</p>
+<p>When we reach the step where no input digits are in focus, we stop and the last row is the final answer.</p>
+<p>In this example we need only one function <span class="math inline">\(F\)</span> because we are always doing the same thing in each step: “adding the single digits, updating the sum and carry over and shifing focus to the left”. In more complicated computations, we may need to switch to a different function under certain circumstances. For instance, if we are checking for equality of two very large strings by comparing one character at a time and cancelling them if they match, then when we are searching for the last cancelled character, we will leave many characters unchanged. Yet, when it is time to cancel them, we would need to use a different function.</p>
+<p>We can do this by introducing a finite set which we denote <span class="math inline">\(Q:=\{q_0, q_1, q_2, \ldots, q_n, q_{stop}\}\)</span>. For now, think of <span class="math inline">\(q_i\)</span>’s as labels. They are usually called states. We can then introduce a function <span class="math inline">\(\delta : Q \times \Gamma \to Q \times \Gamma \times D\)</span>, so that <span class="math inline">\(\delta(q_i, x) = (q_j, x', d)\)</span> may be interpreted as: “if the current state is <span class="math inline">\(q_i\)</span> and <span class="math inline">\(x\)</span> is in focus, then replace <span class="math inline">\(x\)</span> with the string <span class="math inline">\(x'\)</span>, shift focus in direction <span class="math inline">\(d\)</span>, and switch to state <span class="math inline">\(q_j\)</span>.” We begin the computation in state <span class="math inline">\(q_0\)</span> and stop whenever the <span class="math inline">\(q_{stop}\)</span> is outputted.</p>
+<p>The fact that <span class="math inline">\(Q\)</span> is finite, along with the fact that <span class="math inline">\(\Gamma\)</span> is finite, ensures that <span class="math inline">\(\delta\)</span> has a finite domain and may also then be described by a table like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(x_0\)</span></th>
+<th><span class="math inline">\(x_1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(q_0\)</span></td>
+<td><span class="math inline">\((q_i, y_j, d)\)</span></td>
+<td><span class="math inline">\(\cdots\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(q_1\)</span></td>
+<td><span class="math inline">\(\cdots\)</span></td>
+<td><span class="math inline">\(\cdots\)</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-actual-definition">The actual definition</h2>
+<p>We will now make modifications to the above informal description of a computation to define a Turing machine. In the example above, we performed intermediate computations on a two-dimensional page or blackboard. Instead, we will use a tape on which we can can write any string as one long row as shown below, so we only need two directions, left and right, i.e. <span class="math inline">\(D=\{L, R\}\)</span>.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+</tr>
+</tbody>
+</table>
+<p>The tape is divided into cells; only one character can be written on each cell. One essential difference: the tape is infinite to ensure that there is always as much memory as needed. However, the tape <em>always</em> has at most finitely many cells occupied. The information stored is always finite, but since we do not know how much may be required for a given computation, enough tape is available.</p>
+<p>Now how many cells must we include in the focus? Why not simplify matters and allow only 1? <a href="http://blog.shane#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Since at exactly one character is in focus at a time, <span class="math inline">\(\Gamma\)</span> is a set of characters, and is called the “tape alphabet”. Of course, since we must be able to write the original input on the tape, it must contain the input alphabet <span class="math inline">\(\Sigma\)</span> as a subset, i.e. <span class="math inline">\(\Sigma \subset \Gamma\)</span></p>
+<p>The focus is called the “head”. The machine can move the head left or right to bring the appropriate cell in focus. Here, the head is shown with an arrow.</p>
+<p>            <span class="math inline">\(\downarrow\)</span></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+</tr>
+</tbody>
+</table>
+<p>A Turing machine consists of</p>
+<ol type="1">
+<li>A finite set, <span class="math inline">\(\Sigma\)</span>, called the alphabet.</li>
+<li>A finite set, <span class="math inline">\(\Gamma\)</span>, called the tape alphabet, such that <span class="math inline">\(\Sigma \subset \Gamma\)</span>.</li>
+<li>The set of <span class="math inline">\(D:=\{L, R\}\)</span> of directions</li>
+<li>A function <span class="math inline">\(\delta : Q \times \Gamma \to Q \times \Gamma \times D\)</span></li>
+<li>A finite set, <span class="math inline">\(Q\)</span>, called the set of states</li>
+<li>A special element <span class="math inline">\(q_0 \in Q\)</span>, called the start state</li>
+<li>Two special elements <span class="math inline">\(q_{accept}, q_{reject} \in Q\)</span>, called the accept state and reject state, respectively.</li>
+</ol>
+<p>The machine starts at the state <span class="math inline">\(q_0\)</span>, with the head at the beginning of the tape, and the input string written on the tape. If the character under the head is <span class="math inline">\(x\)</span>, then <span class="math inline">\(\delta(q_0, x)\)</span> is evaluated to be say, <span class="math inline">\((q_i, y, d)\)</span>. The machine then replaces <span class="math inline">\(x\)</span> with <span class="math inline">\(y\)</span> in the cell under the head, shifts the head to the left if <span class="math inline">\(d=L\)</span> otherwise it shifts to the right, and moves to state <span class="math inline">\(q_i\)</span>. Then it reads the character, <span class="math inline">\(z\)</span>, under the current head position, evaluates <span class="math inline">\(\delta(q_i, z)\)</span> and uses that to decide what to replace it with , which state to shift to, and which direction to move the head to. This process it repeats over and over again until it reaches either the state <span class="math inline">\(q_{accept}\)</span>, in which case it accepts the input string, or the state <span class="math inline">\(q_{reject}\)</span>, in which case it rejects the input string.</p>
+<p>Now the formal definition of a Turing machine given in the book should make sense to you. We will see some examples in the coming posts.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This is why they say, “it is not what a programming language can do that matters, but what it makes easy”<a href="http://blog.shane#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Search for the “0, 1, infinity rule”!<a href="http://blog.shane#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+</section>
+</article>
+]]></description>
+    <pubDate>Mon, 23 Mar 2020 00:00:00 UT</pubDate>
+    <guid>http://blog.shane/posts/2020-03-23-turing.html</guid>
+    <dc:creator>Shane</dc:creator>
+</item>
+<item>
+    <title>A final look at context-free grammars</title>
+    <link>http://blog.shane/posts/2020-03-22-cfg-remaining.html</link>
+    <description><![CDATA[<article>
+<header>
+<h1>A final look at context-free grammars</h1>
+<p class="date"><strong>22 March, 2020</strong></p>
+</header>
+
+<section>
+<p>We had the time to touch upon only a few concepts of context-free grammars, before me move on to Turing machines. Here is a brief and final look at some facts of context-free grammars that we will not be exploring in more detail in the course, but you are free to discuss them with me if you are interested.</p>
+<ol type="1">
+<li><p>We showed that every context-free language can be recognized by a (non-deterministic) pushdown automaton. It is also true that every language that can be recognized by a (non-deterministic) pushdown automaton, can be described by a context-free grammar. The proof is long and given in each of the references that are mentioned on the main webpage.</p></li>
+<li><p>Unlike finite state automata, deterministic pushdown automata are not as powerful as non-deterministic ones. This has also been covered in your textbook, in case you are interested.</p></li>
+<li><p>YACC (Yet Another Compiler-Compiler) is a “parser generator” for languages specified in notation similar to what we use for specifying the grammar of a context-free language. You can read more about it <a href="http://dinosaur.compilertools.net/yacc/index.html">here</a></p></li>
+</ol>
+</section>
+</article>
+]]></description>
+    <pubDate>Sun, 22 Mar 2020 00:00:00 UT</pubDate>
+    <guid>http://blog.shane/posts/2020-03-22-cfg-remaining.html</guid>
+    <dc:creator>Shane</dc:creator>
+</item>
+<item>
+    <title>Pumping lemma for context free grammars</title>
+    <link>http://blog.shane/posts/2020-03-22-cfg-pumping.html</link>
+    <description><![CDATA[<article>
+<header>
+<h1>Pumping lemma for context free grammars</h1>
+<p class="date"><strong>22 March, 2020</strong></p>
+</header>
+
+<section>
+<p>This post is meant to complement the chapter on pumping lemma for context free grammars in the textbook, but not to replace it. You should read this first to keep the relevant example in mind when you read the formal proof from the textbook.</p>
+<h2 id="the-main-idea">The main idea</h2>
+<p>As an example, we will consider the following context free grammar and the string <span class="math inline">\(acegfdb\)</span> (that belongs to the language generated by the grammar):</p>
+<p><span class="math display">\[A \to aRb\]</span> <span class="math display">\[R \to cBd \ |\ g\]</span> <span class="math display">\[B \to eRf\]</span></p>
+<p>In the following derivation, <span class="math inline">\(R\)</span> plays a special role: it generates a sub-string, <span class="math inline">\(ceRfd\)</span>, which also contains <span class="math inline">\(R\)</span>. This second <span class="math inline">\(R\)</span> is used to generate the final terminals, which in this case is just <span class="math inline">\(g\)</span>.</p>
+<p><span class="math display">\[A \Longrightarrow a\mathbf{R}b \Longrightarrow acBdb \Longrightarrow a\mathbf{ceRfd}b \Longrightarrow acegfdb\]</span></p>
+<p>Before leading to the terminals, we could have instead repeated the generation of <span class="math inline">\(ceRfd\)</span> as many times as we wish:</p>
+<p><span class="math display">\[A \Longrightarrow aRb \Longrightarrow acBdb \Longrightarrow aceRfdb \Longrightarrow a(ce)^2R(fd)^2b \ldots \Longrightarrow a(ce)^nR(fd)^nb\]</span></p>
+<p>before finally using <span class="math inline">\(R\)</span> to lead to the terminal</p>
+<p><span class="math display">\[\Longrightarrow a(ce)^ng(fd)^nb\]</span></p>
+<p>So <span class="math inline">\(a(ce)^2g(fd)^2b\)</span>, <span class="math inline">\(a(ce)^3g(fd)^3b\)</span>, etc are also in our language:</p>
+<p>In fact, we could have skipped the steps shown in bold</p>
+<p><span class="math display">\[A \Longrightarrow aRb \mathbf{\Longrightarrow acBdb \Longrightarrow aceRfdb \Longrightarrow acegfdb}\]</span></p>
+<p>and directly proceeded to</p>
+<p><span class="math display">\[A \Longrightarrow a\mathbf{R}b \Longrightarrow agb\]</span></p>
+<p>It is now easy to generalize these observations:</p>
+<p>If a string <span class="math inline">\(s\)</span> is generated in a series of steps that look like this:</p>
+<p><span class="math display">\[S\ldots  \Longrightarrow\ldots  x_1 R x_2 \ldots \Longrightarrow \ldots x_1 \mathbf{y_1Ry_2} x_2 \ldots \Longrightarrow \ldots  x_1 y_1\mathbf{z}y_2 x_2=s\]</span></p>
+<p>and where both the substrings highlighted in bold are generated by the previous <span class="math inline">\(R\)</span>, then <span class="math inline">\(s\)</span> can be realized as a concatenation of 5 substrings as <span class="math inline">\(s = x_1 y_1zy_2 x_2\)</span>, so that the first <span class="math inline">\(R\)</span> is responsible for <span class="math inline">\(y_1zy_2\)</span> within which the second <span class="math inline">\(R\)</span> is responsible for the substring, <span class="math inline">\(z\)</span>. In that case, the language must also contain the strings <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> for each <span class="math inline">\(n=0, 1, \ldots\)</span></p>
+<p>In fact, if the string <span class="math inline">\(s\)</span> is “long enough”, that will always happen! We can see that by examining the parse tree of a string. <span class="math inline">\(R\)</span> would have the required property if it occurred twice in one path of the parse tree. That in turn is ensured if the length of the path exceeds the number of variables (pigeon-hole principle!). What is long enough? The precise number is not really important. What is important is that there is such a number.</p>
+<h2 id="the-statement">The statement</h2>
+<p>Given a context free grammar generating a language <span class="math inline">\(L\)</span>, there is a number <span class="math inline">\(N\)</span> called the pumping length, such that, whenever the length of a string <span class="math inline">\(s\)</span> exceeds <span class="math inline">\(N\)</span>, it can be broken up as, <span class="math inline">\(s = x_1 y_1zy_2 x_2\)</span>, so that the strings <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> also belong to <span class="math inline">\(L\)</span> for each <span class="math inline">\(n=0, 1, \ldots\)</span>. We can make no assumptions on where the break up occurs, except for the fact that both <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span> cannot be empty (if they could, the lemma willl be useless!), and that the substring <span class="math inline">\(y_1zy_2\)</span> has length less than <span class="math inline">\(N\)</span>.</p>
+<p>As in the previous pumping lemma, you apply it by using some foresight to find, for each possible pumping length, a string of bigger length that belong to the language. You then show that for each such string, no matter how you break it up as <span class="math inline">\(x_1 y_1zy_2 x_2\)</span>, at least for some <span class="math inline">\(n\)</span>, <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> does not belong the language.</p>
+<h2 id="example">Example</h2>
+<p>The language over the alphabet, <span class="math inline">\(\Sigma=\{a, b, c\}\)</span>, consisting of strings of the form <span class="math inline">\(a^nb^nc^n\)</span> cannot be context free. To see this, observe that if the pumping length is <span class="math inline">\(N\)</span>, then <span class="math inline">\(a^Nb^Nc^N\)</span> exceeds that length. If the language were context free, then there is some unknown way to break it up as <span class="math inline">\(x_1 y_1zy_2 x_2\)</span> so that <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> belongs to the language for every <span class="math inline">\(n\)</span>. Notice that if either <span class="math inline">\(y_1\)</span> or <span class="math inline">\(y_2\)</span> contains repetitions of more than one character, then its power will have at least some characters out of order (eg. <span class="math inline">\((aabb)^2 = aabbaabb\)</span> has some <span class="math inline">\(a\)</span>’s following <span class="math inline">\(b\)</span>’s). So we only need to bother about the case where both contain repetitions of only one character. In that case <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> will increase the powers of at most two characters whlie leaving the third untouched, therefore such a string cannot belong to the language where all three powers are required to be the same.</p>
+</section>
+</article>
+]]></description>
+    <pubDate>Sun, 22 Mar 2020 00:00:00 UT</pubDate>
+    <guid>http://blog.shane/posts/2020-03-22-cfg-pumping.html</guid>
+    <dc:creator>Shane</dc:creator>
+</item>
+<item>
     <title>Solutions to mid-semester 2</title>
     <link>http://blog.shane/posts/2020-03-16-midsem2-solutions.html</link>
     <description><![CDATA[<article>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Exercise sheet 6 - IDC 204</title>
+  <title>A final look at context-free grammars - IDC 204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -39,24 +39,19 @@
     </nav>
     </div>
     <section id="pagecontent">
-      <a href="../assignments/pdfs/exercises06.pdf">PDF version</a>
+      
         <article>
 <header>
-<h1>Exercise sheet 6</h1>
-
+<h1>A final look at context-free grammars</h1>
+<p class="date"><strong>22 March, 2020</strong></p>
 </header>
 
 <section>
+<p>We had the time to touch upon only a few concepts of context-free grammars, before me move on to Turing machines. Here is a brief and final look at some facts of context-free grammars that we will not be exploring in more detail in the course, but you are free to discuss them with me if you are interested.</p>
 <ol type="1">
-<li><p>For each language that you proved was regular in the previous exercise sets, find a context free grammar to generate it. Is every regular language a context free language?</p></li>
-<li>Find a context-free grammar to generate the following languages over <span class="math inline">\(\Sigma:= \{0, 1\}\)</span>:
-<ol type="a">
-<li><span class="math inline">\(\{0^n 1^n \ |\ n =0,1,\ldots \}\)</span></li>
-<li>The complement of the previous language</li>
-<li><span class="math inline">\(\{0^m 1^n \ |\ m &gt; n, m,n =0,1,\ldots \}\)</span></li>
-</ol></li>
-<li><p>What language does the context free grammar <span class="math inline">\(G := (\{X\}, \{(,)\}, R, X)\)</span>, where <span class="math inline">\(R = \{X \to (X) \ |\ XX \ |\ \epsilon\}\)</span> generate?</p></li>
-<li><p>Find a context free grammar that generates the language consisting of precisely those strings that are polynomials in <span class="math inline">\(x\)</span> with integer coefficients.</p></li>
+<li><p>We showed that every context-free language can be recognized by a (non-deterministic) pushdown automaton. It is also true that every language that can be recognized by a (non-deterministic) pushdown automaton, can be described by a context-free grammar. The proof is long and given in each of the references that are mentioned on the main webpage.</p></li>
+<li><p>Unlike finite state automata, deterministic pushdown automata are not as powerful as non-deterministic ones. This has also been covered in your textbook, in case you are interested.</p></li>
+<li><p>YACC (Yet Another Compiler-Compiler) is a “parser generator” for languages specified in notation similar to what we use for specifying the grammar of a context-free language. You can read more about it <a href="http://dinosaur.compilertools.net/yacc/index.html">here</a></p></li>
 </ol>
 </section>
 </article>

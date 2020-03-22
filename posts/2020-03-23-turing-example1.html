@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Turing machine example: Equality - IDC 204</title>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../css/my.css">
+<link rel="stylesheet" href="../css/syntax.css">
+  <link rel="alternate" type="application/atom+xml" title="MTH 410" href="../atom.xml" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <div class="navbar">
+
+    <header>
+      <hgroup>
+        <h1><a href="../index.html" id="titlelink">The Theory of Computation <br /> (IDC 204)</a></h1>
+      </hgroup>
+    </header>
+
+    <nav id="mainnav">
+      <div id="topmenu">
+        <menu>
+          <a href="../index.html">Course information</a>
+	  
+	  
+          <a href="../assignments.html">Exercise sheets</a>
+	  
+	  
+          <a href="../posts.html">Comments</a>
+	  
+	  
+          <a href="../lecturenotes.html">Dhruva Sambrani's notes</a>
+	  
+        </menu>
+	</div>
+    </nav>
+    </div>
+    <section id="pagecontent">
+      
+        <article>
+<header>
+<h1>Turing machine example: Equality</h1>
+<p class="date"><strong>23 March, 2020</strong></p>
+</header>
+
+<section>
+<h1 id="checking-for-equality">Checking for equality</h1>
+<p>This state transition table checks if the string …=… is correct. It doees so by repeatedly marking a character that it will search for, then hunts for = symbol and then begins searching for the first non marked character and checks for equality.</p>
+<p>Note that the the alphabet is merely <span class="math inline">\(\{0, 1, =\}\)</span>, but the tape alphabet also includes X.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>X</th>
+<th>=</th>
+<th>_</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>(f, X, R)</td>
+<td>(ff, X, R)</td>
+<td>(0, X, R)</td>
+<td>(Accept, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td>(f, 0, R)</td>
+<td>(f, 1, R)</td>
+<td>(f, 1, R)</td>
+<td>(o, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="odd">
+<td>o</td>
+<td>(be, X, R)</td>
+<td>(Reject, o, R)</td>
+<td>(o, X, R)</td>
+<td>(Reject, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="even">
+<td>ff</td>
+<td>(ff, 0, R)</td>
+<td>(ff, 1, R)</td>
+<td>(ff, X, R)</td>
+<td>(oo, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="odd">
+<td>oo</td>
+<td>(Reject, 0, R)</td>
+<td>(be, X, R)</td>
+<td>(oo, X, R)</td>
+<td>(Reject, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="even">
+<td>be</td>
+<td>(be, 0, L)</td>
+<td>(be, 1, L)</td>
+<td>(be, X, L)</td>
+<td>(bf, =, L)</td>
+<td>(Accept, E, R)</td>
+</tr>
+<tr class="odd">
+<td>bf</td>
+<td>(bf, 0, L)</td>
+<td>(bf, 1, L)</td>
+<td>(0, X, R)</td>
+<td>(Reject, =, R)</td>
+<td>(Accept, =, R)</td>
+</tr>
+</tbody>
+</table>
+<p>Here you can see the steps of the Turing machine.</p>
+<p>input: 1011=1011</p>
+<pre><code>|1| 0  1  1  =  1  0  1  1             0:  (0, 1) -&gt; (ff, X, R)
+ X |0| 1  1  =  1  0  1  1             ff:  (ff, 0) -&gt; (ff, 0, R)
+ X  0 |1| 1  =  1  0  1  1             ff:  (ff, 1) -&gt; (ff, 1, R)
+ X  0  1 |1| =  1  0  1  1             ff:  (ff, 1) -&gt; (ff, 1, R)
+ X  0  1  1 |=| 1  0  1  1             ff:  (ff, =) -&gt; (oo, =, R)
+ X  0  1  1  = |1| 0  1  1             oo:  (oo, 1) -&gt; (be, X, R)
+ X  0  1  1  =  X |0| 1  1             be:  (be, 0) -&gt; (be, 0, L)
+ X  0  1  1  = |X| 0  1  1             be:  (be, X) -&gt; (be, X, L)
+ X  0  1  1 |=| X  0  1  1             be:  (be, =) -&gt; (bf, =, L)
+ X  0  1 |1| =  X  0  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X  0 |1| 1  =  X  0  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X |0| 1  1  =  X  0  1  1             bf:  (bf, 0) -&gt; (bf, 0, L)
+|X| 0  1  1  =  X  0  1  1             bf:  (bf, X) -&gt; (0, X, R)
+ X |0| 1  1  =  X  0  1  1             0:  (0, 0) -&gt; (f, X, R)
+ X  X |1| 1  =  X  0  1  1             f:  (f, 1) -&gt; (f, 1, R)
+ X  X  1 |1| =  X  0  1  1             f:  (f, 1) -&gt; (f, 1, R)
+ X  X  1  1 |=| X  0  1  1             f:  (f, =) -&gt; (o, =, R)
+ X  X  1  1  = |X| 0  1  1             o:  (o, X) -&gt; (o, X, R)
+ X  X  1  1  =  X |0| 1  1             o:  (o, 0) -&gt; (be, X, R)
+ X  X  1  1  =  X  X |1| 1             be:  (be, 1) -&gt; (be, 1, L)
+ X  X  1  1  =  X |X| 1  1             be:  (be, X) -&gt; (be, X, L)
+ X  X  1  1  = |X| X  1  1             be:  (be, X) -&gt; (be, X, L)
+ X  X  1  1 |=| X  X  1  1             be:  (be, =) -&gt; (bf, =, L)
+ X  X  1 |1| =  X  X  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X  X |1| 1  =  X  X  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X |X| 1  1  =  X  X  1  1             bf:  (bf, X) -&gt; (0, X, R)
+ X  X |1| 1  =  X  X  1  1             0:  (0, 1) -&gt; (ff, X, R)
+ X  X  X |1| =  X  X  1  1             ff:  (ff, 1) -&gt; (ff, 1, R)
+ X  X  X  1 |=| X  X  1  1             ff:  (ff, =) -&gt; (oo, =, R)
+ X  X  X  1  = |X| X  1  1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  1  =  X |X| 1  1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  1  =  X  X |1| 1             oo:  (oo, 1) -&gt; (be, X, R)
+ X  X  X  1  =  X  X  X |1|            be:  (be, 1) -&gt; (be, 1, L)
+ X  X  X  1  =  X  X |X| 1             be:  (be, X) -&gt; (be, X, L)
+ X  X  X  1  =  X |X| X  1             be:  (be, X) -&gt; (be, X, L)
+ X  X  X  1  = |X| X  X  1             be:  (be, X) -&gt; (be, X, L)
+ X  X  X  1 |=| X  X  X  1             be:  (be, =) -&gt; (bf, =, L)
+ X  X  X |1| =  X  X  X  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X  X |X| 1  =  X  X  X  1             bf:  (bf, X) -&gt; (0, X, R)
+ X  X  X |1| =  X  X  X  1             0:  (0, 1) -&gt; (ff, X, R)
+ X  X  X  X |=| X  X  X  1             ff:  (ff, =) -&gt; (oo, =, R)
+ X  X  X  X  = |X| X  X  1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  X  =  X |X| X  1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  X  =  X  X |X| 1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  X  =  X  X  X |1|            oo:  (oo, 1) -&gt; (be, X, R)
+ X  X  X  X  =  X  X  X  X | |            be:  (be, _) -&gt; (Accept, E, R)
+ X  X  X  X  =  X  X  X  X  E | |            Accept</code></pre>
+<p>input: 1011=1111</p>
+<pre><code>|1| 0  1  1  =  1  1  1  1             0:  (0, 1) -&gt; (ff, X, R)
+ X |0| 1  1  =  1  1  1  1             ff:  (ff, 0) -&gt; (ff, 0, R)
+ X  0 |1| 1  =  1  1  1  1             ff:  (ff, 1) -&gt; (ff, 1, R)
+ X  0  1 |1| =  1  1  1  1             ff:  (ff, 1) -&gt; (ff, 1, R)
+ X  0  1  1 |=| 1  1  1  1             ff:  (ff, =) -&gt; (oo, =, R)
+ X  0  1  1  = |1| 1  1  1             oo:  (oo, 1) -&gt; (be, X, R)
+ X  0  1  1  =  X |1| 1  1             be:  (be, 1) -&gt; (be, 1, L)
+ X  0  1  1  = |X| 1  1  1             be:  (be, X) -&gt; (be, X, L)
+ X  0  1  1 |=| X  1  1  1             be:  (be, =) -&gt; (bf, =, L)
+ X  0  1 |1| =  X  1  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X  0 |1| 1  =  X  1  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X |0| 1  1  =  X  1  1  1             bf:  (bf, 0) -&gt; (bf, 0, L)
+|X| 0  1  1  =  X  1  1  1             bf:  (bf, X) -&gt; (0, X, R)
+ X |0| 1  1  =  X  1  1  1             0:  (0, 0) -&gt; (f, X, R)
+ X  X |1| 1  =  X  1  1  1             f:  (f, 1) -&gt; (f, 1, R)
+ X  X  1 |1| =  X  1  1  1             f:  (f, 1) -&gt; (f, 1, R)
+ X  X  1  1 |=| X  1  1  1             f:  (f, =) -&gt; (o, =, R)
+ X  X  1  1  = |X| 1  1  1             o:  (o, X) -&gt; (o, X, R)
+ X  X  1  1  =  X |1| 1  1             o:  (o, 1) -&gt; (Reject, o, R)
+ X  X  1  1  =  X  o |1| 1             Reject</code></pre>
+</section>
+</article>
+
+    </section>
+<section id="posts" class="sidenav">
+
+
+    <h2>Latest exercise sheet</h2>
+    <ul>
+	  
+          <li><a href="../assignments/exercises07.html">Exercise sheet 7</a>
+&nbsp;    ()
+	  </li>
+	  
+    </ul>
+    <p><a href="../assignments.html">All exercise sheets&hellip;</a></p>
+
+
+
+    <h2>Recent comments</h2>
+    <ul>
+	  
+          <li><a href="../posts/2020-03-23-turing.html">Turing machines</a>
+	    &nbsp; 
+          </li>
+	  
+          <li><a href="../posts/2020-03-23-turing-example1.html">Turing machine example: Equality</a>
+	    &nbsp; 
+          </li>
+	  
+          <li><a href="../posts/2020-03-22-cfg-remaining.html">A final look at context-free grammars</a>
+	    &nbsp; 
+          </li>
+	  
+          <li><a href="../posts/2020-03-22-cfg-pumping.html">Pumping lemma for context free grammars</a>
+	    &nbsp; 
+          </li>
+	  
+          <li><a href="../posts/2020-03-16-midsem2-solutions.html">Solutions to mid-semester 2</a>
+	    &nbsp; <a href="../posts/pdfs/2020-03-16-midsem2-solutions.pdf">PDF version</a>
+          </li>
+	  
+    </ul>
+    <p><a href="../posts.html">All comments&hellip;</a></p>
+
+
+
+    
+
+    <h2>Dhruva Sambrani's recent notes</h2>
+    <ul>
+	  
+          <li><a href="../lecturenotes/lecture05.html">Regular Languages, Pumping Lemma and existance of an FSA for a Language</a>
+    
+    - <emph class="date">January 29, 2020
+    
+	    &nbsp; <a href="../lecturenotes/pdfs/lecture05.pdf">PDF version</a>
+          </li>
+	  
+          <li><a href="../lecturenotes/lecture04.html">Finite State Automata</a>
+    
+    - <emph class="date">January 27, 2020
+    
+	    &nbsp; <a href="../lecturenotes/pdfs/lecture04.pdf">PDF version</a>
+          </li>
+	  
+    </ul>
+    <p><a href="../lecturenotes.html">All lecture notes&hellip;</a></p>
+
+
+    
+</section>
+</body>
+</html>

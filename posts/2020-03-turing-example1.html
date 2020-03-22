@@ -1,0 +1,122 @@
+<h1 id="checking-for-equality">Checking for equality</h1>
+<p>This state transition table checks if the string …=… is correct. It doees so by repeatedly marking a character that it will search for, then hunts for = symbol and then begins searching for the first non marked character and checks for equality.</p>
+<p>Note that the the alphabet is merely <span class="math inline">\(\{0, 1, =\}\)</span>, but the tape alphabet also includes X.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>X</th>
+<th>=</th>
+<th>_</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>(f, X, R)</td>
+<td>(ff, X, R)</td>
+<td>(0, X, R)</td>
+<td>(Accept, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td>(f, 0, R)</td>
+<td>(f, 1, R)</td>
+<td>(f, 1, R)</td>
+<td>(o, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="odd">
+<td>o</td>
+<td>(be, X, R)</td>
+<td>(Reject, o, R)</td>
+<td>(o, X, R)</td>
+<td>(Reject, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="even">
+<td>ff</td>
+<td>(ff, 0, R)</td>
+<td>(ff, 1, R)</td>
+<td>(ff, X, R)</td>
+<td>(oo, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="odd">
+<td>oo</td>
+<td>(Reject, 0, R)</td>
+<td>(be, X, R)</td>
+<td>(oo, X, R)</td>
+<td>(Reject, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="even">
+<td>be</td>
+<td>(be, 0, L)</td>
+<td>(be, 1, L)</td>
+<td>(be, X, L)</td>
+<td>(bf, =, L)</td>
+<td>(Accept, E, R)</td>
+</tr>
+<tr class="odd">
+<td>bf</td>
+<td>(bf, 0, L)</td>
+<td>(bf, 1, L)</td>
+<td>(0, X, R)</td>
+<td>(Reject, =, R)</td>
+<td>(Accept, =, R)</td>
+</tr>
+</tbody>
+</table>
+<p>Here you can see the steps of the Turing machine.</p>
+<p>input: 1011=1011</p>
+<pre><code>|1| 0  1  1  =  1  0  1  1             0:  (0, 1) -&gt; (ff, X, R)
+ X |0| 1  1  =  1  0  1  1             ff:  (ff, 0) -&gt; (ff, 0, R)
+ X  0 |1| 1  =  1  0  1  1             ff:  (ff, 1) -&gt; (ff, 1, R)
+ X  0  1 |1| =  1  0  1  1             ff:  (ff, 1) -&gt; (ff, 1, R)
+ X  0  1  1 |=| 1  0  1  1             ff:  (ff, =) -&gt; (oo, =, R)
+ X  0  1  1  = |1| 0  1  1             oo:  (oo, 1) -&gt; (be, X, R)
+ X  0  1  1  =  X |0| 1  1             be:  (be, 0) -&gt; (be, 0, L)
+ X  0  1  1  = |X| 0  1  1             be:  (be, X) -&gt; (be, X, L)
+ X  0  1  1 |=| X  0  1  1             be:  (be, =) -&gt; (bf, =, L)
+ X  0  1 |1| =  X  0  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X  0 |1| 1  =  X  0  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X |0| 1  1  =  X  0  1  1             bf:  (bf, 0) -&gt; (bf, 0, L)
+|X| 0  1  1  =  X  0  1  1             bf:  (bf, X) -&gt; (0, X, R)
+ X |0| 1  1  =  X  0  1  1             0:  (0, 0) -&gt; (f, X, R)
+ X  X |1| 1  =  X  0  1  1             f:  (f, 1) -&gt; (f, 1, R)
+ X  X  1 |1| =  X  0  1  1             f:  (f, 1) -&gt; (f, 1, R)
+ X  X  1  1 |=| X  0  1  1             f:  (f, =) -&gt; (o, =, R)
+ X  X  1  1  = |X| 0  1  1             o:  (o, X) -&gt; (o, X, R)
+ X  X  1  1  =  X |0| 1  1             o:  (o, 0) -&gt; (be, X, R)
+ X  X  1  1  =  X  X |1| 1             be:  (be, 1) -&gt; (be, 1, L)
+ X  X  1  1  =  X |X| 1  1             be:  (be, X) -&gt; (be, X, L)
+ X  X  1  1  = |X| X  1  1             be:  (be, X) -&gt; (be, X, L)
+ X  X  1  1 |=| X  X  1  1             be:  (be, =) -&gt; (bf, =, L)
+ X  X  1 |1| =  X  X  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X  X |1| 1  =  X  X  1  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X |X| 1  1  =  X  X  1  1             bf:  (bf, X) -&gt; (0, X, R)
+ X  X |1| 1  =  X  X  1  1             0:  (0, 1) -&gt; (ff, X, R)
+ X  X  X |1| =  X  X  1  1             ff:  (ff, 1) -&gt; (ff, 1, R)
+ X  X  X  1 |=| X  X  1  1             ff:  (ff, =) -&gt; (oo, =, R)
+ X  X  X  1  = |X| X  1  1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  1  =  X |X| 1  1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  1  =  X  X |1| 1             oo:  (oo, 1) -&gt; (be, X, R)
+ X  X  X  1  =  X  X  X |1|            be:  (be, 1) -&gt; (be, 1, L)
+ X  X  X  1  =  X  X |X| 1             be:  (be, X) -&gt; (be, X, L)
+ X  X  X  1  =  X |X| X  1             be:  (be, X) -&gt; (be, X, L)
+ X  X  X  1  = |X| X  X  1             be:  (be, X) -&gt; (be, X, L)
+ X  X  X  1 |=| X  X  X  1             be:  (be, =) -&gt; (bf, =, L)
+ X  X  X |1| =  X  X  X  1             bf:  (bf, 1) -&gt; (bf, 1, L)
+ X  X |X| 1  =  X  X  X  1             bf:  (bf, X) -&gt; (0, X, R)
+ X  X  X |1| =  X  X  X  1             0:  (0, 1) -&gt; (ff, X, R)
+ X  X  X  X |=| X  X  X  1             ff:  (ff, =) -&gt; (oo, =, R)
+ X  X  X  X  = |X| X  X  1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  X  =  X |X| X  1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  X  =  X  X |X| 1             oo:  (oo, X) -&gt; (oo, X, R)
+ X  X  X  X  =  X  X  X |1|            oo:  (oo, 1) -&gt; (be, X, R)
+ X  X  X  X  =  X  X  X  X | |            be:  (be, _) -&gt; (Accept, E, R)
+ X  X  X  X  =  X  X  X  X  E | |            Accept</code></pre>

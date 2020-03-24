@@ -40,6 +40,7 @@
 <li><span class="math inline">\(q_5\)</span> turns left on every character that is not = and remains in the same state until it finds an =. When it finds =, it switches to <span class="math inline">\(q_6\)</span>. <span class="math inline">\(q_5\)</span> never changes any characters.</li>
 <li><span class="math inline">\(q_6\)</span> turns left for every non X character. When it reaches an X it turns right and switches to <span class="math inline">\(q_0\)</span>.</li>
 </ol>
+<p><strong>Tip:</strong> If you are viewing this on a smartphone, view the table and output below in landscape mode.</p>
 <p>This is the transition table.</p>
 <table>
 <thead>

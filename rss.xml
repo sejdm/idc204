@@ -7,14 +7,191 @@
         <description><![CDATA[Some thoughts]]></description>
         <atom:link href="http://blog.shane/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Mon, 23 Mar 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Wed, 25 Mar 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Turing machine example: Equality</title>
+    <link>http://blog.shane/posts/2020-03-25-turing-example1.html</link>
+    <description><![CDATA[<article>
+<header>
+<h1>Turing machine example: Equality</h1>
+<p class="date"><strong>25 March, 2020</strong></p>
+<style type="text/css"> code{white-space:pre} </style> 
+</header>
+
+<section>
+<p>In this example, we design a Turing machine to check whether or not a string is of the form <span class="math inline">\(w=w\)</span>. For instance, <span class="math inline">\(1011=1011\)</span> is to be accepted but <span class="math inline">\(1011=1111\)</span> is to be rejected.</p>
+<p>Here is an algorithm that will work for any input, however large, by matching one character at a time on either side of the = and marking what has been matched:</p>
+<ol type="1">
+<li>Note what is under the head, and mark it (as done) with an X.</li>
+<li>Sweep right until the = symbol, “remembering” whether a 0 or a 1 was noted.</li>
+<li>Continue sweeping right until the first non-marked character, “remembering” what was noted. If that does not match what was noted, halt and reject. If that does match, mark that character as done with an X</li>
+<li>Sweep left until the = symbol</li>
+<li>Continue sweeping until the first marked character, move right so that now the head is on the first character that has not yet been tested, and begin at step 1.</li>
+</ol>
+<p>Each step above corresponds with exactly one way to react to what is under the head. They each, therefore, correspond with states.</p>
+<ol type="1">
+<li>Denote the start state by <span class="math inline">\(q_0\)</span>. No matter what is under the head, it marks it with an X and moves right. Now if the character under the head is a 0, it must switch to a different state, <span class="math inline">\(q_1\)</span>, than it would if it were 1 (<span class="math inline">\(q_3\)</span>), otherwise this difference will not be noted.</li>
+<li><span class="math inline">\(q_1\)</span> and <span class="math inline">\(q_3\)</span> sweep right until =. This means that if the character is not =, both states retain the same character by replacing it with itself and moving right while remaining in the same state. However, if one is in <span class="math inline">\(q_1\)</span> it means that a 0 was marked, otherwise a 1 was marked. When it comes across =, <span class="math inline">\(q_1\)</span> will switch to <span class="math inline">\(q_2\)</span> while <span class="math inline">\(q_3\)</span> will switch to <span class="math inline">\(q_4\)</span>.</li>
+<li><span class="math inline">\(q_3\)</span> and <span class="math inline">\(q_4\)</span> sweep right until if finds a non-marked symbol. If that is a blank, it means that every character matched and was marked, so it will accept. Otherwise, on reaching a non-marked non blank character, it checks if what is now under the head matches with what was seen before. This is possible because if it is in <span class="math inline">\(q_3\)</span> it means that a 0 was marked, otherwise a 1 was marked. So if it is in <span class="math inline">\(q_3\)</span> rather than <span class="math inline">\(q_4\)</span> (which means that it needs to match a 0 rather than a 1) and finds the first non-marked character as 1, it will reject. Otherwise, it will try to compare the next character. Now it no longer matters if a 0 or a 1 was under the head so both states switche to a state, <span class="math inline">\(q_5\)</span></li>
+<li><span class="math inline">\(q_5\)</span> turns left on every character that is not = and remains in the same state until it finds an =. When it finds =, it switches to <span class="math inline">\(q_6\)</span>. <span class="math inline">\(q_5\)</span> never changes any characters.</li>
+<li><span class="math inline">\(q_6\)</span> turns left for every non X character. When it reaches an X it turns right and switches to <span class="math inline">\(q_0\)</span>.</li>
+</ol>
+<p>This is the transition table.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>X</th>
+<th>=</th>
+<th>_</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(q_0\)</span></td>
+<td>(<span class="math inline">\(q_1\)</span>, X, R)</td>
+<td>(<span class="math inline">\(q_3\)</span>, X, R)</td>
+<td>(<span class="math inline">\(q_0\)</span>, X, R)</td>
+<td>(Accept, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(q_1\)</span></td>
+<td>(<span class="math inline">\(q_1\)</span>, 0, R)</td>
+<td>(<span class="math inline">\(q_1\)</span>, 1, R)</td>
+<td>(<span class="math inline">\(q_1\)</span>, 1, R)</td>
+<td>(<span class="math inline">\(q_2\)</span>, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(q_2\)</span></td>
+<td>(<span class="math inline">\(q_5\)</span>, X, R)</td>
+<td>(Reject, 1, R)</td>
+<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
+<td>(Reject, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(q_3\)</span></td>
+<td>(<span class="math inline">\(q_3\)</span>, 0, R)</td>
+<td>(<span class="math inline">\(q_3\)</span>, 1, R)</td>
+<td>(<span class="math inline">\(q_3\)</span>, X, R)</td>
+<td>(<span class="math inline">\(q_4\)</span>, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(q_4\)</span></td>
+<td>(Reject, 0, R)</td>
+<td>(<span class="math inline">\(q_5\)</span>, X, R)</td>
+<td>(<span class="math inline">\(q_4\)</span>, X, R)</td>
+<td>(Reject, =, R)</td>
+<td>(Reject, =, L)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(q_5\)</span></td>
+<td>(<span class="math inline">\(q_5\)</span>, 0, L)</td>
+<td>(<span class="math inline">\(q_5\)</span>, 1, L)</td>
+<td>(<span class="math inline">\(q_5\)</span>, X, L)</td>
+<td>(<span class="math inline">\(q_6\)</span>, =, L)</td>
+<td>(Accept, E, R)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(q_6\)</span></td>
+<td>(<span class="math inline">\(q_6\)</span>, 0, L)</td>
+<td>(<span class="math inline">\(q_6\)</span>, 1, L)</td>
+<td>(<span class="math inline">\(q_0\)</span>, X, R)</td>
+<td>(Reject, =, R)</td>
+<td>(Accept, =, R)</td>
+</tr>
+</tbody>
+</table>
+<p>Here you can see the steps of the Turing machine in two examples; one which is rejected, and the other, which is accepted. Each row shows one snapshots of the tape along with the specific input and output of the transition function <span class="math inline">\(\delta\)</span>.</p>
+<p>input: 1011=1111</p>
+<p><code>: |1| 0  1  1  =  1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
+<code>:  X |0| 1  1  =  1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
+<code>:  X  0 |1| 1  =  1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
+<code>:  X  0  1 |1| =  1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
+<code>:  X  0  1  1 |=| 1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, =, R)<br />
+<code>:  X  0  1  1  = |1| 1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
+<code>:  X  0  1  1  =  X |1| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, 1, L)<br />
+<code>:  X  0  1  1  = |X| 1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
+<code>:  X  0  1  1 |=| X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, =, L)<br />
+<code>:  X  0  1 |1| =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
+<code>:  X  0 |1| 1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
+<code>:  X |0| 1  1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 0, L)<br />
+<code>: |X| 0  1  1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, X, R)<br />
+<code>:  X |0| 1  1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  X  X |1| 1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
+<code>:  X  X  1 |1| =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
+<code>:  X  X  1  1 |=| X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, =, R)<br />
+<code>:  X  X  1  1  = |X| 1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  X  X  1  1  =  X |1| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 1) <span class="math inline">\(\to\)</span> (Reject, 1, R)<br />
+<code>:  X  X  1  1  =  X  1 |1| 1 ...</code> Reject</p>
+<p>input: 1011=1011</p>
+<p><code>: |1| 0  1  1  =  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
+<code>:  X |0| 1  1  =  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
+<code>:  X  0 |1| 1  =  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
+<code>:  X  0  1 |1| =  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
+<code>:  X  0  1  1 |=| 1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, =, R)<br />
+<code>:  X  0  1  1  = |1| 0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
+<code>:  X  0  1  1  =  X |0| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, 0, L)<br />
+<code>:  X  0  1  1  = |X| 0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
+<code>:  X  0  1  1 |=| X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, =, L)<br />
+<code>:  X  0  1 |1| =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
+<code>:  X  0 |1| 1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
+<code>:  X |0| 1  1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 0, L)<br />
+<code>: |X| 0  1  1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, X, R)<br />
+<code>:  X |0| 1  1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  X  X |1| 1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
+<code>:  X  X  1 |1| =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
+<code>:  X  X  1  1 |=| X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, =, R)<br />
+<code>:  X  X  1  1  = |X| 0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  X  X  1  1  =  X |0| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
+<code>:  X  X  1  1  =  X  X |1| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, 1, L)<br />
+<code>:  X  X  1  1  =  X |X| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
+<code>:  X  X  1  1  = |X| X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
+<code>:  X  X  1  1 |=| X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, =, L)<br />
+<code>:  X  X  1 |1| =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
+<code>:  X  X |1| 1  =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
+<code>:  X |X| 1  1  =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, X, R)<br />
+<code>:  X  X |1| 1  =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
+<code>:  X  X  X |1| =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
+<code>:  X  X  X  1 |=| X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, =, R)<br />
+<code>:  X  X  X  1  = |X| X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
+<code>:  X  X  X  1  =  X |X| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
+<code>:  X  X  X  1  =  X  X |1| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
+<code>:  X  X  X  1  =  X  X  X |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, 1, L)<br />
+<code>:  X  X  X  1  =  X  X |X| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
+<code>:  X  X  X  1  =  X |X| X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
+<code>:  X  X  X  1  = |X| X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
+<code>:  X  X  X  1 |=| X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, =, L)<br />
+<code>:  X  X  X |1| =  X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
+<code>:  X  X |X| 1  =  X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, X, R)<br />
+<code>:  X  X  X |1| =  X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
+<code>:  X  X  X  X |=| X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, =, R)<br />
+<code>:  X  X  X  X  = |X| X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
+<code>:  X  X  X  X  =  X |X| X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
+<code>:  X  X  X  X  =  X  X |X| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
+<code>:  X  X  X  X  =  X  X  X |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
+<code>:  X  X  X  X  =  X  X  X  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, _) <span class="math inline">\(\to\)</span> (Accept, E, R)<br />
+<code>:  X  X  X  X  =  X  X  X  X  E | |...</code> Accept</p>
+</section>
+</article>
+]]></description>
+    <pubDate>Wed, 25 Mar 2020 00:00:00 UT</pubDate>
+    <guid>http://blog.shane/posts/2020-03-25-turing-example1.html</guid>
+    <dc:creator>Shane</dc:creator>
+</item>
+<item>
     <title>Turing machines</title>
     <link>http://blog.shane/posts/2020-03-23-turing.html</link>
     <description><![CDATA[<article>
 <header>
 <h1>Turing machines</h1>
 <p class="date"><strong>23 March, 2020</strong></p>
+<style type="text/css"> code{white-space:pre} </style> 
 </header>
 
 <section>
@@ -391,6 +568,7 @@ x_2 \to (y_2, d_2)\\
 <header>
 <h1>A final look at context-free grammars</h1>
 <p class="date"><strong>22 March, 2020</strong></p>
+<style type="text/css"> code{white-space:pre} </style> 
 </header>
 
 <section>
@@ -414,6 +592,7 @@ x_2 \to (y_2, d_2)\\
 <header>
 <h1>Pumping lemma for context free grammars</h1>
 <p class="date"><strong>22 March, 2020</strong></p>
+<style type="text/css"> code{white-space:pre} </style> 
 </header>
 
 <section>
@@ -456,6 +635,7 @@ x_2 \to (y_2, d_2)\\
 <header>
 <h1>Solutions to mid-semester 2</h1>
 <p class="date"><strong>16 March, 2020</strong></p>
+<style type="text/css"> code{white-space:pre} </style> 
 </header>
 
 <section>
@@ -518,6 +698,7 @@ x_2 \to (y_2, d_2)\\
 <header>
 <h1>The Pumping Lemma</h1>
 <p class="date"><strong>29 January, 2020</strong></p>
+<style type="text/css"> code{white-space:pre} </style> 
 </header>
 
 <section>
@@ -574,6 +755,7 @@ x_2 \to (y_2, d_2)\\
 <header>
 <h1>Boolean operator precedence</h1>
 <p class="date"><strong>15 January, 2020</strong></p>
+<style type="text/css"> code{white-space:pre} </style> 
 </header>
 
 <section>

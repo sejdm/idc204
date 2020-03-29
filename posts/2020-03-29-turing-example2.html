@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Turing machine example: Power of 2 - IDC 204</title>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../css/my.css">
+<link rel="stylesheet" href="../css/syntax.css">
+  <link rel="alternate" type="application/atom+xml" title="MTH 410" href="../atom.xml" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <div class="navbar">
+
+    <header>
+      <hgroup>
+        <h1><a href="../index.html" id="titlelink">The Theory of Computation <br /> (IDC 204)</a></h1>
+      </hgroup>
+    </header>
+
+    <nav id="mainnav">
+      <div id="topmenu">
+        <menu>
+          <a href="../index.html">Course information</a>
+	  
+	  
+          <a href="../assignments.html">Exercise sheets</a>
+	  
+	  
+          <a href="../posts.html">Comments</a>
+	  
+	  
+          <a href="../lecturenotes.html">Dhruva Sambrani's notes</a>
+	  
+        </menu>
+	</div>
+    </nav>
+    </div>
+    <section id="pagecontent">
+      
+        <article>
+<header>
+<h1>Turing machine example: Power of 2</h1>
+<p class="date"><strong>29 March, 2020</strong></p>
+<style type="text/css"> code{white-space:pre} </style> 
+</header>
+
+<section>
+<p>In this example, we design a Turing machine to check whether the number of 0s in a string of 0s is a power of 2.</p>
+<p><span class="math inline">\(\mathbf{q_0}\)</span>: If you read a 0, then proceed to <span class="math inline">\(q_1\)</span> otherwise reject.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>_</th>
+<th>0</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(q_0\)</span></td>
+<td>(Reject, _, L)</td>
+<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
+<td>(Reject, _, L)</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(\mathbf{q_1}\)</span>: To halve the number of 0s left, keep sweeping to the right until you hit a 0 or blank (i.e. move right but remain in the same state on seeing an X). If you hit a 0, shift to the state <span class="math inline">\(q_2\)</span> which is meant to denote that even number of 0s were read.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>_</th>
+<th>0</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(q_1\)</span></td>
+<td>(Accept, _, R)</td>
+<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
+<td>(<span class="math inline">\(q_1\)</span>, X, R)</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(\mathbf{q_2}\)</span>:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>_</th>
+<th>0</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(q_2\)</span></td>
+<td>(<span class="math inline">\(q_4\)</span>, _, L)</td>
+<td>(<span class="math inline">\(q_3\)</span>, 0, R)</td>
+<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(\mathbf{q_3}\)</span>:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>_</th>
+<th>0</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(q_3\)</span></td>
+<td>(Reject, _, R)</td>
+<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
+<td>(<span class="math inline">\(q_3\)</span>, X, R)</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(\mathbf{q_4}\)</span>:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>_</th>
+<th>0</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(q_4\)</span></td>
+<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
+<td>(<span class="math inline">\(q_4\)</span>, 0, L)</td>
+<td>(<span class="math inline">\(q_4\)</span>, X, L)</td>
+</tr>
+</tbody>
+</table>
+<p>Here is the final transition table:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>_</th>
+<th>0</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(q_0\)</span></td>
+<td>(Reject, _, L)</td>
+<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
+<td>(Reject, _, L)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(q_1\)</span></td>
+<td>(Accept, _, R)</td>
+<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
+<td>(<span class="math inline">\(q_1\)</span>, X, R)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(q_2\)</span></td>
+<td>(<span class="math inline">\(q_4\)</span>, _, L)</td>
+<td>(<span class="math inline">\(q_3\)</span>, 0, R)</td>
+<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(q_3\)</span></td>
+<td>(Reject, _, R)</td>
+<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
+<td>(<span class="math inline">\(q_3\)</span>, X, R)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(q_4\)</span></td>
+<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
+<td>(<span class="math inline">\(q_4\)</span>, 0, L)</td>
+<td>(<span class="math inline">\(q_4\)</span>, X, L)</td>
+</tr>
+</tbody>
+</table>
+<p>Consider the input which is accepted</p>
+<p>input: 00000000</p>
+<p><code>: |0| 0  0  0  0  0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
+<code>:  _ |0| 0  0  0  0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X |0| 0  0  0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
+<code>:  _  X  0 |0| 0  0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  0  X |0| 0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
+<code>:  _  X  0  X  0 |0| 0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  0  X  0  X |0| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
+<code>:  _  X  0  X  0  X  0 |0|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  0  X  0  X  0  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, <em>, L)<br />
+<code>:  _  X  0  X  0  X  0 |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X  0  X  0  X |0| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
+<code>:  _  X  0  X  0 |X| 0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X  0  X |0| X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
+<code>:  _  X  0 |X| 0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X |0| X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
+<code>:  _ |X| 0  X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>: | | X  0  X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
+<code>:  _ |X| 0  X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X |0| X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  X |X| 0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  X  X |0| X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
+<code>:  _  X  X  X  0 |X| 0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
+<code>:  _  X  X  X  0  X |0| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  X  X  0  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  X  X  0  X  X  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, <em>, L)<br />
+<code>:  _  X  X  X  0  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X  X  X  0  X |X| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X  X  X  0 |X| X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X  X  X |0| X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
+<code>:  _  X  X |X| 0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X |X| X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _ |X| X  X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>: | | X  X  X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
+<code>:  _ |X| X  X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X |X| X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X  X |X| 0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X  X  X |0| X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  X  X  X |X| X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  X  X  X  X |X| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  X  X  X  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X  X  X  X  X  X  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, <em>, L)<br />
+<code>:  _  X  X  X  X  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X  X  X  X  X |X| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X  X  X  X |X| X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X  X  X |X| X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X  X |X| X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _  X |X| X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>:  _ |X| X  X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
+<code>: | | X  X  X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
+<code>:  _ |X| X  X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X |X| X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X  X |X| X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X  X  X |X| X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X  X  X  X |X| X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X  X  X  X  X |X| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X  X  X  X  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
+<code>:  _  X  X  X  X  X  X  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, </em>) <span class="math inline">\(\to\)</span> (Accept, _, R)<br />
+<code>:  _  X  X  X  X  X  X  X  _ | |...</code> Accept</p>
+<p>Now consider this one which is rejected.</p>
+<p>input: 000</p>
+<p><code>: |0| 0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
+<code>:  _ |0| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
+<code>:  _  X |0|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
+<code>:  _  X  0 | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, </em>) <span class="math inline">\(\to\)</span> (Reject, _, R)<br />
+<code>:  _  X  0  _ | |...</code> Reject</p>
+</section>
+</article>
+
+    </section>
+<section id="posts" class="sidenav">
+
+
+    <h2>Latest exercise sheet</h2>
+    <ul>
+	  
+          <li><a href="../assignments/exercises08.html">Exercise sheet 8</a>
+&nbsp;    (<a href="../assignments/pdfs/exercises08.pdf">PDF version</a>)
+	  </li>
+	  
+    </ul>
+    <p><a href="../assignments.html">All exercise sheets&hellip;</a></p>
+
+
+
+    <h2>Recent comments</h2>
+    <ul>
+	  
+          <li><a href="../posts/2020-03-29-turing-example2.html">Turing machine example: Power of 2</a>
+	    &nbsp; 
+          </li>
+	  
+          <li><a href="../posts/2020-03-25-zoom.html">Questions during the 4th of March Zoom session</a>
+	    &nbsp; 
+          </li>
+	  
+          <li><a href="../posts/2020-03-25-turing-example1.html">Turing machine example: Equality</a>
+	    &nbsp; <a href="../posts/pdfs/2020-03-25-turing-example1.pdf">PDF version</a>
+          </li>
+	  
+          <li><a href="../posts/2020-03-23-turing.html">Turing machines</a>
+	    &nbsp; 
+          </li>
+	  
+          <li><a href="../posts/2020-03-22-cfg-remaining.html">A final look at context-free grammars</a>
+	    &nbsp; 
+          </li>
+	  
+    </ul>
+    <p><a href="../posts.html">All comments&hellip;</a></p>
+
+
+
+    
+
+    <h2>Dhruva Sambrani's recent notes</h2>
+    <ul>
+	  
+          <li><a href="../lecturenotes/lecture05.html">Regular Languages, Pumping Lemma and existance of an FSA for a Language</a>
+    
+    - <emph class="date">January 29, 2020
+    
+	    &nbsp; <a href="../lecturenotes/pdfs/lecture05.pdf">PDF version</a>
+          </li>
+	  
+          <li><a href="../lecturenotes/lecture04.html">Finite State Automata</a>
+    
+    - <emph class="date">January 27, 2020
+    
+	    &nbsp; <a href="../lecturenotes/pdfs/lecture04.pdf">PDF version</a>
+          </li>
+	  
+    </ul>
+    <p><a href="../lecturenotes.html">All lecture notes&hellip;</a></p>
+
+
+    
+</section>
+</body>
+</html>

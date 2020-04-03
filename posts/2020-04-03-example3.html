@@ -39,7 +39,7 @@
     </nav>
     </div>
     <section id="pagecontent">
-      
+      <a href="../posts/pdfs/2020-04-03-example3.pdf">PDF version</a>
         <article>
 <header>
 <h1>Turing machine example: Shifting</h1>
@@ -69,16 +69,17 @@
 <p>Each step describes possible changes to the memory, the character under the head, and the next step and the direction to shift the head to. We will literally describe these changes by defining the part of <span class="math inline">\(\delta\)</span> that takes as input the current step, memory, and character under the head, and outputs their future versions as well as the direction. We will use notation that makes the translation from step to part of <span class="math inline">\(\delta\)</span> very apparent.</p>
 <p>We will then hide the way we think of the states by assigning the distinct pairs (of step and memory) distinct labels, and express <span class="math inline">\(\delta\)</span> in terms of these. For the implementation, this is all that is needed; viewing states as pairs was only to assist us in translating the algorithm to a transition table.</p>
 <p>Finally, we will collect all the parts of the definition of <span class="math inline">\(\delta\)</span> that use <span class="math inline">\(q_i\)</span>’s rather than pairs, and use it to define the transition table.</p>
+<p><strong>Note:</strong> The symbol <span class="math inline">\(\sqcup\)</span> is commonly used to denote a blank symbol explicitly.</p>
 <p><strong>Step 0</strong> is described by</p>
 <p><span class="math display">\[\delta((\text{Step 0},\text{Nothing}),x) = \begin{cases}
-((\text{Step 1}, x),\ ,\mathrm{R}) &amp; \text{if } x \text{= 0,1}\\
+((\text{Step 1}, x),\sqcup ,\mathrm{R}) &amp; \text{if } x \text{= 0,1}\\
 (Accept,x, \mathrm{R}) &amp; \text{otherwise}\\
 \end{cases}\]</span></p>
 <p><em>“If the character under focus is a 0 or 1, store it in the memory, shift right, and go to step 2; otherwise, accept”</em></p>
 <p>We now hide the way we think of the states by denoting <span class="math display">\[q_0:=(\text{Step 0}, \text{Nothing})\]</span> <span class="math display">\[q_1:=(\text{Step 1}, 0)\]</span> <span class="math display">\[q_1':=(\text{Step 1},1)\]</span> and expressing the above as,</p>
 <p><span class="math display">\[\delta(q_0, x) = \begin{cases}
-(q_1,\ , \mathrm{R}) &amp; \text{if } x \text{= 0}\\
-(q_1',\ , \mathrm{R}) &amp; \text{if } x \text{= 1}\\
+(q_1,\sqcup , \mathrm{R}) &amp; \text{if } x \text{= 0}\\
+(q_1',\sqcup , \mathrm{R}) &amp; \text{if } x \text{= 1}\\
 (Accept,x, \mathrm{R}) &amp; \text{otherwise}\\
 \end{cases}
 \]</span></p>
@@ -103,20 +104,20 @@
 \]</span></p>
 <p><strong>Step 2</strong> is described by,</p>
 <p><span class="math display">\[\delta((\text{Step 2},n), x) = \begin{cases}
-((\text{Step 3},\text{Nothing}),n, \mathrm{R}) &amp; \text{if } x \text{=} .\\
+((\text{Step 3},\text{Nothing}),n, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup\\
 ((\text{Step 2},n),x, \mathrm{R}) &amp; \text{otherwise}\\
 \end{cases}
 \]</span></p>
 <p><em>“If the character under focus is blank, erase the memory, move right, and go to Step 3; otherwise, move right.”</em></p>
 <p>Denoting <span class="math display">\[q_3:=(\text{Step 3},\text{Nothing})\]</span> we get</p>
 <p><span class="math display">\[\delta(q_2, x) = \begin{cases}
-(q_3,0, \mathrm{R}) &amp; \text{if } x \text{=} .\\
+(q_3,0, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup\\
 (q_2,x, \mathrm{R}) &amp; \text{otherwise}\\
 \end{cases}
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[\delta(q_2', x) = \begin{cases}
-(q_3,1, \mathrm{R}) &amp; \text{if } x \text{=} .\\
+(q_3,1, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup \\
 (q_2',x, \mathrm{R}) &amp; \text{otherwise}\\
 \end{cases}
 \]</span></p>
@@ -135,13 +136,13 @@
 \]</span></p>
 <p><strong>Step 4</strong> is described by</p>
 <p><span class="math display">\[\delta((\text{Step 4},\text{Nothing}), x) = \begin{cases}
-((\text{Step 0}, \text{Nothing}),x, \mathrm{R}) &amp; \text{if } x \text{=} .\\
+((\text{Step 0}, \text{Nothing}),x, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup \\
 ((\text{Step 4},\text{Nothing}),x, \mathrm{L}) &amp; \text{otherwise}\\
 \end{cases}
 \]</span></p>
 <p>which, using the <span class="math inline">\(q_i\)</span>’s already defined, is</p>
 <p><span class="math display">\[\delta(q_4, x) = \begin{cases}
-(q_0 ,x, \mathrm{R}) &amp; \text{if } x \text{=} .\\
+(q_0 ,x, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup \\
 (q_4,x, \mathrm{L}) &amp; \text{otherwise}\\
 \end{cases}
 \]</span></p>
@@ -153,30 +154,30 @@
 <th></th>
 <th>0</th>
 <th>1</th>
-<th>_</th>
+<th><span class="math inline">\(\sqcup\)</span></th>
 <th>#</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(q_0\)</span></td>
-<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
-<td>(<span class="math inline">\(q_1'\)</span>, _, R)</td>
-<td>(Accept, _, R)</td>
+<td>(<span class="math inline">\(q_1\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
+<td>(<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
+<td>(Accept, <span class="math inline">\(\sqcup\)</span>, R)</td>
 <td>(Accept, #, R)</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(q_1\)</span></td>
 <td>(<span class="math inline">\(q_1\)</span>, 0, R)</td>
 <td>(<span class="math inline">\(q_1\)</span>, 1, R)</td>
-<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
+<td>(<span class="math inline">\(q_1\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
 <td>(<span class="math inline">\(q_2\)</span>, #, R)</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(q_1'\)</span></td>
 <td>(<span class="math inline">\(q_1'\)</span>, 0, R)</td>
 <td>(<span class="math inline">\(q_1'\)</span>, 1, R)</td>
-<td>(<span class="math inline">\(q_1'\)</span>, _, R)</td>
+<td>(<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
 <td>(<span class="math inline">\(q_2'\)</span>, #, R)</td>
 </tr>
 <tr class="even">
@@ -197,66 +198,66 @@
 <td><span class="math inline">\(q_3\)</span></td>
 <td>(<span class="math inline">\(q_3\)</span>, 0, L)</td>
 <td>(<span class="math inline">\(q_3\)</span>, 1, L)</td>
-<td>(<span class="math inline">\(q_3\)</span>, _, L)</td>
+<td>(<span class="math inline">\(q_3\)</span>, <span class="math inline">\(\sqcup\)</span>, L)</td>
 <td>(<span class="math inline">\(q_4\)</span>, #, L)</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(q_4\)</span></td>
 <td>(<span class="math inline">\(q_4\)</span>, 0, L)</td>
 <td>(<span class="math inline">\(q_4\)</span>, 1, L)</td>
-<td>(<span class="math inline">\(q_0\)</span>, _, R)</td>
+<td>(<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
 <td>(<span class="math inline">\(q_4\)</span>, #, L)</td>
 </tr>
 </tbody>
 </table>
 <h3 id="an-example-input">An example input</h3>
 <p>input: 1011#</p>
-<p><code>: |1| 0  1  1  # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, <em>, R)<br />
-<code>:  _ |0| 1  1  # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 0, R)<br />
-<code>:  _  0 |1| 1  # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 1, R)<br />
-<code>:  _  0  1 |1| # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 1, R)<br />
-<code>:  _  0  1  1 |#|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, #, R)<br />
-<code>:  _  0  1  1  # | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  _  0  1  1 |#| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
-<code>:  _  0  1 |1| #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  _  0 |1| 1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  _ |0| 1  1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
-<code>: | | 0  1  1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, </em>, R)<br />
-<code>:  _ |0| 1  1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
-<code>:  _  _ |1| 1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
-<code>:  _  _  1 |1| #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
-<code>:  _  _  1  1 |#| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, #, R)<br />
-<code>:  _  _  1  1  # |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, 1, R)<br />
-<code>:  _  _  1  1  #  1 | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, L)<br />
-<code>:  _  _  1  1  # |1| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  _  _  1  1 |#| 1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
-<code>:  _  _  1 |1| #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  _  _ |1| 1  #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  _ | | 1  1  #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, </em>, R)<br />
-<code>:  _  _ |1| 1  #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, <em>, R)<br />
-<code>:  _  _  _ |1| #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 1, R)<br />
-<code>:  _  _  _  1 |#| 1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, #, R)<br />
-<code>:  _  _  _  1  # |1| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 1, R)<br />
-<code>:  _  _  _  1  #  1 |0|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 0, R)<br />
-<code>:  _  _  _  1  #  1  0 | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  _  _  _  1  #  1 |0| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, L)<br />
-<code>:  _  _  _  1  # |1| 0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  _  _  _  1 |#| 1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
-<code>:  _  _  _ |1| #  1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  _  _ | | 1  #  1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, </em>, R)<br />
-<code>:  _  _  _ |1| #  1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, <em>, R)<br />
-<code>:  _  _  _  _ |#| 1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, #, R)<br />
-<code>:  _  _  _  _  # |1| 0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 1, R)<br />
-<code>:  _  _  _  _  #  1 |0| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 0, R)<br />
-<code>:  _  _  _  _  #  1  0 |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 1, R)<br />
-<code>:  _  _  _  _  #  1  0  1 | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  _  _  _  _  #  1  0 |1| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  _  _  _  _  #  1 |0| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, L)<br />
-<code>:  _  _  _  _  # |1| 0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  _  _  _  _ |#| 1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
-<code>:  _  _  _ | | #  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, </em>, R)<br />
-<code>:  _  _  _  _ |#| 1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, #) <span class="math inline">\(\to\)</span> (Accept, #, R)<br />
-<code>:  _  _  _  _  # |1| 0  1  1 ...</code> Accept</p>
+<p><code>: |1| 0  1  1  # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
+<code>:  ␣ |0| 1  1  # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 0, R)<br />
+<code>:  ␣  0 |1| 1  # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 1, R)<br />
+<code>:  ␣  0  1 |1| # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 1, R)<br />
+<code>:  ␣  0  1  1 |#|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, #, R)<br />
+<code>:  ␣  0  1  1  # |␣|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
+<code>:  ␣  0  1  1 |#| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
+<code>:  ␣  0  1 |1| #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
+<code>:  ␣  0 |1| 1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
+<code>:  ␣ |0| 1  1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
+<code>: |␣| 0  1  1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
+<code>:  ␣ |0| 1  1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
+<code>:  ␣  ␣ |1| 1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
+<code>:  ␣  ␣  1 |1| #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
+<code>:  ␣  ␣  1  1 |#| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, #, R)<br />
+<code>:  ␣  ␣  1  1  # |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, 1, R)<br />
+<code>:  ␣  ␣  1  1  #  1 |␣|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, L)<br />
+<code>:  ␣  ␣  1  1  # |1| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
+<code>:  ␣  ␣  1  1 |#| 1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
+<code>:  ␣  ␣  1 |1| #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
+<code>:  ␣  ␣ |1| 1  #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
+<code>:  ␣ |␣| 1  1  #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
+<code>:  ␣  ␣ |1| 1  #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
+<code>:  ␣  ␣  ␣ |1| #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 1, R)<br />
+<code>:  ␣  ␣  ␣  1 |#| 1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, #, R)<br />
+<code>:  ␣  ␣  ␣  1  # |1| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 1, R)<br />
+<code>:  ␣  ␣  ␣  1  #  1 |0|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 0, R)<br />
+<code>:  ␣  ␣  ␣  1  #  1  0 |␣|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
+<code>:  ␣  ␣  ␣  1  #  1 |0| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, L)<br />
+<code>:  ␣  ␣  ␣  1  # |1| 0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
+<code>:  ␣  ␣  ␣  1 |#| 1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
+<code>:  ␣  ␣  ␣ |1| #  1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
+<code>:  ␣  ␣ |␣| 1  #  1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
+<code>:  ␣  ␣  ␣ |1| #  1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
+<code>:  ␣  ␣  ␣  ␣ |#| 1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, #, R)<br />
+<code>:  ␣  ␣  ␣  ␣  # |1| 0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 1, R)<br />
+<code>:  ␣  ␣  ␣  ␣  #  1 |0| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 0, R)<br />
+<code>:  ␣  ␣  ␣  ␣  #  1  0 |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 1, R)<br />
+<code>:  ␣  ␣  ␣  ␣  #  1  0  1 |␣|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
+<code>:  ␣  ␣  ␣  ␣  #  1  0 |1| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
+<code>:  ␣  ␣  ␣  ␣  #  1 |0| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, L)<br />
+<code>:  ␣  ␣  ␣  ␣  # |1| 0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
+<code>:  ␣  ␣  ␣  ␣ |#| 1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
+<code>:  ␣  ␣  ␣ |␣| #  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
+<code>:  ␣  ␣  ␣  ␣ |#| 1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, #) <span class="math inline">\(\to\)</span> (Accept, #, R)<br />
+<code>:  ␣  ␣  ␣  ␣  # |1| 0  1  1 ...</code> Accept</p>
 </section>
 </article>
 
@@ -280,7 +281,7 @@
     <ul>
 	  
           <li><a href="../posts/2020-04-03-example3.html">Turing machine example: Shifting</a>
-	    &nbsp; 
+	    &nbsp; <a href="../posts/pdfs/2020-04-03-example3.pdf">PDF version</a>
           </li>
 	  
           <li><a href="../posts/2020-03-29-turing-example2.html">Turing machine example: Power of 2</a>

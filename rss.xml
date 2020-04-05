@@ -247,6 +247,7 @@
 </header>
 
 <section>
+<p><img src="http://blog.shane/files/power2.gif" id="id" class="class" width="700" /></p>
 <p>In this example, we design a Turing machine to check whether the number of 0s in a string of 0s is a power of 2.</p>
 <p>We do this by first checking if there are no 0s. If there is at least one, we cancel out half the 0s; if there are odd number of 0s then we instantly reject. We then repeat the process over and over again: check if there are no 0s, in which case accept because it means that by repeatedly halving, we were left with nothing and so it was a power of 2; otherwise, cancel out half of the half that remained; if there are odd number of 0s then we instantly reject.</p>
 <p>First, let us understand the meaning of some of those informal terms above:</p>

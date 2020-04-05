@@ -67,10 +67,12 @@
 <p>We will see how we can view the current state as the current step <em>and</em> the current memory. Therefore, we can think of it as a pair coming from <span class="math inline">\(S \times M\)</span>. So,</p>
 <p><span class="math display">\[Q \subset S \times M\]</span></p>
 <h3 id="decoding-the-steps">Decoding the steps</h3>
+<p>This gif animation shows the literal translation of a step into a part of the definition of a transition function.</p>
+<p><img src="../files/algtotransition.gif" id="id" class="class" style="width:70.0%" /></p>
+<p>(<strong>The symbol</strong> <span class="math inline">\(\sqcup\)</span> <strong>is commonly used to denote a blank symbol explicitly.</strong>)</p>
 <p>Each step describes possible changes to the memory, the character under the head, and the next step and the direction to shift the head to. We will literally describe these changes by defining the part of <span class="math inline">\(\delta\)</span> that takes as input the current step, memory, and character under the head, and outputs their future versions as well as the direction. We will use notation that makes the translation from step to part of <span class="math inline">\(\delta\)</span> very apparent.</p>
 <p>We will then hide the way we think of the states by assigning the distinct pairs (of step and memory) distinct labels, and express <span class="math inline">\(\delta\)</span> in terms of these. For the implementation, this is all that is needed; viewing states as pairs was only to assist us in translating the algorithm to a transition table.</p>
 <p>Finally, we will collect all the parts of the definition of <span class="math inline">\(\delta\)</span> that use <span class="math inline">\(q_i\)</span>’s rather than pairs, and use it to define the transition table.</p>
-<p><strong>The symbol</strong> <span class="math inline">\(\sqcup\)</span> <strong>is commonly used to denote a blank symbol explicitly.</strong></p>
 <p><strong>Step 0</strong> is described by</p>
 <p><span class="math display">\[\delta((\text{Step 0},\text{Nothing}),x) = \begin{cases}
 ((\text{Step 1}, x),\sqcup ,\mathrm{R}) &amp; \text{if } x \text{= 0,1}\\

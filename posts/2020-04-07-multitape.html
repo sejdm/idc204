@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>A final look at context-free grammars - IDC 204</title>
+  <title>Multitape Turing Machine - IDC 204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -42,18 +42,31 @@
       
         <article>
 <header>
-<h1>A final look at context-free grammars</h1>
-<p class="date"><strong>22 March, 2020</strong></p>
+<h1>Multitape Turing Machine</h1>
+<p class="date"><strong> 7 April, 2020</strong></p>
 <style type="text/css"> code{white-space:pre} </style> 
 </header>
 
 <section>
-<p>We had the time to touch upon only a few concepts of context-free grammars, before me move on to Turing machines. Here is a brief and final look at some facts of context-free grammars that we will not be exploring in more detail in the course, but you are free to discuss them with me if you are interested.</p>
+<h2 id="the-formal-definition">The formal definition</h2>
+<p><span class="math display">\[(Q, \Sigma, \Gamma, \delta, q_{accept}, q_{reject})\]</span></p>
+<p><span class="math display">\[\delta : Q \times \Gamma^k \to Q \times \Gamma^k \times \{L, R, S\}^k\]</span></p>
+<h2 id="the-steps">The steps</h2>
+<h4 id="section"></h4>
+<p>Step 1: Find out what is “under the heads” Step 2: Apply <span class="math inline">\(\delta\)</span> to know the output Step 3: Update the simulated tapes</p>
+<h4 id="section-1"></h4>
+<ul>
+<li>Sweep right</li>
+</ul>
+<h4 id="states">States</h4>
+<p>Let us first list the information that we need to remember while sweeping between cells on the tape:</p>
 <ol type="1">
-<li><p>We showed that every context-free language can be recognized by a (non-deterministic) pushdown automaton. It is also true that every language that can be recognized by a (non-deterministic) pushdown automaton, can be described by a context-free grammar. The proof is long and given in each of the references that are mentioned on the main webpage.</p></li>
-<li><p>Unlike finite state automata, deterministic pushdown automata are not as powerful as non-deterministic ones. This has also been covered in your textbook, in case you are interested.</p></li>
-<li><p>YACC (Yet Another Compiler-Compiler) is a “parser generator” for languages specified in notation similar to what we use for specifying the grammar of a context-free language. You can read more about it <a href="http://dinosaur.compilertools.net/yacc/index.html">here</a></p></li>
+<li>The number of the simulated tape in focus. So define, <span class="math display">\[N := \{1, 2, \ldots, k\}\]</span>.</li>
+<li>The current state, i.e. element of <span class="math inline">\(Q\)</span>. But in the beginning, we may have nothing. So, <span class="math display">\[\tilde{Q} = Q \cup \{\text{Nothing}\}\]</span></li>
+<li>The characters under the simulated heads, i.e. <span class="math inline">\(\Gamma^k\)</span></li>
+<li>The output of <span class="math inline">\(\delta\)</span>, i.e. <span class="math display">\[Y:=Q \times \Gamma^k \times \{L, R, S\}^k \cup \{\text{Nothing}\}\]</span></li>
 </ol>
+<p>So we take the set of states <span class="math display">\[Q' \subset S \times \tilde{Q} \times \tilde{\Gamma}^k \times Y\]</span>. Once again, it is a subset, because not all of them are required. In fact, all elements from the <span class="math inline">\(Y\)</span> component are already determined by the previous two components.</p>
 </section>
 </article>
 
@@ -76,6 +89,10 @@
     <h2>Recent comments</h2>
     <ul>
 	  
+          <li><a href="../posts/2020-04-07-multitape.html">Multitape Turing Machine</a>
+	    &nbsp; 
+          </li>
+	  
           <li><a href="../posts/2020-04-03-example3.html">Turing machine example: Shifting</a>
 	    &nbsp; <a href="../posts/pdfs/2020-04-03-example3.pdf">PDF version</a>
           </li>
@@ -90,10 +107,6 @@
 	  
           <li><a href="../posts/2020-03-25-turing-example1.html">Turing machine example: Equality</a>
 	    &nbsp; <a href="../posts/pdfs/2020-03-25-turing-example1.pdf">PDF version</a>
-          </li>
-	  
-          <li><a href="../posts/2020-03-23-turing.html">Turing machines</a>
-	    &nbsp; 
           </li>
 	  
     </ul>

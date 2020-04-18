@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Finite State Automata - IDC 204</title>
+  <title>A remark on subroutines - IDC 204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -39,45 +39,17 @@
     </nav>
     </div>
     <section id="pagecontent">
-      <a href="../lecturenotes/pdfs/lecture04.pdf">PDF version</a>
+      
         <article>
 <header>
-<h1>Finite State Automata
-
-<p class="author">by Dhruva Sambrani<p>
-
-
-</h1>
-
-<p class="date"><strong>27 January, 2020</strong></p>
-
+<h1>A remark on subroutines</h1>
+<p class="date"><strong>19 April, 2020</strong></p>
+<style type="text/css"> code{white-space:pre} </style> 
 </header>
 
 <section>
-<h2 id="finite-state-automaton">Finite State Automaton</h2>
-<p>M = (Q, Σ, δ, q<sub>0</sub>, f) There is a set of states Q which M manipulates by δ over Σ and the string is accepted if it lies in f ⊂ Q, starting from q<sub>0</sub>.</p>
-<p>q<sub>0</sub> ∈ Q, f ⊂ Q</p>
-<blockquote>
-<p>M always reads the entire input.</p>
-</blockquote>
-<h3 id="accepting-a-string">Accepting a string</h3>
-<p>Given a string, S = c<sub>0</sub>,c<sub>1</sub>…c<sub>n</sub>, M accepts S iff ∃ r<sub>0</sub>, r<sub>1</sub>, … r<sub>n+1</sub> ∈ Q, st 1. r<sub>0</sub> = q<sub>0</sub> 2. r<sub>i + 1</sub> = δ(r<sub>i</sub>, c<sub>i</sub>) 3. r<sub>n+1</sub> ∈ f</p>
-<p>A language is recognized by M, iff L = {s | M accepts s}.</p>
-<h3 id="example">Example</h3>
-<ol type="1">
-<li>Define a Finite State Automaton that recognizes the language L = 101, Σ = {0,1}. Look at Fig 1 for implementation.</li>
-</ol>
-<figure>
-<img src="../files/fsa.jpeg" alt="FSA" /><figcaption>FSA</figcaption>
-</figure>
-<p><strong>Side note</strong></p>
-<p>FSAs can be <em>implemented</em> in more than one ways. Is there a <em>minimal</em> implementation?</p>
-<ol start="2" type="1">
-<li>Define a Finite State Automaton that recognizes the language L = {s | s has equal 0s and 1s}, Σ = {0,1}</li>
-</ol>
-<p><a href="https://en.wikipedia.org/wiki/Pigeonhole_principle">Pigeonhole Principle</a></p>
-<p>r<sub>0</sub> → r<sub>1</sub> → … → r<sub>i</sub> → … → r<sub>n</sub></p>
-<p>Continued in next class…</p>
+<p>In the last example, we saw how viewing states as tuples simplified the process of designing a Turing machine by exposing the state as a combination of various components, including the step of the algorithm and memory. Similarly, we can simplify the process of designing also by breaking down the algorithm broadly into “subroutines” and then focussing on each subroutine at a time. Each subroutine may in turn be a a combination of subourtines and so on. Together with the method of representing states as tuples, it allows one to specify a Turing machine by merely describing broad steps of an algorithm, if each of the steps are straightforward or previously worked out subroutines.</p>
+<p>As an example, assume that step 6 of a certain algorithm was “shift all the characters, beginning with the current head position, one cell to the right.” We have already designed a Turing machine which shifts all characters one cell to the right. It has a start state <span class="math inline">\(q_0\)</span>, some other states <span class="math inline">\(q_1, q_1'\)</span> etc., accept state <span class="math inline">\(q_{accept}\)</span>, and reject state <span class="math inline">\(q_{reject}\)</span>. So we can think of the states to run this as a subroutine as <span class="math inline">\((\text{Step 6}, q_0)\)</span>, <span class="math inline">\((\text{Step 6}, q_1)\)</span>, etc. If we denote the transition function for shifting by <span class="math inline">\(\delta\)</span> and our transition function by <span class="math inline">\(\delta'\)</span>, and <span class="math inline">\(\delta(q, c) = (q', c', d)\)</span> then the relevant part of <span class="math inline">\(\delta'\)</span> will be defined <span class="math inline">\(\delta'( (\text{Step 6}, q) = ((\text{Step 6}, q'), c', d)\)</span> as long as <span class="math inline">\(q\)</span> is not a halt state. If it is a halt state, then instead of terminating, <span class="math inline">\(\delta'\)</span> will transition to the step or state that is supposed to transition into after the subroutine ends. It may make a choice and transition into one or another state depending on whether the subroutine finished with an accept or reject state. For example, if the subroutine was testing equality between two substrings, then if that is correct (i.e. the subroutine halted in an accept state) it will have to transition into the relevant state.</p>
 </section>
 </article>
 
@@ -100,11 +72,11 @@
     <h2>Recent comments</h2>
     <ul>
 	  
-          <li><a href="../posts/2020-04-19-multitape.html">Multitape Turing Machine</a>
+          <li><a href="../posts/2020-04-19-subroutines.html">A remark on subroutines</a>
 	    &nbsp; 
           </li>
 	  
-          <li><a href="../posts/2020-04-19-a-subroutine.html">A remark on subroutines</a>
+          <li><a href="../posts/2020-04-19-multitape.html">Multitape Turing Machine</a>
 	    &nbsp; 
           </li>
 	  

@@ -43,7 +43,7 @@
         <article>
 <header>
 <h1>Multitape Turing Machine</h1>
-<p class="date"><strong> 7 April, 2020</strong></p>
+<p class="date"><strong>19 April, 2020</strong></p>
 <style type="text/css"> code{white-space:pre} </style> 
 </header>
 
@@ -158,12 +158,12 @@
 <p>This part of the transition function represents the recording of the character under <span class="math inline">\(n\)</span>th simulated head. Remember that the <em>A</em> character represents the character 0 with a sumulated head pointing at it (as opposed to an ordinary 0 which represents a character with no head over it). Similarly a <em>B</em> representes the character 1 with a simulated head over it. Note that since the state records the current simulated tape under focus as <span class="math inline">\(n\)</span>, the character under the head is recorded in the <span class="math inline">\(n\)</span>th entry of the inner tuple from <span class="math inline">\(\Gamma^k\)</span>.</p>
 <p><span class="math display">\[
 \begin{split}
-((\text{Step 0}, \mathbf{n}, q_i, (0,1, \text{Nothing}, \ldots), \text{Nothing}),\  {\mathbf{\text{A}}}) &amp; \to \\ ((\text{Step 0}, n, q_i, (0, {1}, \ldots, \mathbf{0}, \ldots), \text{Nothing}), {\text{A}}, \text{R})) &amp;
+((\text{Step 0}, \mathbf{n}, q_i, (0,1, \text{Nothing}, \ldots), \text{Nothing}),\  {\mathbf{\hat{0}}}) &amp; \to \\ ((\text{Step 0}, n, q_i, (0, {1}, \ldots, \mathbf{0}, \ldots), \text{Nothing}), {\hat{0}}, \text{R})) &amp;
 \end{split}
 \]</span></p>
 <p><span class="math display">\[
 \begin{split}
-((\text{Step 0}, \mathbf{n}, q_i, (0,1, \text{Nothing}, \ldots), \text{Nothing}),\  {\mathbf{\text{B}}}) &amp; \to \\ ((\text{Step 0}, n, q_i, (0, 1, \ldots, \mathbf{1}, \ldots), \text{Nothing}), {\text{B}}, \text{R})) &amp;
+((\text{Step 0}, \mathbf{n}, q_i, (0,1, \text{Nothing}, \ldots), \text{Nothing}),\  {\mathbf{\hat{1}}}) &amp; \to \\ ((\text{Step 0}, n, q_i, (0, 1, \ldots, \mathbf{1}, \ldots), \text{Nothing}), {\hat{1}}, \text{R})) &amp;
 \end{split}
 \]</span></p>
 <p>Once again, the variable <span class="math inline">\(n\)</span> above will be replaced with each of the <span class="math inline">\(k\)</span> possible values that represent the precise tape from among the <span class="math inline">\(k\)</span> possibilites. So this part of the transition function will account for <span class="math inline">\(2k\)</span> rows of the transition table.</p>
@@ -191,11 +191,11 @@
     <h2>Recent comments</h2>
     <ul>
 	  
-          <li><a href="../posts/2020-04-19-subroutines.html">A remark on subroutines</a>
+          <li><a href="../posts/2020-04-19-multitape.html">Multitape Turing Machine</a>
 	    &nbsp; 
           </li>
 	  
-          <li><a href="../posts/2020-04-07-multitape.html">Multitape Turing Machine</a>
+          <li><a href="../posts/2020-04-19-a-subroutine.html">A remark on subroutines</a>
 	    &nbsp; 
           </li>
 	  

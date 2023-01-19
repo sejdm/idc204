@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>2021-09-10-exercise01 - MTH201</title>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../css/my.css">
+<link rel="stylesheet" href="../css/syntax.css">
+  <link rel="alternate" type="application/atom+xml" title="MTH 201" href="../atom.xml" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <div class="navbar">
+
+    <header>
+      <hgroup>
+        <h1><a href="../index.html" id="titlelink">Curves and Surfaces<br /> (MTH 201)</a></h1>
+      </hgroup>
+    </header>
+
+    <nav id="mainnav">
+      <div id="topmenu">
+        <menu>
+          <a href="../index.html">Course information</a>
+	  
+          <a href="../assignments.html">Exercise sheets</a>
+	  
+	  
+	  
+          <a href="../slides.html">Last year's slides</a>
+	  
+        </menu>
+	</div>
+    </nav>
+    </div>
+    <section id="pagecontent">
+        <article>
+    <section class="header">
+        <h1>Exercise sheet 1</h1>
+    </section>
+    <section>
+      <p>
+	
+	
+	<a href="../assignments/2022-09-12-exercise02.html" style="float:right" class="next">>></a>
+	
+      </p>
+<p class="date"><strong>&nbsp;Last modified: 05:42 PM - 29 August, 2022 </strong></p>
+	  
+	  <a href="../assignments/pdfs/2021-09-10-exercise01.pdf">PDF version</a>
+	  
+	  
+	  <br />
+	  <a href="../assignments/solutions/2021-09-10-exercise01.html">Hints or Solutions</a> / 
+	  <a href="../assignments/solutions/pdfs/2021-09-10-exercise01.pdf">Hints or Solutions PDF</a>
+	  
+        <ol>
+<li><p>Find a parametrization <span class="math inline">\(\gamma(t)\)</span> for a line segment joining two given points <span class="math inline">\((x_1. y_1)\)</span> and <span class="math inline">\((x_2. y_2)\)</span>. Find <span class="math inline">\(\dot{\gamma}(t)\)</span>.</p></li>
+<li><p>What does the parametrization trace out <span class="math inline">\(\gamma(t) = (\frac{2t}{1+t^2}, \frac{1-t^2}{1+t^2})\)</span>?</p></li>
+<li><p>Show that the parametrization <span class="math inline">\(\gamma(t) := (t^2 - 1, t(t^2 - 1))\)</span> is not injective, i.e. there are two <em>distinct</em> real numbers <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span> so that <span class="math inline">\(\gamma(t_1) = \gamma(t_2)\)</span>. Can you deduce the shape<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> of this curve? Can you express the set of points defined by this curve as the zero set<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> of some function <span class="math inline">\(f(x,y)\)</span>?</p></li>
+<li><p>For <span class="math inline">\(\mathbf{v} : (\alpha,\beta) \to \mathbf{R}^2\)</span> and <span class="math inline">\(\mathbf{w} : (\alpha,\beta) \to \mathbf{R}^2\)</span>, show that <span class="math inline">\((\mathbf{v}(t). \mathbf{w}(t))' = \mathbf{v}'(t). \mathbf{w}(t) + \mathbf{v}(t). \mathbf{w}'(t)\)</span>.</p></li>
+<li><p>If <span class="math inline">\(\mathbf{n} : (\alpha,\beta) \to \mathbf{R}^2\)</span> is such that <span class="math inline">\(||\mathbf{n}(t)||\)</span> is constant, then prove that <span class="math inline">\(\dot{\mathbf{n}}(t)\)</span> is either 0 or perpendicular to <span class="math inline">\(\mathbf{n}(t)\)</span>.</p></li>
+<li><p>if we denote, <span class="math display">\[s_\alpha(t) := \int_{t_\alpha}^t| | \dot{\gamma}(u)| | \mathrm{d}u\]</span> <span class="math display">\[s_\beta(t) := \int_{t_\beta}^t| | \dot{\gamma}(u)| | \mathrm{d}u\]</span> prove that <span class="math inline">\(s_\beta(t) - s_\alpha(t)\)</span> is a constant <strong>(assume that <span class="math inline">\(t_\alpha &lt; t_\beta\)</span>)</strong>.</p></li>
+<li><p>If <span class="math inline">\(\gamma : (\alpha, \beta) \to \mathbb{R}^2\)</span> is a smooth <strong>and regular</strong> parametrization, then show that <span class="math inline">\(| |\dot{\gamma}(t)| | : (\alpha, \beta) \to \mathbb{R}\)</span> is smooth.</p></li>
+<li><p>For the parametrization <span class="math inline">\(\gamma : (-\pi/2, \pi/2) \to \mathbb{R}^2\)</span> given by <span class="math inline">\(\gamma(t) = (5\cos(t), 5\sin(t))\)</span>,</p>
+<ol>
+<li><p>Find the arc-length function <span class="math inline">\(s(t)\)</span> (starting at, say, 0)</p></li>
+<li><p>Find a reparametrization map <span class="math inline">\(\phi\)</span> so that <span class="math inline">\(\gamma(\phi(t))\)</span> is a unit-speed parametrization.</p></li>
+</ol></li>
+</ol>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Just a rough drawing showing where the curve intersects the axes and where it self-intersects etc.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>The zero set of a function <span class="math inline">\(f : \mathbb{R}^2 \to \mathbb{R}\)</span> is <span class="math inline">\(\{(x,y) \ |\ f(x,y) = 0\}\)</span>, i.e. the set of points <span class="math inline">\((x,y)\)</span> in the plane for which <span class="math inline">\(f(x,y)=0\)</span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+    </section>
+</article>
+
+    </section>
+
+<section id="posts" class="sidenav">
+
+    <h2>Latest exercise sheet</h2>
+<ul>
+    
+        <li>
+          <a href="../assignments/2022-12-01-exercise08.html">Exercise sheet 8</a>
+	   /
+	  <a href="../assignments/pdfs/2022-12-01-exercise08.pdf">PDF version</a>
+	  
+	  
+        </li>
+    
+        <li>
+          <a href="../assignments/2022-11-19-exercise07.html">Exercise sheet 7</a>
+	   /
+	  <a href="../assignments/pdfs/2022-11-19-exercise07.pdf">PDF version</a>
+	  
+	  
+        </li>
+    
+</ul>
+
+    <p><a href="../assignments.html">All exercise sheets&hellip;</a></p>
+
+
+
+
+
+
+
+</section>
+</body>
+</html>

@@ -1,1355 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>Shane - RSS feed</title>
-    <link href="http://blog.shane/atom.xml" rel="self" />
-    <link href="http://blog.shane" />
-    <id>http://blog.shane/atom.xml</id>
+    <title>IDC204 Theory of Computation</title>
+    <link href="http://sejdm.github.io/idc204/atom.xml" rel="self" />
+    <link href="http://sejdm.github.io/idc204" />
+    <id>http://sejdm.github.io/idc204/atom.xml</id>
     <author>
-        <name>Shane</name>
-        <email>shane.dmello@gmail.com</email>
+        <name>Shane D'Mello</name>
+        <email>shane@iisermohali.ac.in</email>
     </author>
-    <updated>2020-04-19T00:00:00Z</updated>
+    <updated>2023-01-19T11:59:07+5:30</updated>
     <entry>
-    <title>Multitape Turing Machine</title>
-    <link href="http://blog.shane/posts/2020-04-19-multitape.html" />
-    <id>http://blog.shane/posts/2020-04-19-multitape.html</id>
-    <published>2020-04-19T00:00:00Z</published>
-    <updated>2020-04-19T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>Multitape Turing Machine</h1>
-<p class="date"><strong>19 April, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<p>Consider a Turing machine that takes as input, strings from the alphabet <span class="math inline">\(\{0, 1, +\}\)</span> of the form <span class="math inline">\(s_1+s_2\)</span>, where <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span> are strings of 0s and 1s and represent numbers in binary, and outputs the sum of the two numbers represented. One can do this on an ordinary Turing machine, but it would be simpler if we had three tapes, so that we could write <span class="math inline">\(s_1\)</span> on one of them, <span class="math inline">\(s_2\)</span> on the other, and the partial sum on the third. It would then help to focus on one character from each of these tapes to add one digit at a time.</p>
-<p>While any computation that such so called multitape Turing machines can perform can be simulated on a single tape Turing machine, it is often easier to design a Turing machine if we allow more than one tape, and the, and then the design can be converted into a design of a single tape Turing machine by the standard method described below. This is similar to the situation with finite state automata, where we could first design the more flexible non-deterministic automaton and then convert it to a deterministic one by a standard procedure.</p>
-<h2 id="the-formal-definition">The formal definition</h2>
-<p>A multitape Turing machine has more than one but finitely many tapes and each of its tapes has its own head. Formally, it consists of a five tuple, <span class="math display">\[(Q, \Sigma, \Gamma, \delta, q_{accept}, q_{reject})\]</span> where every symbol means the same as before except the transition function, <span class="math display">\[\delta : Q \times \Gamma^k \to Q \times \Gamma^k \times \{L, R, S\}^k\]</span></p>
-<p>Here, the direction <span class="math inline">\(S\)</span> stands for “Stationary” and means that the head should not be moved during that step. Since this machine has <span class="math inline">\(k\)</span> heads, one for each of the <span class="math inline">\(k\)</span> tapes, <span class="math inline">\(\delta\)</span> takes as input the current state, and the <span class="math inline">\(k\)</span> letters of the tape alphabet <span class="math inline">\(\Gamma\)</span> under each of these <span class="math inline">\(k\)</span> heads, and outputs the new state to shift into, the new characters to replace the ones under the <span class="math inline">\(k\)</span> heads, and the directions to move each head. For example, if</p>
-<p><span class="math display">\[\delta(q_2, (0, 1, 0)) = (q_5, (1, 1, 1), (L, S, R))\]</span></p>
-<p>it means that if the current state is <span class="math inline">\(q_2\)</span>, if the letter under the first head is 0, under the second is 1, and under the third one is 0, then replace the character under the first head (i.e. on the first tape) by 1, leave the character under the second head (on the second tape) unchanged, and change the character under the third head (on the third tape) to 0. Also, shift the first head left, the third right, but leave the second unchanged, and switch to state <span class="math inline">\(q_5\)</span>. It halts when it reaches either an accept state (i.e. <span class="math inline">\(q_{accept}\)</span>) or a reject state (i.e. <span class="math inline">\(q_{reject}\)</span>), just as an ordinary Turing machine does.</p>
-<p>Can a multitape Turing machine do more than a single tape one? The answer is no, although it may perform the same computation more efficiently. The reason is simple: we can simulate the working of any <span class="math inline">\(k\)</span> shaped Turing machine using a Turing machine with only one tape.</p>
-<h3 id="simulating-the-tapes">Simulating the tapes</h3>
-<p>Each tape of the multitape Turing machine is infinite but at any given instant, only a finite part of the tape is used. Therefore, during any stage of the computation, the current contents of all the tapes can be written one after the other, using <code>#</code> as a separator, on a single tape, as shown in the table below.</p>
-<p>We need a way to “mark” the <span class="math inline">\(k\)</span> characters that are under the heads. However, each cell of a tape can hold only one character. One way to do that is to have marked versions for each letter of the alphabet. So if the alphabet is <span class="math inline">\(\{0, 1\}\)</span>, we must also include <span class="math inline">\(\{\hat{0},\hat{1},\hat{\sqcup}\}\)</span> so that <span class="math inline">\(\hat{0}\)</span> would be the marked version of 0, <span class="math inline">\(\hat{1}\)</span> would be the marked version of 1, and <span class="math inline">\(\hat{\sqcup}\)</span> would be the marked version of the blank character. It is important to realize that each marked character is a <em>single</em> character and not a combination of two characters!</p>
-<p>For example, the following tape simulates the three configurations of each of the three tapes of a mult-tape machine, each separated by a <code>#</code>. The first head of the original machine is over a 0, which was the third character on the first tape; the second head is over a 1, which is also the third character on the second tape; the third head is over a 0, which happens to be the first character on the tape.</p>
-<table>
-<tr>
-<td>
-0
-</td>
-<td>
-1
-</td>
-<td>
-<span class="math inline">\(\hat{0}\)</span>
-</td>
-<td>
-1
-</td>
-<td>
-<code>#</code>
-</td>
-<td>
-1
-</td>
-<td>
-0
-</td>
-<td>
-<span class="math inline">\(\hat{1}\)</span>
-</td>
-<td>
-<code>#</code>
-</td>
-<td>
-<span class="math inline">\(\hat{0}\)</span>
-</td>
-<td>
-0
-</td>
-<td>
-0
-</td>
-<td>
-<span class="math inline">\(\sqcup\)</span>
-</td>
-<td>
-<span class="math inline">\(\sqcup\)</span>
-</td>
-<td>
-<span class="math inline">\(\sqcup\)</span>
-</td>
-<td>
-<span class="math inline">\(\sqcup\)</span>
-</td>
-<td>
-<span class="math inline">\(\sqcup\)</span>
-</td>
-<td>
-<span class="math inline">\(\sqcup\)</span>
-</td>
-</tr>
-</table>
-<p>To simulate the computation, a shift of head would involve replacing the “head” version of the character with its ordinary one, and replacing the ordinary character with a head version. If the head is to move right to a previously unwritten cell of one of the tapes, then in the simulated version, one would need to insert a blank character before the separator <code>#</code>, which would require everything to the right of it to be shifted one character to the right.</p>
-<h2 id="the-steps">The steps</h2>
-<h4 id="section"></h4>
-<ul>
-<li>Step 1: Find out what is “under the heads”</li>
-<li>Step 2: Apply <span class="math inline">\(\delta\)</span> to know the output</li>
-<li>Step 3: Update the simulated tapes</li>
-</ul>
-<h4 id="states">States</h4>
-<p>Let us first list the information that we need to remember while sweeping between cells on the tape:</p>
-<ol type="1">
-<li>The number of the simulated tape in focus. So define, <span class="math display">\[N := \{1, 2, \ldots, k\}\]</span>.</li>
-<li>The current state, i.e. element of <span class="math inline">\(Q\)</span>. But in the beginning, we may have nothing. So, <span class="math display">\[\tilde{Q} = Q \cup \{\text{Nothing}\}\]</span></li>
-<li>The characters under the simulated heads, i.e. <span class="math inline">\(\Gamma^k\)</span></li>
-<li>The output of <span class="math inline">\(\delta\)</span>, i.e. <span class="math display">\[Y:=Q \times \Gamma^k \times \{L, R, S\}^k \cup \{\text{Nothing}\}\]</span></li>
-</ol>
-<p>So we take the set of states <span class="math display">\[Q' \subset S \times \tilde{Q} \times \tilde{\Gamma}^k \times Y\]</span>. Once again, it is a subset, because not all of them are required. In fact, all elements from the <span class="math inline">\(Y\)</span> component are already determined by the previous two components.</p>
-<h5 id="example-noting-the-tape-number">Example: noting the tape number</h5>
-<p>For instance, this part of the transition function represents the recording of the current simulated tape that the head is on. Therefore, it updates the tape number when it crosses <code>#</code> but alters no other entry of the state. It continues moving right. <span class="math display">\[
-\begin{split}
-((\text{Step 0}, {n}, q_i, (0,1, \text{Nothing}, \ldots), \text{Nothing}),\  {{\tt \#}}) &amp; \to \\ ((\text{Step 0}, {n+1}, q_i, (0, 1, \text{Nothing}, \ldots), \text{Nothing}), {{\tt \#}}, \text{R})) &amp;
-\end{split}
-\]</span></p>
-<p>Remember that the variable <span class="math inline">\(n\)</span> is only to express it in a more compact form. While constructing the transition table, we need to replace <span class="math inline">\(n\)</span> by its <span class="math inline">\(k\)</span> possibilites and therefore we would have (the relevant entries are in bold):</p>
-<p><span class="math display">\[
-\begin{split}
-((\text{Step 0}, \mathbf{1}, q_i, (0,1, \text{Nothing}, \ldots), \text{Nothing}),\  {{\tt \#}}) &amp; \to \\ ((\text{Step 0}, \mathbf{2}, q_i, (0, 1, \text{Nothing}, \ldots), \text{Nothing}), {{\tt \#}}, \text{R})) &amp;
-\end{split}
-\]</span></p>
-<p><span class="math display">\[
-\begin{split}
-((\text{Step 0}, \mathbf{2}, q_i, (0,1, \text{Nothing}, \ldots), \text{Nothing}),\  {{\tt \#}}) &amp; \to \\ ((\text{Step 0}, \mathbf{3}, q_i, (0, 1, \text{Nothing}, \ldots), \text{Nothing}), {{\tt \#}}, \text{R})) &amp;
-\end{split}
-\]</span></p>
-<p>etc.</p>
-<p>However, there are finitely many simualted tapes, so this will account for only finitely many rows of the transition table (the columns are of course finite because they correspond to characters from the alphabet).</p>
-<h5 id="example-noting-the-characters-under-the-heads">Example: Noting the characters under the heads</h5>
-<p>This part of the transition function represents the recording of the character under <span class="math inline">\(n\)</span>th simulated head. Remember that the <em>A</em> character represents the character 0 with a sumulated head pointing at it (as opposed to an ordinary 0 which represents a character with no head over it). Similarly a <em>B</em> representes the character 1 with a simulated head over it. Note that since the state records the current simulated tape under focus as <span class="math inline">\(n\)</span>, the character under the head is recorded in the <span class="math inline">\(n\)</span>th entry of the inner tuple from <span class="math inline">\(\Gamma^k\)</span>.</p>
-<p><span class="math display">\[
-\begin{split}
-((\text{Step 0}, \mathbf{n}, q_i, (0,1, \text{Nothing}, \ldots), \text{Nothing}),\  {\mathbf{\hat{0}}}) &amp; \to \\ ((\text{Step 0}, n, q_i, (0, {1}, \ldots, \mathbf{0}, \ldots), \text{Nothing}), {\hat{0}}, \text{R})) &amp;
-\end{split}
-\]</span></p>
-<p><span class="math display">\[
-\begin{split}
-((\text{Step 0}, \mathbf{n}, q_i, (0,1, \text{Nothing}, \ldots), \text{Nothing}),\  {\mathbf{\hat{1}}}) &amp; \to \\ ((\text{Step 0}, n, q_i, (0, 1, \ldots, \mathbf{1}, \ldots), \text{Nothing}), {\hat{1}}, \text{R})) &amp;
-\end{split}
-\]</span></p>
-<p>Once again, the variable <span class="math inline">\(n\)</span> above will be replaced with each of the <span class="math inline">\(k\)</span> possible values that represent the precise tape from among the <span class="math inline">\(k\)</span> possibilites. So this part of the transition function will account for <span class="math inline">\(2k\)</span> rows of the transition table.</p>
-<p>The step that enlarges a simulated tape by shifting, requires a “subroutine”.</p>
-<p>You can do the rest as an exercise and convince yourself that, even if it is tedious, it is straightforward to come up with the transition table that will specify a single tape Turing machine to simulate a given multitape one.</p>
-</section>
-</article>
-]]></summary>
+    <title>Exercise sheet 1</title>
+    <link href="http://sejdm.github.io/idc204/assignments/2023-01-16-exercise01.html" />
+    <id>http://sejdm.github.io/idc204/assignments/2023-01-16-exercise01.html</id>
+    <published>2023-01-16T00:00:00Z</published>
+    <updated>2023-01-19T11:59:07+5:30</updated>
+    <summary type="html"><![CDATA[Exercise sheet 1 has been posted.]]></summary>
 </entry>
 <entry>
-    <title>A remark on subroutines</title>
-    <link href="http://blog.shane/posts/2020-04-19-a-subroutine.html" />
-    <id>http://blog.shane/posts/2020-04-19-a-subroutine.html</id>
-    <published>2020-04-19T00:00:00Z</published>
-    <updated>2020-04-19T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>A remark on subroutines</h1>
-<p class="date"><strong>19 April, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<p>In the last example, we saw how viewing states as tuples simplified the process of designing a Turing machine by exposing the state as a combination of various components, including the step of the algorithm and memory. Similarly, we can simplify the process of designing also by breaking down the algorithm broadly into “subroutines” and then focussing on each subroutine at a time. Each subroutine may in turn be a a combination of subourtines and so on. Together with the method of representing states as tuples, it allows one to specify a Turing machine by merely describing broad steps of an algorithm, if each of the steps are straightforward or previously worked out subroutines.</p>
-<p>As an example, assume that step 6 of a certain algorithm was “shift all the characters, beginning with the current head position, one cell to the right.” We have already designed a Turing machine which shifts all characters one cell to the right. It has a start state <span class="math inline">\(q_0\)</span>, some other states <span class="math inline">\(q_1, q_1'\)</span> etc., accept state <span class="math inline">\(q_{accept}\)</span>, and reject state <span class="math inline">\(q_{reject}\)</span>. So we can think of the states to run this as a subroutine as <span class="math inline">\((\text{Step 6}, q_0)\)</span>, <span class="math inline">\((\text{Step 6}, q_1)\)</span>, etc. If we denote the transition function for shifting by <span class="math inline">\(\delta\)</span> and our transition function by <span class="math inline">\(\delta'\)</span>, and <span class="math inline">\(\delta(q, c) = (q', c', d)\)</span> then the relevant part of <span class="math inline">\(\delta'\)</span> will be defined <span class="math inline">\(\delta'( (\text{Step 6}, q) = ((\text{Step 6}, q'), c', d)\)</span> as long as <span class="math inline">\(q\)</span> is not a halt state. If it is a halt state, then instead of terminating, <span class="math inline">\(\delta'\)</span> will transition to the step or state that is supposed to transition into after the subroutine ends. It may make a choice and transition into one or another state depending on whether the subroutine finished with an accept or reject state. For example, if the subroutine was testing equality between two substrings, then if that is correct (i.e. the subroutine halted in an accept state) it will have to transition into the relevant state.</p>
-</section>
-</article>
-]]></summary>
+    <title>Lecture slide 21</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-11-29-lecture21.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-11-29-lecture21.pdf</id>
+    <published>2021-11-29T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 21 has been posted.]]></summary>
 </entry>
 <entry>
-    <title>Turing machine example: Shifting</title>
-    <link href="http://blog.shane/posts/2020-04-03-example3.html" />
-    <id>http://blog.shane/posts/2020-04-03-example3.html</id>
-    <published>2020-04-03T00:00:00Z</published>
-    <updated>2020-04-03T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>Turing machine example: Shifting</h1>
-<p class="date"><strong> 3 April, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<p><img src="http://blog.shane/files/shift.gif" id="id" class="class" style="width:100.0%" /></p>
-<p>Although the tape serves as an unlimited memory for the computation, it is often used to focus on one part of the tape and then move to another part to use it (either to compare, as in equality, or to print it). While moving to the other part of the tape, one needs to remember what was seen and that information can only be &quot; by the states themselves &quot;. We will now see what that means. This time, let us separate whatever we need to remember from the steps and use more organized notation to help us keep track of all of this.</p>
-<p>We will now look at states in a more organized way by thinking of them as a combination of the steps and a finite memory. This is only to assist in designing the Turing machine, i.e. coming up with the transition table. We can use it for all the previous examples too and the final transition table will be just as before, bearing no evidence of how we figured it out.</p>
-<p><strong>Example:</strong> Shift a string to a position marked after the symbol <code>#</code>.</p>
-<p>Let us summarize the algorithm. We can shift a string by repeating this sequence of steps: “remember” the character under the head, sweep right until we find the <code>#</code> symbol, then find the first blank character, and print the remembered character there, and then sweep back, first searching for the <code>#</code> and then for the blank character and then move right.</p>
-<h3 id="the-steps">The steps</h3>
-<p>The distinct steps are as follows:</p>
-<p><em>Step 0:</em> If the character under the head is 0 or 1, erase it and store it in the memory; otherwise, accept and halt.<br />
-<em>Step 1:</em> Search for the <code>#</code> toward the right<br />
-<em>Step 2:</em> Now search for the first blank character and print the character stored in memory<br />
-<em>Step 3:</em> Search for the <code>#</code> toward the left<br />
-<em>Step 4:</em> Now search for the first blank character, shift to the right and go to Step 0.</p>
-<p>Denote these set of steps by <span class="math display">\[S := \{\text{Step 0, Step 1, Step 2, Step 3, Step 4}\}\]</span>.</p>
-<h3 id="the-memory">The “memory”</h3>
-<p>It is necessary to remember the character while searching for the appropriate position of the tape to print it. So it is stored in a memory during the search. As we shall see, this memory can be viewed as a component of the state, and is therefore different from the tape: the tape is unlimited, whereas, the size of this memory is fixed in the machine and is usually very small. In our example, the steps above need to store at most one character at a time, and that too only 0, or 1. Of course, you may need to remember nothing. So the “memory” can have three possibilites, 0, 1, or Nothing. Denote the possible states of the memory by <span class="math display">\[M :=\{ 0, 1, \text{Nothing} \}\]</span>.</p>
-<h3 id="the-states">The states</h3>
-<p>We will see how we can view the current state as the current step <em>and</em> the current memory. Therefore, we can think of it as a pair coming from <span class="math inline">\(S \times M\)</span>. So,</p>
-<p><span class="math display">\[Q \subset S \times M\]</span></p>
-<h3 id="decoding-the-steps">Decoding the steps</h3>
-<p>This gif animation shows the literal translation of a step into a part of the definition of a transition function.</p>
-<p><img src="http://blog.shane/files/algtotransition.gif" id="id" class="class" style="width:70.0%" /></p>
-<p>(<strong>The symbol</strong> <span class="math inline">\(\sqcup\)</span> <strong>is commonly used to denote a blank symbol explicitly.</strong>)</p>
-<p>Each step describes possible changes to the memory, the character under the head, and the next step and the direction to shift the head to. We will literally describe these changes by defining the part of <span class="math inline">\(\delta\)</span> that takes as input the current step, memory, and character under the head, and outputs their future versions as well as the direction. We will use notation that makes the translation from step to part of <span class="math inline">\(\delta\)</span> very apparent.</p>
-<p>We will then hide the way we think of the states by assigning the distinct pairs (of step and memory) distinct labels, and express <span class="math inline">\(\delta\)</span> in terms of these. For the implementation, this is all that is needed; viewing states as pairs was only to assist us in translating the algorithm to a transition table.</p>
-<p>Finally, we will collect all the parts of the definition of <span class="math inline">\(\delta\)</span> that use <span class="math inline">\(q_i\)</span>’s rather than pairs, and use it to define the transition table.</p>
-<p><strong>Step 0</strong> is described by</p>
-<p><span class="math display">\[\delta((\text{Step 0},\text{Nothing}),x) = \begin{cases}
-((\text{Step 1}, x),\sqcup ,\mathrm{R}) &amp; \text{if } x \text{= 0,1}\\
-(Accept,x, \mathrm{R}) &amp; \text{otherwise}\\
-\end{cases}\]</span></p>
-<p><em>“If the character under focus is a 0 or 1, store it in the memory, shift right, and go to step 2; otherwise, accept”</em></p>
-<p>We now hide the way we think of the states by denoting <span class="math display">\[q_0:=(\text{Step 0}, \text{Nothing})\]</span> <span class="math display">\[q_1:=(\text{Step 1}, 0)\]</span> <span class="math display">\[q_1':=(\text{Step 1},1)\]</span> and expressing the above as,</p>
-<p><span class="math display">\[\delta(q_0, x) = \begin{cases}
-(q_1,\sqcup , \mathrm{R}) &amp; \text{if } x \text{= 0}\\
-(q_1',\sqcup , \mathrm{R}) &amp; \text{if } x \text{= 1}\\
-(Accept,x, \mathrm{R}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<p><strong>Step 1</strong> is described by,</p>
-<p><span class="math display">\[\delta((\text{Step 1}, n), x) = \begin{cases}
-((\text{Step 2}, n) ,x, \mathrm{R}) &amp; \text{if } x \text{=} \#\\
-((\text{Step 1}, n),x, \mathrm{R}) &amp; \text{otherwise}
-\end{cases}
-\]</span></p>
-<p><em>“if the character under focus is a <code>#</code>, then move right and go to Step 2; otherwise, repeat this step.”</em></p>
-<p>Here, <span class="math inline">\(n=0\)</span> or 1, so if we denote <span class="math display">\[q_2=(\text{Step 2},0)\]</span> <span class="math display">\[q_2'=(\text{Step 2},1)\]</span> then we can rewrite the above as</p>
-<p><span class="math display">\[\delta(q_1, x) = \begin{cases}
-(q_2 ,x, \mathrm{R}) &amp; \text{if } x \text{=} \#\\
-(q_1,x, \mathrm{R}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<p>and</p>
-<p><span class="math display">\[\delta(q_1', x) = \begin{cases}
-(q_2' ,x, \mathrm{R}) &amp; \text{if } x \text{=} \#\\
-(q_1',x, \mathrm{R}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<p><strong>Step 2</strong> is described by,</p>
-<p><span class="math display">\[\delta((\text{Step 2},n), x) = \begin{cases}
-((\text{Step 3},\text{Nothing}),n, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup\\
-((\text{Step 2},n),x, \mathrm{R}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<p><em>“If the character under focus is blank, erase the memory, move right, and go to Step 3; otherwise, move right.”</em></p>
-<p>Denoting <span class="math display">\[q_3:=(\text{Step 3},\text{Nothing})\]</span> we get</p>
-<p><span class="math display">\[\delta(q_2, x) = \begin{cases}
-(q_3,0, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup\\
-(q_2,x, \mathrm{R}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<p>and</p>
-<p><span class="math display">\[\delta(q_2', x) = \begin{cases}
-(q_3,1, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup \\
-(q_2',x, \mathrm{R}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<p><strong>Step 3</strong> is described by</p>
-<p><span class="math display">\[\delta((\text{Step 3},\text{Nothing}), x) = \begin{cases}
-((\text{Step 4},\text{Nothing}),x, \mathrm{L}) &amp; \text{if } x \text{=} \#\\
-((\text{Step 3},\text{Nothing}),x, \mathrm{L}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<p><em>“If the character under focus is <code>#</code>, then move left and go to Step 4; otherwise, move left and repeat this step.”</em></p>
-<p>Denote, <span class="math display">\[q_3=(\text{Step 3},\text{Nothing})\]</span> <span class="math display">\[q_4=(\text{Step 4},\text{Nothing})\]</span> to get</p>
-<p><span class="math display">\[\delta(q_3, x) = \begin{cases}
-(q_4 ,x, \mathrm{L}) &amp; \text{if } x \text{=} \#\\
-(q_3,x, \mathrm{L}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<p><strong>Step 4</strong> is described by</p>
-<p><span class="math display">\[\delta((\text{Step 4},\text{Nothing}), x) = \begin{cases}
-((\text{Step 0}, \text{Nothing}),x, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup \\
-((\text{Step 4},\text{Nothing}),x, \mathrm{L}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<p>which, using the <span class="math inline">\(q_i\)</span>’s already defined, is</p>
-<p><span class="math display">\[\delta(q_4, x) = \begin{cases}
-(q_0 ,x, \mathrm{R}) &amp; \text{if } x \text{=} \sqcup \\
-(q_4,x, \mathrm{L}) &amp; \text{otherwise}\\
-\end{cases}
-\]</span></p>
-<h3 id="the-transition-table">The transition table</h3>
-<p>Now it is very straightforward to translate all the partial definitions of <span class="math inline">\(\delta\)</span> above that use <span class="math inline">\(q_i\)</span>’s rather than the explicit tuples, into a transition table.</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>0</th>
-<th>1</th>
-<th><span class="math inline">\(\sqcup\)</span></th>
-<th>#</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(q_0\)</span></td>
-<td>(<span class="math inline">\(q_1\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
-<td>(<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
-<td>(Accept, <span class="math inline">\(\sqcup\)</span>, R)</td>
-<td>(Accept, #, R)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(q_1\)</span></td>
-<td>(<span class="math inline">\(q_1\)</span>, 0, R)</td>
-<td>(<span class="math inline">\(q_1\)</span>, 1, R)</td>
-<td>(<span class="math inline">\(q_1\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, #, R)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(q_1'\)</span></td>
-<td>(<span class="math inline">\(q_1'\)</span>, 0, R)</td>
-<td>(<span class="math inline">\(q_1'\)</span>, 1, R)</td>
-<td>(<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
-<td>(<span class="math inline">\(q_2'\)</span>, #, R)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(q_2\)</span></td>
-<td>(<span class="math inline">\(q_2\)</span>, 0, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, 1, R)</td>
-<td>(<span class="math inline">\(q_3\)</span>, 0, L)</td>
-<td>(<span class="math inline">\(q_2\)</span>, #, R)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(q_2'\)</span></td>
-<td>(<span class="math inline">\(q_2'\)</span>, 0, R)</td>
-<td>(<span class="math inline">\(q_2'\)</span>, 1, R)</td>
-<td>(<span class="math inline">\(q_3\)</span>, 1, L)</td>
-<td>(<span class="math inline">\(q_2'\)</span>, #, R)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(q_3\)</span></td>
-<td>(<span class="math inline">\(q_3\)</span>, 0, L)</td>
-<td>(<span class="math inline">\(q_3\)</span>, 1, L)</td>
-<td>(<span class="math inline">\(q_3\)</span>, <span class="math inline">\(\sqcup\)</span>, L)</td>
-<td>(<span class="math inline">\(q_4\)</span>, #, L)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(q_4\)</span></td>
-<td>(<span class="math inline">\(q_4\)</span>, 0, L)</td>
-<td>(<span class="math inline">\(q_4\)</span>, 1, L)</td>
-<td>(<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)</td>
-<td>(<span class="math inline">\(q_4\)</span>, #, L)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="an-example-input">An example input</h3>
-<p>input: 1011#</p>
-<p><code>: |1| 0  1  1  # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
-<code>:  ␣ |0| 1  1  # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 0, R)<br />
-<code>:  ␣  0 |1| 1  # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 1, R)<br />
-<code>:  ␣  0  1 |1| # ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 1, R)<br />
-<code>:  ␣  0  1  1 |#|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, #, R)<br />
-<code>:  ␣  0  1  1  # |␣|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  ␣  0  1  1 |#| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
-<code>:  ␣  0  1 |1| #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  ␣  0 |1| 1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  ␣ |0| 1  1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
-<code>: |␣| 0  1  1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
-<code>:  ␣ |0| 1  1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
-<code>:  ␣  ␣ |1| 1  #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
-<code>:  ␣  ␣  1 |1| #  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
-<code>:  ␣  ␣  1  1 |#| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, #, R)<br />
-<code>:  ␣  ␣  1  1  # |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, 1, R)<br />
-<code>:  ␣  ␣  1  1  #  1 |␣|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, L)<br />
-<code>:  ␣  ␣  1  1  # |1| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  ␣  ␣  1  1 |#| 1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
-<code>:  ␣  ␣  1 |1| #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  ␣  ␣ |1| 1  #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  ␣ |␣| 1  1  #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
-<code>:  ␣  ␣ |1| 1  #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
-<code>:  ␣  ␣  ␣ |1| #  1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, 1, R)<br />
-<code>:  ␣  ␣  ␣  1 |#| 1  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, #, R)<br />
-<code>:  ␣  ␣  ␣  1  # |1| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 1, R)<br />
-<code>:  ␣  ␣  ␣  1  #  1 |0|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 0, R)<br />
-<code>:  ␣  ␣  ␣  1  #  1  0 |␣|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  ␣  ␣  ␣  1  #  1 |0| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, L)<br />
-<code>:  ␣  ␣  ␣  1  # |1| 0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  ␣  ␣  ␣  1 |#| 1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
-<code>:  ␣  ␣  ␣ |1| #  1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 1, L)<br />
-<code>:  ␣  ␣ |␣| 1  #  1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
-<code>:  ␣  ␣  ␣ |1| #  1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1'\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
-<code>:  ␣  ␣  ␣  ␣ |#| 1  0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1'\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, #, R)<br />
-<code>:  ␣  ␣  ␣  ␣  # |1| 0  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 1, R)<br />
-<code>:  ␣  ␣  ␣  ␣  #  1 |0| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 0, R)<br />
-<code>:  ␣  ␣  ␣  ␣  #  1  0 |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2'\)</span>, 1, R)<br />
-<code>:  ␣  ␣  ␣  ␣  #  1  0  1 |␣|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2'\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  ␣  ␣  ␣  ␣  #  1  0 |1| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  ␣  ␣  ␣  ␣  #  1 |0| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, L)<br />
-<code>:  ␣  ␣  ␣  ␣  # |1| 0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, L)<br />
-<code>:  ␣  ␣  ␣  ␣ |#| 1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, #) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, #, L)<br />
-<code>:  ␣  ␣  ␣ |␣| #  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, <span class="math inline">\(\sqcup\)</span>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, <span class="math inline">\(\sqcup\)</span>, R)<br />
-<code>:  ␣  ␣  ␣  ␣ |#| 1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, #) <span class="math inline">\(\to\)</span> (Accept, #, R)<br />
-<code>:  ␣  ␣  ␣  ␣  # |1| 0  1  1 ...</code> Accept</p>
-</section>
-</article>
-]]></summary>
+    <title>Lecture slide 20</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-11-25-lecture20.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-11-25-lecture20.pdf</id>
+    <published>2021-11-25T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 20 has been posted.]]></summary>
 </entry>
 <entry>
-    <title>Turing machine example: Power of 2</title>
-    <link href="http://blog.shane/posts/2020-03-29-turing-example2.html" />
-    <id>http://blog.shane/posts/2020-03-29-turing-example2.html</id>
-    <published>2020-03-29T00:00:00Z</published>
-    <updated>2020-03-29T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>Turing machine example: Power of 2</h1>
-<p class="date"><strong>29 March, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<p><img src="http://blog.shane/files/power2.gif" id="id" class="class" style="width:100.0%" /></p>
-<p>In this example, we design a Turing machine to check whether the number of 0s in a string of 0s is a power of 2.</p>
-<p>We do this by first checking if there are no 0s. If there is at least one, we cancel out half the 0s; if there are odd number of 0s then we instantly reject. We then repeat the process over and over again: check if there are no 0s, in which case accept because it means that by repeatedly halving, we were left with nothing and so it was a power of 2; otherwise, cancel out half of the half that remained; if there are odd number of 0s then we instantly reject.</p>
-<p>First, let us understand the meaning of some of those informal terms above:</p>
-<p>How do we cancel out exactly half? By cancelling every alternate one, beginning with the second.</p>
-<p>How do we check that there are even number of 0s left? We must <strong>not</strong> encounter a blank cell (indicating the end of the input) when we are in the “saw odd number of 0s” state.</p>
-<p>Now one small point that is easy to overlook. Remember that there is no marker for the beginning of the tape so we have to add one. As a result, the first 0 should be marked not with an X but another character, and then why not a blank? Then when searching for the beginning one simply searches for the blank character while sweeping left.</p>
-<p>What does it mean to sweep from left to right until the characters <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span>? One is referring to a state, say <span class="math inline">\(q_i\)</span>, here, and that state is partly characterized by the fact <span class="math inline">\(\delta(q_i, a) = (q_i, a, R)\)</span> as long as <span class="math inline">\(a\)</span> is not x or y. In other words, it remains in the same state as long as it does not encounter <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> and leaves those characters untouched and shifts one cell to the right.</p>
-<p>When we are starting with state <span class="math inline">\(q_0\)</span> we mark the first character with a blank; since we are doing something special, we designate it a separate state and jump out of it soon. We need to check if we encounter no 0s during an entire sweep, so we give that a state <span class="math inline">\(q_1\)</span>; if we do encounter a 0, we need to keep in mind if there were even or odd number of them and to do that we simply designate two different states, <span class="math inline">\(q_2\)</span> and <span class="math inline">\(q_3\)</span>, which we keep oscillating between as and when we encounter a 0 during the sweep. When the sweep is over, we need to get back to the beginning via a new state, <span class="math inline">\(q_5\)</span>.</p>
-<p><span class="math inline">\(\mathbf{q_0}\)</span>: If you read a 0, then mark it with a blank to know that this is the beginning, and proceed to <span class="math inline">\(q_1\)</span>, otherwise reject. If it begins with a blank, it is to be understood that there are no 0s (unless the input was corrupted), and so it accepts. We never return to the start state again.</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>_</th>
-<th>0</th>
-<th>X</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(q_0\)</span></td>
-<td>(Accept, _, L)</td>
-<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
-<td>(Reject, _, L)</td>
-</tr>
-</tbody>
-</table>
-<p><span class="math inline">\(\mathbf{q_1}\)</span>: The purpose of this state is to check if there are no 0s during a sweep. So keep sweeping to the right until you hit a 0 or blank (i.e. move right but remain in the same state on seeing an X). If you hit a 0, shift to the state <span class="math inline">\(q_2\)</span> which is meant to denote that even number of 0s were read. But if you encounter a blank, accept.</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>_</th>
-<th>0</th>
-<th>X</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(q_1\)</span></td>
-<td>(Accept, _, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
-<td>(<span class="math inline">\(q_1\)</span>, X, R)</td>
-</tr>
-</tbody>
-</table>
-<p><span class="math inline">\(\mathbf{q_2}\)</span>: Keep sweeping, ignoring the 0s that were already marked with an X, until you encounter a 0, in which case switch to <span class="math inline">\(q_3\)</span> so that you keep in mind that an odd number of 0s were read. If you encounter a blank then it means that the string is over and you need to sweep back.</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>_</th>
-<th>0</th>
-<th>X</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(q_2\)</span></td>
-<td>(<span class="math inline">\(q_4\)</span>, _, L)</td>
-<td>(<span class="math inline">\(q_3\)</span>, 0, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
-</tr>
-</tbody>
-</table>
-<p><span class="math inline">\(\mathbf{q_3}\)</span>: Just like <span class="math inline">\(q_2\)</span>, except that this time you have to switch back to <span class="math inline">\(q_2\)</span> if a 0 has been encountered to indicate that even number off 0s were encountered and if you see blank symbol now, it means there were odd number of 0s left so reject.</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>_</th>
-<th>0</th>
-<th>X</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(q_3\)</span></td>
-<td>(Reject, _, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
-<td>(<span class="math inline">\(q_3\)</span>, X, R)</td>
-</tr>
-</tbody>
-</table>
-<p><span class="math inline">\(\mathbf{q_4}\)</span>: This state finds the beginning by sweeping left until the blank symbol. Therefore, unless it sees the blank symbol, it keeps moving left, leaving the symbols intact, and remaining in the same state. When it encounters the blank symbol, it switches to state <span class="math inline">\(q_1\)</span> to begin sweeping to the right and check if there are no 0s.</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>_</th>
-<th>0</th>
-<th>X</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(q_4\)</span></td>
-<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
-<td>(<span class="math inline">\(q_4\)</span>, 0, L)</td>
-<td>(<span class="math inline">\(q_4\)</span>, X, L)</td>
-</tr>
-</tbody>
-</table>
-<p>Here is the final transition table:</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>_</th>
-<th>0</th>
-<th>X</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(q_0\)</span></td>
-<td>(Reject, _, L)</td>
-<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
-<td>(Reject, _, L)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(q_1\)</span></td>
-<td>(Accept, _, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
-<td>(<span class="math inline">\(q_1\)</span>, X, R)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(q_2\)</span></td>
-<td>(<span class="math inline">\(q_4\)</span>, _, L)</td>
-<td>(<span class="math inline">\(q_3\)</span>, 0, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(q_3\)</span></td>
-<td>(Reject, _, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
-<td>(<span class="math inline">\(q_3\)</span>, X, R)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(q_4\)</span></td>
-<td>(<span class="math inline">\(q_1\)</span>, _, R)</td>
-<td>(<span class="math inline">\(q_4\)</span>, 0, L)</td>
-<td>(<span class="math inline">\(q_4\)</span>, X, L)</td>
-</tr>
-</tbody>
-</table>
-<p>Here is an input which should be accepted because it is a string of 0s of length <span class="math inline">\(2^3\)</span>. Below, we also consider one that is rejected.</p>
-<p>input: 00000000</p>
-<p><code>: |0| 0  0  0  0  0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
-<code>:  _ |0| 0  0  0  0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X |0| 0  0  0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
-<code>:  _  X  0 |0| 0  0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  0  X |0| 0  0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
-<code>:  _  X  0  X  0 |0| 0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  0  X  0  X |0| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
-<code>:  _  X  0  X  0  X  0 |0|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  0  X  0  X  0  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, <em>, L)<br />
-<code>:  _  X  0  X  0  X  0 |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X  0  X  0  X |0| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
-<code>:  _  X  0  X  0 |X| 0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X  0  X |0| X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
-<code>:  _  X  0 |X| 0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X |0| X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
-<code>:  _ |X| 0  X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>: | | X  0  X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
-<code>:  _ |X| 0  X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X |0| X  0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  X |X| 0  X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  X  X |0| X  0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
-<code>:  _  X  X  X  0 |X| 0  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
-<code>:  _  X  X  X  0  X |0| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  X  X  0  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  X  X  0  X  X  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, <em>, L)<br />
-<code>:  _  X  X  X  0  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X  X  X  0  X |X| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X  X  X  0 |X| X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X  X  X |0| X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, 0, L)<br />
-<code>:  _  X  X |X| 0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X |X| X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _ |X| X  X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>: | | X  X  X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
-<code>:  _ |X| X  X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X |X| X  0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X  X |X| 0  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X  X  X |0| X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  X  X  X |X| X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  X  X  X  X |X| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  X  X  X  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X  X  X  X  X  X  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, <em>, L)<br />
-<code>:  _  X  X  X  X  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X  X  X  X  X |X| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X  X  X  X |X| X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X  X  X |X| X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X  X |X| X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _  X |X| X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>:  _ |X| X  X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, L)<br />
-<code>: | | X  X  X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, </em>) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
-<code>:  _ |X| X  X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X |X| X  X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X  X |X| X  X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X  X  X |X| X  X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X  X  X  X |X| X  X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X  X  X  X  X |X| X  _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X  X  X  X  X  X |X| _ ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  _  X  X  X  X  X  X  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, </em>) <span class="math inline">\(\to\)</span> (Accept, _, R)<br />
-<code>:  _  X  X  X  X  X  X  X  _ | |...</code> Accept</p>
-<p>Now consider this one which is rejected.</p>
-<p>input: 000</p>
-<p><code>: |0| 0  0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, <em>, R)<br />
-<code>:  _ |0| 0 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  _  X |0|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
-<code>:  _  X  0 | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, </em>) <span class="math inline">\(\to\)</span> (Reject, _, R)<br />
-<code>:  _  X  0  _ | |...</code> Reject</p>
-</section>
-</article>
-]]></summary>
+    <title>Lecture slide 19</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-11-22-lecture19.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-11-22-lecture19.pdf</id>
+    <published>2021-11-22T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 19 has been posted.]]></summary>
 </entry>
 <entry>
-    <title>Questions during the 4th of March Zoom session</title>
-    <link href="http://blog.shane/posts/2020-03-25-zoom.html" />
-    <id>http://blog.shane/posts/2020-03-25-zoom.html</id>
-    <published>2020-03-25T00:00:00Z</published>
-    <updated>2020-03-25T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>Questions during the 4th of March Zoom session</h1>
-<p class="date"><strong>25 March, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<p>During the Zoom session on the 4th of March, some of you had some questions that were not addressed in earlier posts. In this post, I have written more detailed and complete responses to those questions.</p>
-<h3 id="compare-turing-machines-with-automata.">Compare Turing machines with automata.</h3>
-<p>Here is a summary of each that highlights their differences.</p>
-<p><strong>Deterministic finite state automata:</strong> Languages that can be represented by regular expressions are recognized by deterministic finite state automata and all languages that can be recognized by deterministic finite state automata can be represented by regular expressions. The process stops when the entire input is read. It cannot re-read an input character. A string is accepted if it is an accept state <em>when it has read the entire input</em>.</p>
-<p><strong>Non-deterministic finite state automata:</strong> Non-deterministic finite state automata do <strong>not</strong> recognize any more languages. Therefore, non-deterministic finite state automata are as powerful as deterministic ones. All that is added is non-determinism so the process stops when the entire string is read, it cannot re-read an input, and a string is accepted if it is an accept state <em>when it has read the entire input</em>.</p>
-<p><strong>Pushdown automata:</strong> Languages generated by context free grammars are recognized by push-down automata and all languages that can be recognized by pushdown automata can be generated by some context free grammar. Push-down automata are provided with a stack. One can read only the last item pushed onto a stack; to read the second last one has to push the last one off the stack. However, this makes it more powerful than deterministic/non-deterministic finite state automata and the language consisting of strings of the form <span class="math inline">\(0^n 1^n\)</span> can be recognized by a push-down automata but not by an ordinary deterministic/non-deterministic finite state automaton. The process stops when the entire input is read. It cannot re-read an input character but it can store it on the stack (keep in mind its limitations). A string is accepted if it is an accept state <em>when it has read the entire input</em>.</p>
-<p><strong>Turing machines:</strong> Turing machines are provided with a tape. The input is written on the tape. The machine can run back and forth through the tape. It is much more powerful than a push-down automaton or a simple deterministic / non-deterministic finite state automaton and the language consisting of strings of the form <span class="math inline">\(a^nb^nc^n\)</span> can be recognized by a Turing machine but not a push-down automaton or finite state automaton. The process stops when it reaches an accept or reject state and it can re-read / modify / add-to the input any number of times since the input is on the tape.</p>
-<h3 id="are-there-languages-that-a-turing-machine-cannot-recognize">Are there languages that a Turing machine cannot recognize?</h3>
-<p>Remember that the set of languages is uncountable because it is a power set of <span class="math inline">\(\Sigma^*\)</span>. A Turing machine can be specified by a (finite) string, so the set of Turing machines is countable. If I correspond every Turing machine to the language it recognizes, there are bound to be many (in fact, uncountable) languages that are left out.</p>
-<p>The same reasoning as above works for finite state automata as well as push-down automata. Of course, any subset of <span class="math inline">\(\Sigma^*\)</span> is technically a language but we want to find examples of saner languages that cannot be recognized. For finite state automata and push-down automata, we found concrete examples and used the pumping lemma to prove it. For Turing machines, the situation is trickier but later in the course we will see why it is impossible to build a Turing machine that will identify whether or a not a given Turing machine eventually will halt if a given string is provided as its input. Therefore, if I consider the language consisting of those pairs of the form <span class="math inline">\((T, s)\)</span> such that <span class="math inline">\(T\)</span> will eventually halt when provided with <span class="math inline">\(s\)</span> as an input, then this language cannot be recognized by a Turing machine.</p>
-<h3 id="why-finite-states-but-an-infinite-tape">Why finite states but an infinite tape?</h3>
-<p>One can give many reasons and each paragraph below deals with a different one. It is better to read this answer only if you are comfortable with the last two posts which introduced the concept of a Turing machine and outlined an example.</p>
-<p>The transition function is at the heart of a finite state automaton, push-down automaton, or Turing machine. In each case, the finite state and alphabet together ensure that the domain is finite, allowing the function to be specified as a simple table. A particular Turing machine may need larger memory for larger inputs and is, therefore, provided with an infinite tape but if the states are infinite, you cannot even specify the complete design of the machine.</p>
-<p>In practice, we do not have infinite memory for any computation, but usually we have more than enough for the task at hand. Even if we temporarily run out of memory, it is simpler to add more memory. For instance, if we had a finite tape we may be forced to compromise and accept inputs from only a subset of the language. But if we want to accept bigger inputs, we just need to add more cells and lengthen the tape. On the other hand, consider what happens if we tried a similar compromise with a finite state automaton: if we try to recognize a non-regular language by bothering about only a finite subset of the language. Since all finite languages are regular, we can build a finite state automaton to recognize just that subset. However, every time we want to enhance that automaton to recognize an even bigger subset, the automaton will need a complete redesign! This is not at all as simple as increasing the length of the tape.</p>
-<p>In fact, although technically we can design a finite state automaton to recognize a finite subset of a non-regular language, it will most likely require a huge number of states and will be little better than simply listing out all the elements of the language explicitly. The transition function will be tedious. But if we can build a Turing machine to recognize the entire language, although a finite tape may limit its use to a subset of the language, since larger inputs may at most require more tape with no change to the transition function, the transition function is likely to be significantly more sophisticated than merely listing out all the elements.</p>
-<p>Furthermore, for a given computational task, if we assume unlimited memory, we can first establish whether or not it is possible to design a Turing machine at all for that task. Once that is done, we can study the maximum memory requirement (and even the time it takes) and in fact try to understand how that changes with the size of the input. We can know, for instance, whether a particular computation needs only a fixed amount of memory, even for large inputs, or if the size required grows exponentially if we increase the size of the input. This is precisely the concern of complexity theory, a subject that is tackled in your textbook although we may not have the time to touch upon it in this course. So we can say that by allowing an infinite tape, we can at least first tackle the problem of whether the computation is possible in theory, assuming as much memory available as needed, and study the impacts of limited memory separately (there is standard way to specify that, eg. the big O notation).</p>
-<p>If the states are infinite, we cannot represent the transition function explicitly. One may ask why we insist that the transition function be defined explicitly. After all, we are used to many functions with infinite domains that we represent by using formulae. But we are trying to reduce computations to the basics. If you use a formula to represent a transition function with an infinite domain, you will have to specify how to compute that transition function so it may be a minor simplification at best but is not comparable to the reduction to basics achieved by Turing machines. So many computations, from arithmetic to sorting lists, in fact, anything that you can program, can be modelled using Turing machines. Yet, the differences between Turing machine is reduced to merely differences in the precise entries of the transition table. The form of the table, the way it is used by the machine along with the tape etc. are all the same for all Turing machine no matter what they model!</p>
-<p>Finally, whenever you wonder why an alernative model is not used instead of the conventional Turing machine, the answer is either that your model is not as powerful or it is exactly as powerful, in which case choosing between your model and the conventional one is just a matter of taste. For instance, if you allowed transition functions with infinite domains, you would have to restrict attention to those functions which can be defined by at least finite amount of information so that you can at least specify the machine. So you might consider a Turing like machine which works just like an ordinary one except that its transition function is allowed to compute outputs using a conventional Turing machine. However, since the workings of this machine can be simulated by a conventional Turing machine, this too will not be more powerful, despite enhancing its transition function. In fact, Turing, Church, and Goedel made completely independent attempts to define computable functions, but the remarkable fact is that each method, despite looking completely independent of each other, characterizes exactly the same class of functions as computable. The same holds true for subsequent attempts at characterizing computable functions (Read about the <a href="https://en.wikipedia.org/wiki/Church–Turing_thesis">Church-Turing thesis</a>, if you are interested). Therefore, although each method may individually feel a bit artificial, the fact that they characterize the same functions as computable makes one feel that they capture the concept of computation correctly. Yet another reason why the conventional definition of a Turing machine, with its finite set of states and infinite tape, ough to be the “right” definition even if there is more than one “right” definition.</p>
-</section>
-</article>
-]]></summary>
+    <title>Lecture slide 18</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-11-18-lecture18.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-11-18-lecture18.pdf</id>
+    <published>2021-11-18T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 18 has been posted.]]></summary>
 </entry>
 <entry>
-    <title>Turing machine example: Equality</title>
-    <link href="http://blog.shane/posts/2020-03-25-turing-example1.html" />
-    <id>http://blog.shane/posts/2020-03-25-turing-example1.html</id>
-    <published>2020-03-25T00:00:00Z</published>
-    <updated>2020-03-25T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>Turing machine example: Equality</h1>
-<p class="date"><strong>25 March, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<p>In this example, we design a Turing machine to check whether or not a string is of the form <span class="math inline">\(w=w\)</span>. For instance, <span class="math inline">\(1011=1011\)</span> is to be accepted but <span class="math inline">\(1011=1111\)</span> is to be rejected.</p>
-<p>Here is an algorithm that will work for any input, however large, by matching one character at a time on either side of the = and marking what has been matched:</p>
-<ol type="1">
-<li>Note what is under the head, and mark it (as done) with an X.</li>
-<li>Sweep right until the = symbol, “remembering” whether a 0 or a 1 was noted.</li>
-<li>Continue sweeping right until the first non-marked character, “remembering” what was noted. If that does not match what was noted, halt and reject. If that does match, mark that character as done with an X</li>
-<li>Sweep left until the = symbol</li>
-<li>Continue sweeping until the first marked character, move right so that now the head is on the first character that has not yet been tested, and begin at step 1.</li>
-</ol>
-<p>Each step above corresponds with exactly one way to react to what is under the head. They each, therefore, correspond with states.</p>
-<ol type="1">
-<li>Denote the start state by <span class="math inline">\(q_0\)</span>. No matter what is under the head, it marks it with an X and moves right. Now if the character under the head is a 0, it must switch to a different state, <span class="math inline">\(q_1\)</span>, than it would if it were 1 (<span class="math inline">\(q_3\)</span>), otherwise this difference will not be noted.</li>
-<li><span class="math inline">\(q_1\)</span> and <span class="math inline">\(q_3\)</span> sweep right until =. This means that if the character is not =, both states retain the same character by replacing it with itself and moving right while remaining in the same state. However, if one is in <span class="math inline">\(q_1\)</span> it means that a 0 was marked, otherwise a 1 was marked. When it comes across =, <span class="math inline">\(q_1\)</span> will switch to <span class="math inline">\(q_2\)</span> while <span class="math inline">\(q_3\)</span> will switch to <span class="math inline">\(q_4\)</span>.</li>
-<li><span class="math inline">\(q_3\)</span> and <span class="math inline">\(q_4\)</span> sweep right until if finds a non-marked symbol. If that is a blank, it means that every character matched and was marked, so it will accept. Otherwise, on reaching a non-marked non blank character, it checks if what is now under the head matches with what was seen before. This is possible because if it is in <span class="math inline">\(q_3\)</span> it means that a 0 was marked, otherwise a 1 was marked. So if it is in <span class="math inline">\(q_3\)</span> rather than <span class="math inline">\(q_4\)</span> (which means that it needs to match a 0 rather than a 1) and finds the first non-marked character as 1, it will reject. Otherwise, it will try to compare the next character. Now it no longer matters if a 0 or a 1 was under the head so both states switche to a state, <span class="math inline">\(q_5\)</span></li>
-<li><span class="math inline">\(q_5\)</span> turns left on every character that is not = and remains in the same state until it finds an =. When it finds =, it switches to <span class="math inline">\(q_6\)</span>. <span class="math inline">\(q_5\)</span> never changes any characters.</li>
-<li><span class="math inline">\(q_6\)</span> turns left for every non X character. When it reaches an X it turns right and switches to <span class="math inline">\(q_0\)</span>.</li>
-</ol>
-<p><strong>Tip:</strong> If you are viewing this on a smartphone, view the table and output below in landscape mode.</p>
-<p>This is the transition table.</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>0</th>
-<th>1</th>
-<th>X</th>
-<th>=</th>
-<th>_</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(q_0\)</span></td>
-<td>(<span class="math inline">\(q_1\)</span>, X, R)</td>
-<td>(<span class="math inline">\(q_3\)</span>, X, R)</td>
-<td>(<span class="math inline">\(q_0\)</span>, X, R)</td>
-<td>(Accept, =, R)</td>
-<td>(Reject, =, L)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(q_1\)</span></td>
-<td>(<span class="math inline">\(q_1\)</span>, 0, R)</td>
-<td>(<span class="math inline">\(q_1\)</span>, 1, R)</td>
-<td>(<span class="math inline">\(q_1\)</span>, 1, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, =, R)</td>
-<td>(Reject, =, L)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(q_2\)</span></td>
-<td>(<span class="math inline">\(q_5\)</span>, X, R)</td>
-<td>(Reject, 1, R)</td>
-<td>(<span class="math inline">\(q_2\)</span>, X, R)</td>
-<td>(Reject, =, R)</td>
-<td>(Reject, =, L)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(q_3\)</span></td>
-<td>(<span class="math inline">\(q_3\)</span>, 0, R)</td>
-<td>(<span class="math inline">\(q_3\)</span>, 1, R)</td>
-<td>(<span class="math inline">\(q_3\)</span>, X, R)</td>
-<td>(<span class="math inline">\(q_4\)</span>, =, R)</td>
-<td>(Reject, =, L)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(q_4\)</span></td>
-<td>(Reject, 0, R)</td>
-<td>(<span class="math inline">\(q_5\)</span>, X, R)</td>
-<td>(<span class="math inline">\(q_4\)</span>, X, R)</td>
-<td>(Reject, =, R)</td>
-<td>(Reject, =, L)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(q_5\)</span></td>
-<td>(<span class="math inline">\(q_5\)</span>, 0, L)</td>
-<td>(<span class="math inline">\(q_5\)</span>, 1, L)</td>
-<td>(<span class="math inline">\(q_5\)</span>, X, L)</td>
-<td>(<span class="math inline">\(q_6\)</span>, =, L)</td>
-<td>(Accept, E, R)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(q_6\)</span></td>
-<td>(<span class="math inline">\(q_6\)</span>, 0, L)</td>
-<td>(<span class="math inline">\(q_6\)</span>, 1, L)</td>
-<td>(<span class="math inline">\(q_0\)</span>, X, R)</td>
-<td>(Reject, =, R)</td>
-<td>(Accept, =, R)</td>
-</tr>
-</tbody>
-</table>
-<p>Here you can see the steps of the Turing machine in two examples; one which is rejected, and the other, which is accepted. Each row shows one snapshots of the tape along with the specific input and output of the transition function <span class="math inline">\(\delta\)</span>.</p>
-<p>input: 1011=1111</p>
-<p><code>: |1| 0  1  1  =  1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
-<code>:  X |0| 1  1  =  1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
-<code>:  X  0 |1| 1  =  1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
-<code>:  X  0  1 |1| =  1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
-<code>:  X  0  1  1 |=| 1  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, =, R)<br />
-<code>:  X  0  1  1  = |1| 1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
-<code>:  X  0  1  1  =  X |1| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, 1, L)<br />
-<code>:  X  0  1  1  = |X| 1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
-<code>:  X  0  1  1 |=| X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, =, L)<br />
-<code>:  X  0  1 |1| =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
-<code>:  X  0 |1| 1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
-<code>:  X |0| 1  1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 0, L)<br />
-<code>: |X| 0  1  1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, X, R)<br />
-<code>:  X |0| 1  1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  X  X |1| 1  =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
-<code>:  X  X  1 |1| =  X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
-<code>:  X  X  1  1 |=| X  1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, =, R)<br />
-<code>:  X  X  1  1  = |X| 1  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  X  X  1  1  =  X |1| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 1) <span class="math inline">\(\to\)</span> (Reject, 1, R)<br />
-<code>:  X  X  1  1  =  X  1 |1| 1 ...</code> Reject</p>
-<p>input: 1011=1011</p>
-<p><code>: |1| 0  1  1  =  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
-<code>:  X |0| 1  1  =  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 0, R)<br />
-<code>:  X  0 |1| 1  =  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
-<code>:  X  0  1 |1| =  1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
-<code>:  X  0  1  1 |=| 1  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, =, R)<br />
-<code>:  X  0  1  1  = |1| 0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
-<code>:  X  0  1  1  =  X |0| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, 0, L)<br />
-<code>:  X  0  1  1  = |X| 0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
-<code>:  X  0  1  1 |=| X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, =, L)<br />
-<code>:  X  0  1 |1| =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
-<code>:  X  0 |1| 1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
-<code>:  X |0| 1  1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 0, L)<br />
-<code>: |X| 0  1  1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, X, R)<br />
-<code>:  X |0| 1  1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, X, R)<br />
-<code>:  X  X |1| 1  =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
-<code>:  X  X  1 |1| =  X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_1\)</span>, 1, R)<br />
-<code>:  X  X  1  1 |=| X  0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_1\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, =, R)<br />
-<code>:  X  X  1  1  = |X| 0  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_2\)</span>, X, R)<br />
-<code>:  X  X  1  1  =  X |0| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_2\)</span>, 0) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
-<code>:  X  X  1  1  =  X  X |1| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, 1, L)<br />
-<code>:  X  X  1  1  =  X |X| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
-<code>:  X  X  1  1  = |X| X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
-<code>:  X  X  1  1 |=| X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, =, L)<br />
-<code>:  X  X  1 |1| =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
-<code>:  X  X |1| 1  =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
-<code>:  X |X| 1  1  =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, X, R)<br />
-<code>:  X  X |1| 1  =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
-<code>:  X  X  X |1| =  X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, 1, R)<br />
-<code>:  X  X  X  1 |=| X  X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, =, R)<br />
-<code>:  X  X  X  1  = |X| X  1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
-<code>:  X  X  X  1  =  X |X| 1  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
-<code>:  X  X  X  1  =  X  X |1| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
-<code>:  X  X  X  1  =  X  X  X |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, 1, L)<br />
-<code>:  X  X  X  1  =  X  X |X| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
-<code>:  X  X  X  1  =  X |X| X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
-<code>:  X  X  X  1  = |X| X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, L)<br />
-<code>:  X  X  X  1 |=| X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, =, L)<br />
-<code>:  X  X  X |1| =  X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_6\)</span>, 1, L)<br />
-<code>:  X  X |X| 1  =  X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_6\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_0\)</span>, X, R)<br />
-<code>:  X  X  X |1| =  X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_0\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_3\)</span>, X, R)<br />
-<code>:  X  X  X  X |=| X  X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_3\)</span>, =) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, =, R)<br />
-<code>:  X  X  X  X  = |X| X  X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
-<code>:  X  X  X  X  =  X |X| X  1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
-<code>:  X  X  X  X  =  X  X |X| 1 ...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, X) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_4\)</span>, X, R)<br />
-<code>:  X  X  X  X  =  X  X  X |1|...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_4\)</span>, 1) <span class="math inline">\(\to\)</span> (<span class="math inline">\(q_5\)</span>, X, R)<br />
-<code>:  X  X  X  X  =  X  X  X  X | |...</code> <span class="math inline">\(\delta:\)</span>(<span class="math inline">\(q_5\)</span>, _) <span class="math inline">\(\to\)</span> (Accept, E, R)<br />
-<code>:  X  X  X  X  =  X  X  X  X  E | |...</code> Accept</p>
-</section>
-</article>
-]]></summary>
+    <title>Lecture slide 17</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-11-15-lecture17.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-11-15-lecture17.pdf</id>
+    <published>2021-11-15T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 17 has been posted.]]></summary>
 </entry>
 <entry>
-    <title>Turing machines</title>
-    <link href="http://blog.shane/posts/2020-03-23-turing.html" />
-    <id>http://blog.shane/posts/2020-03-23-turing.html</id>
-    <published>2020-03-23T00:00:00Z</published>
-    <updated>2020-03-23T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>Turing machines</h1>
-<p class="date"><strong>23 March, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<h2 id="why-study-them">Why study them?</h2>
-<p>Before we motivate and define Turing machines, let us see why we care about them.</p>
-<p>Turing machines will turn out to be more powerful than all the previous computation models that we have seen: any language that can be recognized by a finite state automaton or a push down automaton, can also be recognized by a Turing machine. Some languages cannot be recognized by automata but can be recognized by a Turing machine. In fact, despite their simple definition, Turing machines are really powerful: if you can write a program for any computation, no matter how complex, you can build a Turing machine to perform the same computation! Attempts at alternatives that can perform computations that a Turing machine cannot, have so far failed (although they may be more efficient). In this course, we will see how some attempts to “enhance” a Turing machine fail to make it more powerful, i.e. anything that the “enhanced” machine can compute, the original one can too. This is similar to the situation with non-deterministic vs deterministic automata.</p>
-<p>Despite their power, Turing machines are merely abstract models of computation and though you can actually build a physical model of it, it would be too inefficient to use in practice. But we will soon see that we can use the concept of a Turing machine to prove certain very fundamental questions about computability. For instance, we will show that some natural problems cannot be solved by any Turing machine, however complex it may be. Therefore, it cannot be done by any program either. This is why we will study Turing machines. Furthermore, if you can write a program in your favourite programming langauge that can simulate any Turing machine, given its designs, then you know that it is equivalent to a Turing machine and, therefore, what you can do in another programming language can also be done in your favourite one <a href="http://blog.shane#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
-<h2 id="motivation">Motivation</h2>
-<p>This section is not meant to be very formal and may be skipped if you are annoyed by this sort of thing. The purpose is to reflect upon what characterizes a computation and how that leads to the definition of a Turing machine.</p>
-<p>The tables below show the steps of a common algorithm used to add two numbers (in this example, 2356 and 4579).</p>
-<p>Step 0</p>
-<table>
-<tbody>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-<td><strong>.</strong></td>
-<td><strong>.</strong></td>
-</tr>
-<tr class="even">
-<td></td>
-<td>2</td>
-<td>3</td>
-<td>5</td>
-<td><strong>6</strong></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>4</td>
-<td>5</td>
-<td>7</td>
-<td><strong>9</strong></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td><strong>.</strong></td>
-</tr>
-</tbody>
-</table>
-<p>Step 1</p>
-<table>
-<tbody>
-<tr class="odd">
-<td></td>
-<td></td>
-<td><strong>.</strong></td>
-<td><strong>1</strong></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td>2</td>
-<td>3</td>
-<td><strong>5</strong></td>
-<td>6</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>4</td>
-<td>5</td>
-<td><strong>7</strong></td>
-<td>9</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td><strong>.</strong></td>
-<td><em>5</em></td>
-</tr>
-</tbody>
-</table>
-<p>Step 2</p>
-<table>
-<tbody>
-<tr class="odd">
-<td></td>
-<td><strong>.</strong></td>
-<td><strong>1</strong></td>
-<td>1</td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td>2</td>
-<td><strong>3</strong></td>
-<td>5</td>
-<td>6</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>4</td>
-<td><strong>5</strong></td>
-<td>7</td>
-<td>9</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td><strong>.</strong></td>
-<td><em>3</em></td>
-<td><em>5</em></td>
-</tr>
-</tbody>
-</table>
-<p>Step 3</p>
-<table>
-<tbody>
-<tr class="odd">
-<td><strong>.</strong></td>
-<td><strong>0</strong></td>
-<td>1</td>
-<td>1</td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><strong>2</strong></td>
-<td>3</td>
-<td>5</td>
-<td>6</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><strong>4</strong></td>
-<td>5</td>
-<td>7</td>
-<td>9</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><strong>.</strong></td>
-<td><em>9</em></td>
-<td><em>3</em></td>
-<td><em>5</em></td>
-</tr>
-</tbody>
-</table>
-<p>Step 4</p>
-<table>
-<tbody>
-<tr class="odd">
-<td><strong>0</strong></td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>.</strong></td>
-<td>2</td>
-<td>3</td>
-<td>5</td>
-<td>6</td>
-</tr>
-<tr class="odd">
-<td><strong>.</strong></td>
-<td>4</td>
-<td>5</td>
-<td>7</td>
-<td>9</td>
-</tr>
-<tr class="even">
-<td><strong>.</strong></td>
-<td><em>6</em></td>
-<td><em>9</em></td>
-<td><em>3</em></td>
-<td><em>5</em></td>
-</tr>
-</tbody>
-</table>
-<p>Step 5</p>
-<table>
-<tbody>
-<tr class="odd">
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td>2</td>
-<td>3</td>
-<td>5</td>
-<td>6</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>4</td>
-<td>5</td>
-<td>7</td>
-<td>9</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><em>6</em></td>
-<td><em>9</em></td>
-<td><em>3</em></td>
-<td><em>5</em></td>
-</tr>
-</tbody>
-</table>
-<p>Note that in every step, we have only made use of symbols from the alphabet, <span class="math inline">\(\Sigma := \{0, 1, \ldots, 9, blankspace\}\)</span>.</p>
-<p>The same algorithm works no matter how large the input, because each step need focus on only a small part (five cells of the table) at a time (shown in bold and with a dot when the cell is empty). Since each cell can have at most 10 possible entries, the number of possible variations of what is in focus form a <em>finite</em> set, which we will denote by <span class="math inline">\(\Gamma\)</span>.</p>
-<p>In each step, based on what is in focus, we alter its contents and shift focus in a new direction (in this example, we always shift left). If we denote the set of directions by <span class="math inline">\(D\)</span>, then we are essentially applying a function <span class="math inline">\(F : \Gamma \to \Gamma \times D\)</span>. The function takes as input the string that is in focus and outputs the new string that is to replace it as well as the direction to shift focus to.</p>
-<p>Since <span class="math inline">\(\Gamma\)</span>, which is the domain of <span class="math inline">\(F\)</span>, is finite, the entire function <span class="math inline">\(F\)</span> can be defined using a finite table of mappings:</p>
-<p><span class="math display">\[ x_1 \to (y_1, d_1)\\
-x_2 \to (y_2, d_2)\\
-\cdots\]</span></p>
-<p>One would normally evaluate the output of <span class="math inline">\(F\)</span> by performing a tiny little calculation, however, to simplify this discussion, let us note that we can also do it by simply referring to that table. The table may be big, but is finite and of fixed size no matter how big the input is.</p>
-<p>When we reach the step where no input digits are in focus, we stop and the last row is the final answer.</p>
-<p>In this example we need only one function <span class="math inline">\(F\)</span> because we are always doing the same thing in each step: “adding the single digits, updating the sum and carry over and shifing focus to the left”. In more complicated computations, we may need to switch to a different function under certain circumstances. For instance, if we are checking for equality of two very large strings by comparing one character at a time and cancelling them if they match, then when we are searching for the last cancelled character, we will leave many characters unchanged. Yet, when it is time to cancel them, we would need to use a different function.</p>
-<p>We can do this by introducing a finite set which we denote <span class="math inline">\(Q:=\{q_0, q_1, q_2, \ldots, q_n, q_{stop}\}\)</span>. For now, think of <span class="math inline">\(q_i\)</span>’s as labels. They are usually called states. We can then introduce a function <span class="math inline">\(\delta : Q \times \Gamma \to Q \times \Gamma \times D\)</span>, so that <span class="math inline">\(\delta(q_i, x) = (q_j, x', d)\)</span> may be interpreted as: “if the current state is <span class="math inline">\(q_i\)</span> and <span class="math inline">\(x\)</span> is in focus, then replace <span class="math inline">\(x\)</span> with the string <span class="math inline">\(x'\)</span>, shift focus in direction <span class="math inline">\(d\)</span>, and switch to state <span class="math inline">\(q_j\)</span>.” We begin the computation in state <span class="math inline">\(q_0\)</span> and stop whenever the <span class="math inline">\(q_{stop}\)</span> is outputted.</p>
-<p>The fact that <span class="math inline">\(Q\)</span> is finite, along with the fact that <span class="math inline">\(\Gamma\)</span> is finite, ensures that <span class="math inline">\(\delta\)</span> has a finite domain and may also then be described by a table like this:</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th><span class="math inline">\(x_0\)</span></th>
-<th><span class="math inline">\(x_1\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(q_0\)</span></td>
-<td><span class="math inline">\((q_i, y_j, d)\)</span></td>
-<td><span class="math inline">\(\cdots\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(q_1\)</span></td>
-<td><span class="math inline">\(\cdots\)</span></td>
-<td><span class="math inline">\(\cdots\)</span></td>
-</tr>
-</tbody>
-</table>
-<h2 id="the-actual-definition">The actual definition</h2>
-<p>We will now make modifications to the above informal description of a computation to define a Turing machine. In the example above, we performed intermediate computations on a two-dimensional page or blackboard. Instead, we will use a tape on which we can can write any string as one long row as shown below, so we only need two directions, left and right, i.e. <span class="math inline">\(D=\{L, R\}\)</span>.</p>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-</tr>
-</tbody>
-</table>
-<p>The tape is divided into cells; only one character can be written on each cell. One essential difference: the tape is infinite to ensure that there is always as much memory as needed. However, the tape <em>always</em> has at most finitely many cells occupied. The information stored is always finite, but since we do not know how much may be required for a given computation, enough tape is available.</p>
-<p>Now how many cells must we include in the focus? Why not simplify matters and allow only 1? <a href="http://blog.shane#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Since at exactly one character is in focus at a time, <span class="math inline">\(\Gamma\)</span> is a set of characters, and is called the “tape alphabet”. Of course, since we must be able to write the original input on the tape, it must contain the input alphabet <span class="math inline">\(\Sigma\)</span> as a subset, i.e. <span class="math inline">\(\Sigma \subset \Gamma\)</span></p>
-<p>The focus is called the “head”. The machine can move the head left or right to bring the appropriate cell in focus. Here, the head is shown with an arrow.</p>
-<p>            <span class="math inline">\(\downarrow\)</span></p>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-<col style="width: 4%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-<td>.</td>
-</tr>
-</tbody>
-</table>
-<p>A Turing machine consists of</p>
-<ol type="1">
-<li>A finite set, <span class="math inline">\(\Sigma\)</span>, called the alphabet.</li>
-<li>A finite set, <span class="math inline">\(\Gamma\)</span>, called the tape alphabet, such that <span class="math inline">\(\Sigma \subset \Gamma\)</span>.</li>
-<li>The set of <span class="math inline">\(D:=\{L, R\}\)</span> of directions</li>
-<li>A function <span class="math inline">\(\delta : Q \times \Gamma \to Q \times \Gamma \times D\)</span></li>
-<li>A finite set, <span class="math inline">\(Q\)</span>, called the set of states</li>
-<li>A special element <span class="math inline">\(q_0 \in Q\)</span>, called the start state</li>
-<li>Two special elements <span class="math inline">\(q_{accept}, q_{reject} \in Q\)</span>, called the accept state and reject state, respectively.</li>
-</ol>
-<p>The machine starts at the state <span class="math inline">\(q_0\)</span>, with the head at the beginning of the tape, and the input string written on the tape. If the character under the head is <span class="math inline">\(x\)</span>, then <span class="math inline">\(\delta(q_0, x)\)</span> is evaluated to be say, <span class="math inline">\((q_i, y, d)\)</span>. The machine then replaces <span class="math inline">\(x\)</span> with <span class="math inline">\(y\)</span> in the cell under the head, shifts the head to the left if <span class="math inline">\(d=L\)</span> otherwise it shifts to the right, and moves to state <span class="math inline">\(q_i\)</span>. Then it reads the character, <span class="math inline">\(z\)</span>, under the current head position, evaluates <span class="math inline">\(\delta(q_i, z)\)</span> and uses that to decide what to replace it with , which state to shift to, and which direction to move the head to. This process it repeats over and over again until it reaches either the state <span class="math inline">\(q_{accept}\)</span>, in which case it accepts the input string, or the state <span class="math inline">\(q_{reject}\)</span>, in which case it rejects the input string.</p>
-<p>Now the formal definition of a Turing machine given in the book should make sense to you. We will see some examples in the coming posts.</p>
-<section class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>This is why they say, “it is not what a programming language can do that matters, but what it makes easy”<a href="http://blog.shane#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Search for the “0, 1, infinity rule”!<a href="http://blog.shane#fnref2" class="footnote-back">↩</a></p></li>
-</ol>
-</section>
-</section>
-</article>
-]]></summary>
+    <title>Lecture slide 16</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-11-12-lecture16.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-11-12-lecture16.pdf</id>
+    <published>2021-11-12T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 16 has been posted.]]></summary>
 </entry>
 <entry>
-    <title>A final look at context-free grammars</title>
-    <link href="http://blog.shane/posts/2020-03-22-cfg-remaining.html" />
-    <id>http://blog.shane/posts/2020-03-22-cfg-remaining.html</id>
-    <published>2020-03-22T00:00:00Z</published>
-    <updated>2020-03-22T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>A final look at context-free grammars</h1>
-<p class="date"><strong>22 March, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<p>We had the time to touch upon only a few concepts of context-free grammars, before me move on to Turing machines. Here is a brief and final look at some facts of context-free grammars that we will not be exploring in more detail in the course, but you are free to discuss them with me if you are interested.</p>
-<ol type="1">
-<li><p>We showed that every context-free language can be recognized by a (non-deterministic) pushdown automaton. It is also true that every language that can be recognized by a (non-deterministic) pushdown automaton, can be described by a context-free grammar. The proof is long and given in each of the references that are mentioned on the main webpage.</p></li>
-<li><p>Unlike finite state automata, deterministic pushdown automata are not as powerful as non-deterministic ones. This has also been covered in your textbook, in case you are interested.</p></li>
-<li><p>YACC (Yet Another Compiler-Compiler) is a “parser generator” for languages specified in notation similar to what we use for specifying the grammar of a context-free language. You can read more about it <a href="http://dinosaur.compilertools.net/yacc/index.html">here</a></p></li>
-</ol>
-</section>
-</article>
-]]></summary>
+    <title>Lecture slide 15</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-11-08-lecture15.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-11-08-lecture15.pdf</id>
+    <published>2021-11-08T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 15 has been posted.]]></summary>
 </entry>
 <entry>
-    <title>Pumping lemma for context free grammars</title>
-    <link href="http://blog.shane/posts/2020-03-22-cfg-pumping.html" />
-    <id>http://blog.shane/posts/2020-03-22-cfg-pumping.html</id>
-    <published>2020-03-22T00:00:00Z</published>
-    <updated>2020-03-22T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>Pumping lemma for context free grammars</h1>
-<p class="date"><strong>22 March, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<p>This post is meant to complement the chapter on pumping lemma for context free grammars in the textbook, but not to replace it. You should read this first to keep the relevant example in mind when you read the formal proof from the textbook.</p>
-<h2 id="the-main-idea">The main idea</h2>
-<p>As an example, we will consider the following context free grammar and the string <span class="math inline">\(acegfdb\)</span> (that belongs to the language generated by the grammar):</p>
-<p><span class="math display">\[A \to aRb\]</span> <span class="math display">\[R \to cBd \ |\ g\]</span> <span class="math display">\[B \to eRf\]</span></p>
-<p>In the following derivation, <span class="math inline">\(R\)</span> plays a special role: it generates a sub-string, <span class="math inline">\(ceRfd\)</span>, which also contains <span class="math inline">\(R\)</span>. This second <span class="math inline">\(R\)</span> is used to generate the final terminals, which in this case is just <span class="math inline">\(g\)</span>.</p>
-<p><span class="math display">\[A \Longrightarrow a\mathbf{R}b \Longrightarrow acBdb \Longrightarrow a\mathbf{ceRfd}b \Longrightarrow acegfdb\]</span></p>
-<p>Before leading to the terminals, we could have instead repeated the generation of <span class="math inline">\(ceRfd\)</span> as many times as we wish:</p>
-<p><span class="math display">\[A \Longrightarrow aRb \Longrightarrow acBdb \Longrightarrow aceRfdb \Longrightarrow a(ce)^2R(fd)^2b \ldots \Longrightarrow a(ce)^nR(fd)^nb\]</span></p>
-<p>before finally using <span class="math inline">\(R\)</span> to lead to the terminal</p>
-<p><span class="math display">\[\Longrightarrow a(ce)^ng(fd)^nb\]</span></p>
-<p>So <span class="math inline">\(a(ce)^2g(fd)^2b\)</span>, <span class="math inline">\(a(ce)^3g(fd)^3b\)</span>, etc are also in our language:</p>
-<p>In fact, we could have skipped the steps shown in bold</p>
-<p><span class="math display">\[A \Longrightarrow aRb \mathbf{\Longrightarrow acBdb \Longrightarrow aceRfdb \Longrightarrow acegfdb}\]</span></p>
-<p>and directly proceeded to</p>
-<p><span class="math display">\[A \Longrightarrow a\mathbf{R}b \Longrightarrow agb\]</span></p>
-<p>It is now easy to generalize these observations:</p>
-<p>If a string <span class="math inline">\(s\)</span> is generated in a series of steps that look like this:</p>
-<p><span class="math display">\[S\ldots  \Longrightarrow\ldots  x_1 R x_2 \ldots \Longrightarrow \ldots x_1 \mathbf{y_1Ry_2} x_2 \ldots \Longrightarrow \ldots  x_1 y_1\mathbf{z}y_2 x_2=s\]</span></p>
-<p>and where both the substrings highlighted in bold are generated by the previous <span class="math inline">\(R\)</span>, then <span class="math inline">\(s\)</span> can be realized as a concatenation of 5 substrings as <span class="math inline">\(s = x_1 y_1zy_2 x_2\)</span>, so that the first <span class="math inline">\(R\)</span> is responsible for <span class="math inline">\(y_1zy_2\)</span> within which the second <span class="math inline">\(R\)</span> is responsible for the substring, <span class="math inline">\(z\)</span>. In that case, the language must also contain the strings <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> for each <span class="math inline">\(n=0, 1, \ldots\)</span></p>
-<p>In fact, if the string <span class="math inline">\(s\)</span> is “long enough”, that will always happen! We can see that by examining the parse tree of a string. <span class="math inline">\(R\)</span> would have the required property if it occurred twice in one path of the parse tree. That in turn is ensured if the length of the path exceeds the number of variables (pigeon-hole principle!). What is long enough? The precise number is not really important. What is important is that there is such a number.</p>
-<h2 id="the-statement">The statement</h2>
-<p>Given a context free grammar generating a language <span class="math inline">\(L\)</span>, there is a number <span class="math inline">\(N\)</span> called the pumping length, such that, whenever the length of a string <span class="math inline">\(s\)</span> exceeds <span class="math inline">\(N\)</span>, it can be broken up as, <span class="math inline">\(s = x_1 y_1zy_2 x_2\)</span>, so that the strings <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> also belong to <span class="math inline">\(L\)</span> for each <span class="math inline">\(n=0, 1, \ldots\)</span>. We can make no assumptions on where the break up occurs, except for the fact that both <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span> cannot be empty (if they could, the lemma willl be useless!), and that the substring <span class="math inline">\(y_1zy_2\)</span> has length less than <span class="math inline">\(N\)</span>.</p>
-<p>As in the previous pumping lemma, you apply it by using some foresight to find, for each possible pumping length, a string of bigger length that belong to the language. You then show that for each such string, no matter how you break it up as <span class="math inline">\(x_1 y_1zy_2 x_2\)</span>, at least for some <span class="math inline">\(n\)</span>, <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> does not belong the language.</p>
-<h2 id="example">Example</h2>
-<p>The language over the alphabet, <span class="math inline">\(\Sigma=\{a, b, c\}\)</span>, consisting of strings of the form <span class="math inline">\(a^nb^nc^n\)</span> cannot be context free. To see this, observe that if the pumping length is <span class="math inline">\(N\)</span>, then <span class="math inline">\(a^Nb^Nc^N\)</span> exceeds that length. If the language were context free, then there is some unknown way to break it up as <span class="math inline">\(x_1 y_1zy_2 x_2\)</span> so that <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> belongs to the language for every <span class="math inline">\(n\)</span>. Notice that if either <span class="math inline">\(y_1\)</span> or <span class="math inline">\(y_2\)</span> contains repetitions of more than one character, then its power will have at least some characters out of order (eg. <span class="math inline">\((aabb)^2 = aabbaabb\)</span> has some <span class="math inline">\(a\)</span>’s following <span class="math inline">\(b\)</span>’s). So we only need to bother about the case where both contain repetitions of only one character. In that case <span class="math inline">\(x_1 y_1^nzy_2^n x_2\)</span> will increase the powers of at most two characters whlie leaving the third untouched, therefore such a string cannot belong to the language where all three powers are required to be the same.</p>
-</section>
-</article>
-]]></summary>
+    <title>Lecture slide 14</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-11-01-lecture14.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-11-01-lecture14.pdf</id>
+    <published>2021-11-01T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 14 has been posted.]]></summary>
 </entry>
 <entry>
-    <title>Solutions to mid-semester 2</title>
-    <link href="http://blog.shane/posts/2020-03-16-midsem2-solutions.html" />
-    <id>http://blog.shane/posts/2020-03-16-midsem2-solutions.html</id>
-    <published>2020-03-16T00:00:00Z</published>
-    <updated>2020-03-16T00:00:00Z</updated>
-    <summary type="html"><![CDATA[<article>
-<header>
-<h1>Solutions to mid-semester 2</h1>
-<p class="date"><strong>16 March, 2020</strong></p>
-<style type="text/css"> code{white-space:pre} </style> 
-</header>
-
-<section>
-<h3 id="question-1">Question 1</h3>
-<p><em>Consider the language over the alphabet <span class="math inline">\(\Sigma=\{a, b, c, d\}\)</span> recognized by the following non-deterministic finite state automaton.</em></p>
-<p><img src="http://blog.shane/files/ndfa.png" /></p>
-<h4 id="part-a">Part a)</h4>
-<p><em>Find a regular expression that describes the language.</em></p>
-<p><strong>Answer:</strong> <span class="math inline">\(ac^*d \cup b\)</span></p>
-<p>The usual method of adding “empty” arrows is useful to shorten the proof that every regular language can be defined by a regular expression, but unnecessarily long in this situation. There are no arrows going into the initial state and no arrows coming out of the final state, and the loop is responsible for the <span class="math inline">\(c^*\)</span>.</p>
-<h4 id="part-b">Part b)</h4>
-<p><em>Convert the automaton to a deterministic automaton that recognizes the same language but which has at most one extra state.</em></p>
-<p>Remember that in a deterministic automaton, one must have a unique new state for each state and <em>each</em> letter of the alphabet. The automaton is non-deterministic because some states do not have arrows corresponding to certain letters coming out it. Reading such a letter when it is in that state should make it die out. So all one needs to do is to add one “reject” state to which all such letters are redirected.</p>
-<h4 id="part-c">Part c)</h4>
-<p><em>Find a context free grammar that generates the language.</em></p>
-<p>Since the language may be thought of as a union of two languages, we can use a variable to branch out, leading to the following rules:</p>
-<ol type="1">
-<li><span class="math display">\[S \to A \ |\  b\]</span> (The variable <span class="math inline">\(A\)</span> will take care of strings of the form <span class="math inline">\(ac^*d\)</span>, but the string may also be a single <span class="math inline">\(b\)</span>. Some of you added an extra variable <span class="math inline">\(B\)</span>, which then led to the terminal <span class="math inline">\(b\)</span>. That is fine, but not necessary in this case).</li>
-<li><span class="math display">\[A \to aCd\]</span> (Only the <span class="math inline">\(C\)</span> is repeated, so we need an extra variable to take care of the repetition; the <span class="math inline">\(a\)</span> and <span class="math inline">\(d\)</span> may be added immediately.</li>
-<li><span class="math display">\[C \to cC \ |\ \epsilon\]</span> (The variable on the right hand side allows the C to be repeated indefinitely. When it needs to stop, one can use the empty string. Several variations here are also fine, including replacing the empty string with a single <span class="math inline">\(c\)</span> or <span class="math inline">\(C \to CC \ |\ c\)</span>).</li>
-</ol>
-<p>Some of you have done it by following the general algorithm to convert a finite state automaton recognizing a language into a context free grammar recognizing the same language. Then you would get a rule for each state. The method is longer than needed when applied to this case but more general and also perfectly fine.</p>
-<h3 id="question-2">Question 2</h3>
-<p>Find regular expressions to describe the following languages, each over the alphabet <span class="math inline">\(\{0, 1\}\)</span>.</p>
-<h4 id="part-a-1">Part a)</h4>
-<p><em>All strings except the string 10.</em></p>
-<p><strong>Answer:</strong> <span class="math inline">\(\epsilon\cup \Sigma\cup \Sigma\Sigma\Sigma^* \cup 00 \cup 01 \cup 11\)</span></p>
-<p>Note that this is a complement of a finite (in fact singleton) language. So strings that avoid certain fixed lengths (in this case, 2) are definitely in the language, and the rest are finite in number. Therefore, the regular expression may involve <span class="math inline">\(\epsilon \cup \Sigma\cup \Sigma\Sigma\Sigma^*\)</span> to ensure that all strings of lengths 0, 1, or 3 and above are included. Now among the four possible length 2 strings, we only need to add <span class="math inline">\(00\)</span>, <span class="math inline">\(11\)</span>, and <span class="math inline">\(10\)</span>. Some of you have given minor variations of this by explicitly including everything of lengths 0, 1, and 2, which are all fine as long as you observed that you could split the problem into an infinite part which is easy to tackle because it includes all strings of lengths greater than 2, and a finite part that can be tackled explicitly (but in some cases, shortened).</p>
-<h4 id="part-b-1">Part b)</h4>
-<p>Strings for which the third last character is 0.</p>
-<p><strong>Answer:</strong> <span class="math inline">\(\Sigma^*0\Sigma\Sigma\)</span></p>
-<p>Some of you have tackled the problem by noting that the last three characters can have only finitely many variations so <span class="math inline">\(\Sigma^*000 \cup \Sigma^*001\ldots\)</span>, which is also fine.</p>
-<h3 id="question-3">Question 3</h3>
-<p><em>If a <strong>non</strong>-deterministic finite state automaton, <span class="math inline">\(N:=(Q, \Sigma, \delta, q_0, F)\)</span> with <strong>at most two states</strong> recognizes a language <span class="math inline">\(L\)</span>, is it necessary that <span class="math inline">\(N':=(Q, \Sigma, \delta, q_0, F^c)\)</span> must recognize <span class="math inline">\(L^c\)</span>? If you think it is </em>always* true, then explain why, otherwise, give an explicit example of an <span class="math inline">\(N\)</span> and a string which is either accepted by both <span class="math inline">\(N\)</span> and <span class="math inline">\(N'\)</span> or rejected by both.*</p>
-<p>This need not be true; it is only true for a deterministic finite state automaton. Any non-deterministic finite state automaton that has no looping arrows can only recognize a finite language. Even after flipping the accept and non-accept states, it will have to accept another <em>finite</em> language which cannot possibly exhaust the complement of a finite language because <span class="math inline">\(\Sigma^*\)</span> is infinite. From this is it is straightforward to construct an example and there are many possibilities. In fact, it is quite easy to come up with examples; almost any truly non-deterministic one with the possibility of dying out would have worked.</p>
-<h3 id="question-4">Question 4</h3>
-<p><em>Consider the context free grammars <span class="math inline">\(G_1=(V_1, \Sigma_1, R_1, S_1)\)</span> and <span class="math inline">\(G_2=(V_2, \Sigma_2, R_2, S_2)\)</span> generating <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span>, respectively.</em></p>
-<h5 id="part-a-2">Part a)</h5>
-<p><em>How will you define a context free grammar <span class="math inline">\(G = (V, \Sigma, R, S)\)</span> that recognizes <span class="math inline">\(L_1\cup L_2\)</span>?</em> The new rules should be <span class="math inline">\(R_1\cup R_2 \cup \{S \to S_1 \ |\ S_2\}\)</span>, where <span class="math inline">\(S\)</span> is a <em>new</em> variable. We need a <em>new</em> start state <span class="math inline">\(S\)</span> and the rule, <span class="math inline">\(S \to S_1 \ |\ S_2\)</span>. If one chooses <span class="math inline">\(S_1\)</span> during the deduction, then one can generate all the strings in the first language, and similarly, if one chooses <span class="math inline">\(S_2\)</span>, then one can generate all the strings in the second language. You therefore also need the original rules <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>.</p>
-<p>Some of you combined each rule from <span class="math inline">\(R_1\)</span> with a rule from <span class="math inline">\(R_2\)</span> by using <span class="math inline">\(|\)</span>. This will include all strings in the union of the two languages but will also include many more that are not intended (try to think of an example!).</p>
-<p><strong>IMPORTANT</strong>: <span class="math inline">\(S = S_1 \cup S_2\)</span> is a completely nonsensical expression! <span class="math inline">\(S_1\)</span> and <span class="math inline">\(S_2\)</span> are not sets; taking their union makes no sense! Similalry, wrting <span class="math inline">\(A_1 \to B_1 \cup B_2\)</span> is completely meaningless.</p>
-<h4 id="part-b-2">Part b)</h4>
-<p><em>How will you define a context free grammar <span class="math inline">\(G = (V, \Sigma, R, S)\)</span> that recognizes <span class="math inline">\(L_1 \circ L_2\)</span>?</em></p>
-<p>The new rules can be <span class="math inline">\(R_1\cup R_2 \cup \{S \to S_1 S_2\}\)</span>. The new start state triggers the generation of two blocks of strings, where the first one is in <span class="math inline">\(L_1\)</span> and the second one is in <span class="math inline">\(L_2\)</span>.</p>
-<p>Once again, <span class="math inline">\(R_1\circ R_2\)</span> is complete nonsense. You can concatenate strings, not rules!</p>
-<h4 id="part-c-1">Part c)</h4>
-<p><em>How will you define a context free grammar <span class="math inline">\(G = (V, \Sigma, R, S)\)</span> that recognizes <span class="math inline">\(L_1^*\)</span>?</em></p>
-<p>The new rules can be <span class="math inline">\(R_1 \cup \{S_1\to S_1S_1 \ |\ \epsilon\}\)</span>. <span class="math inline">\(L^*\)</span> contains strings of the form <span class="math inline">\(w_1w_2\ldots w_n\)</span>. The rule <span class="math inline">\(S_1 \to S_1S_1\)</span> allows the start variable to replicate itself the required number of times, say <span class="math inline">\(n\)</span> times. So we can derive <span class="math inline">\(S_1S_1 \ldots S_1\)</span>. Now each of these <span class="math inline">\(S_1\)</span> can be replaced eventually by a string in <span class="math inline">\(L\)</span> using the previous rules.</p>
-</section>
-</article>
-]]></summary>
+    <title>Lecture slide 13</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-10-28-lecture13.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-10-28-lecture13.pdf</id>
+    <published>2021-10-28T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 13 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 12</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-10-25-lecture12.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-10-25-lecture12.pdf</id>
+    <published>2021-10-25T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 12 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 11</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-10-18-lecture11.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-10-18-lecture11.pdf</id>
+    <published>2021-10-18T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 11 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 10</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-10-07-lecture10.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-10-07-lecture10.pdf</id>
+    <published>2021-10-07T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 10 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 9</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-10-04-lecture09.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-10-04-lecture09.pdf</id>
+    <published>2021-10-04T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 9 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 8</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-09-30-lecture08.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-09-30-lecture08.pdf</id>
+    <published>2021-09-30T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 8 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 7</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-09-23-lecture07.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-09-23-lecture07.pdf</id>
+    <published>2021-09-23T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 7 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 6</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-09-20-lecture06.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-09-20-lecture06.pdf</id>
+    <published>2021-09-20T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 6 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 5</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-09-16-lecture05.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-09-16-lecture05.pdf</id>
+    <published>2021-09-16T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 5 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 4</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-09-13-lecture04.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-09-13-lecture04.pdf</id>
+    <published>2021-09-13T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 4 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 3</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-09-10-lecture03.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-09-10-lecture03.pdf</id>
+    <published>2021-09-10T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 3 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 2</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-09-09-lecture02.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-09-09-lecture02.pdf</id>
+    <published>2021-09-09T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 2 has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Lecture slide 1</title>
+    <link href="http://sejdm.github.io/idc204/texslides/2021-09-06-lecture01.pdf" />
+    <id>http://sejdm.github.io/idc204/texslides/2021-09-06-lecture01.pdf</id>
+    <published>2021-09-06T00:00:00Z</published>
+    <updated>2022-09-15T00:43:17+5:30</updated>
+    <summary type="html"><![CDATA[Lecture slide 1 has been posted.]]></summary>
 </entry>
 
 </feed>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>2022-11-05-exercise06 - MTH201</title>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../css/my.css">
+<link rel="stylesheet" href="../css/syntax.css">
+  <link rel="alternate" type="application/atom+xml" title="MTH 201" href="../atom.xml" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <div class="navbar">
+
+    <header>
+      <hgroup>
+        <h1><a href="../index.html" id="titlelink">Curves and Surfaces<br /> (MTH 201)</a></h1>
+      </hgroup>
+    </header>
+
+    <nav id="mainnav">
+      <div id="topmenu">
+        <menu>
+          <a href="../index.html">Course information</a>
+	  
+          <a href="../assignments.html">Exercise sheets</a>
+	  
+	  
+	  
+          <a href="../slides.html">Last year's slides</a>
+	  
+        </menu>
+	</div>
+    </nav>
+    </div>
+    <section id="pagecontent">
+        <article>
+    <section class="header">
+        <h1>Exercise sheet 6</h1>
+    </section>
+    <section>
+      <p>
+	
+	<a href="../assignments/2022-10-26-exercise05.html" class="prev"><<</a>
+	
+	
+	<a href="../assignments/2022-11-19-exercise07.html" style="float:right" class="next">>></a>
+	
+      </p>
+<p class="date"><strong>&nbsp;Last modified: 03:49 PM - 13 November, 2022 </strong></p>
+	  
+	  <a href="../assignments/pdfs/2022-11-05-exercise06.pdf">PDF version</a>
+	  
+	  
+        <ol>
+<li><p>Consider any surface <span class="math inline">\(S\subset \mathbb{R}^3\)</span>, let <span class="math inline">\(f : S \to \mathbb{R}\)</span>, <span class="math inline">\(f(x,y,z) = x\)</span>. Show that this is a smooth function.</p></li>
+<li><p>Consider a surface <span class="math inline">\(S\subset \mathbb{R}^3\)</span>, let <span class="math inline">\(f : S \to P\)</span>, where <span class="math inline">\(f(x,y,z) = (x,y,0)\)</span> and <span class="math inline">\(P\)</span> is the plane defined by <span class="math inline">\(z=0\)</span>. Show that this is a smooth function.</p></li>
+<li><p>Give a surface patch for a sphere. Compute the first fundamental form using the surface patch.</p></li>
+<li><p>Give a surface patch for a plane. Compute the first fundamental form using the surface patch.</p></li>
+<li><p>How does the matrix associated with the first fundamental form change under a coordinate transformation?</p></li>
+<li><p>For the map <span class="math inline">\(f\)</span> in exercise 2, and compute <span class="math inline">\(\mathcal{D}_p(f)\)</span>.</p></li>
+<li><p>This exercise is to revise what is taught in the lecture. Recall the definition of the Weingarten map, which is denoted by <span class="math inline">\(\mathcal{W}_p\)</span></p>
+<ol>
+<li><p>Prove that <span class="math inline">\(\mathcal{W}_p(\sigma_x)=\hat{\tilde{\mathbf{n}}}_x\)</span> and <span class="math inline">\(\mathcal{W}_p(\sigma_y)=\hat{\tilde{\mathbf{n}}}_y\)</span></p></li>
+<li><p>Prove that <span class="math inline">\(\mathcal{W}(\mathbf{v})\)</span> lies in the tangent space for any tangent vector <span class="math inline">\(v\)</span>.</p></li>
+<li><p>Prove that the Weingarten map is a linear map.</p></li>
+<li><p>Therefore, it is enough to compute the Weingarten map for the basis tangent vectors <span class="math inline">\(\sigma_x\)</span> and <span class="math inline">\(\sigma_y\)</span> and we therefore need to find the coefficients <span class="math inline">\(a, b, c\)</span> and <span class="math inline">\(d\)</span>, below: <span class="math display">\[\mathcal{W}_p(\sigma_x)=a\sigma_x+b\sigma_y\]</span> <span class="math display">\[\mathcal{W}_p(\sigma_y)=c\sigma_x+d\sigma_y\]</span></p></li>
+<li><p>Define <span class="math inline">\(L:=\sigma_{xx} . \hat{\mathbf{n}}\)</span>, <span class="math inline">\(M:=\sigma_{xy} . \hat{\mathbf{n}}\)</span>, <span class="math inline">\(N:=\sigma_{yy} . \hat{\mathbf{n}}\)</span>. Prove that <span class="math inline">\(L= - \sigma_x.\hat{\mathbf{n}}_x\)</span>, <span class="math inline">\(M= - \sigma_x.\hat{\mathbf{n}}_y = - \sigma_y.\hat{\mathbf{n}}_x\)</span>, and <span class="math inline">\(N= - \sigma_y.\hat{\mathbf{n}}_y\)</span>. The following matrix is called the matrix of the matrix of the second fundamental form: <span class="math display">\[\begin{pmatrix}
+             L &amp; M\\
+             M &amp; N
+           \end{pmatrix}\]</span></p></li>
+<li><p>By taking the dot product on both sides of each of the two equations in part 4 by <span class="math inline">\(\sigma_x\)</span> and then by <span class="math inline">\(\sigma_y\)</span>, obtain 4 linear equations whose unknowns are <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span>, and <span class="math inline">\(d\)</span>. Compute <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span>, and <span class="math inline">\(d\)</span> in terms of the first fundamenal form (i.e. <span class="math inline">\(E\)</span>, <span class="math inline">\(F\)</span>, <span class="math inline">\(G\)</span>), and the second fundamental form (<span class="math inline">\(L\)</span>, <span class="math inline">\(M\)</span>, and <span class="math inline">\(N\)</span>).</p></li>
+</ol></li>
+</ol>
+    </section>
+</article>
+
+    </section>
+
+<section id="posts" class="sidenav">
+
+    <h2>Latest exercise sheet</h2>
+<ul>
+    
+        <li>
+          <a href="../assignments/2022-12-01-exercise08.html">Exercise sheet 8</a>
+	   /
+	  <a href="../assignments/pdfs/2022-12-01-exercise08.pdf">PDF version</a>
+	  
+	  
+        </li>
+    
+        <li>
+          <a href="../assignments/2022-11-19-exercise07.html">Exercise sheet 7</a>
+	   /
+	  <a href="../assignments/pdfs/2022-11-19-exercise07.pdf">PDF version</a>
+	  
+	  
+        </li>
+    
+</ul>
+
+    <p><a href="../assignments.html">All exercise sheets&hellip;</a></p>
+
+
+
+
+
+
+
+</section>
+</body>
+</html>

@@ -42,7 +42,7 @@
 	
 	
       </p>
-<p class="date"><strong>&nbsp;Last modified: 11:59 AM - 19 January, 2023 </strong></p>
+<p class="date"><strong>&nbsp;Last modified: 12:43 PM - 20 January, 2023 </strong></p>
 	  
 	  <a href="../assignments/pdfs/2023-01-16-exercise01.pdf">PDF version</a>
 	  
@@ -110,14 +110,6 @@
 </tr>
 </tbody>
 </table></li>
-<li><p>Define the <span class="math inline">\(\mathrm{NOR}\)</span> operator by the rule, <span class="math inline">\(P\ \mathrm{NOR}\ Q\)</span> is true if and only if <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> are both false.</p>
-<ol>
-<li><p>Write a truth table for <span class="math inline">\(\mathrm{NOR}\)</span>.</p></li>
-<li><p>Find an expression for <span class="math inline">\(P\ \mathrm{NOR}\ Q\)</span> in terms of <span class="math inline">\(\land\)</span>, <span class="math inline">\(\lor\)</span>, and <span class="math inline">\(\neg\)</span>.</p></li>
-<li><p>Prove that <span class="math inline">\(\neg P\)</span> can be defined completely in terms of <span class="math inline">\(\mathrm{NOR}\)</span> *(Hint: since <span class="math inline">\(\mathrm{NOR}\)</span> takes two arguments but <span class="math inline">\(\neg P\)</span> involves just one variable, there is only one thing you can do!).*</p></li>
-<li><p>Prove that <span class="math inline">\(P \lor Q\)</span> can be expressed using only the <span class="math inline">\(\mathrm{NOR}\)</span> operator. *(Hint: <span class="math inline">\(\lor\)</span> is the negation of <span class="math inline">\(\mathrm{NOR}\)</span> and part c. shows how to express negation in terms of <span class="math inline">\(\mathrm{NOR}\)</span>).*</p></li>
-<li><p>Prove that <span class="math inline">\(P \land Q\)</span> can be expressed using only the <span class="math inline">\(\mathrm{NOR}\)</span> operator, and therefore, by c. and d. you can express any boolean function using only the <span class="math inline">\(\mathrm{NOR}\)</span> operator. *(Hint: compare the truth tables of <span class="math inline">\(\land\)</span> and <span class="math inline">\(\mathrm{NOR}\)</span>. How do you get one from the other?)*</p></li>
-</ol></li>
 <li><p>Write truth tables for the following expressions and based on that try to guess an equivalent but simpler expression (involving fewer terms):</p>
 <ol>
 <li><p><span class="math inline">\(P \land P\)</span></p></li>
@@ -150,7 +142,27 @@
 <li><p><span class="math inline">\((\neg P \lor \neg Q) \land (\neg P \lor Q)\)</span></p></li>
 <li><p><span class="math inline">\(\neg P \land \neg (P \lor Q)\)</span></p></li>
 </ol></li>
+<li><p>This exercise and the following one revise something that was discussed in the lecture. See if you can answer it yourself by at most looking at the hints. Define the <span class="math inline">\(\mathrm{NOR}\)</span> operator by the rule, <span class="math inline">\(P\ \mathrm{NOR}\ Q\)</span> is true if and only if <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> are both false.</p>
+<ol>
+<li><p>Write a truth table for <span class="math inline">\(\mathrm{NOR}\)</span>.</p></li>
+<li><p>Find an expression for <span class="math inline">\(P\ \mathrm{NOR}\ Q\)</span> in terms of <span class="math inline">\(\land\)</span>, <span class="math inline">\(\lor\)</span>, and <span class="math inline">\(\neg\)</span>.</p></li>
+<li><p>Prove that <span class="math inline">\(\neg P\)</span> can be defined completely in terms of <span class="math inline">\(\mathrm{NOR}\)</span> *(Hint: since <span class="math inline">\(\mathrm{NOR}\)</span> takes two arguments but <span class="math inline">\(\neg P\)</span> involves just one variable, there is only one thing you can do!).*</p></li>
+<li><p>Prove that <span class="math inline">\(P \lor Q\)</span> can be expressed using only the <span class="math inline">\(\mathrm{NOR}\)</span> operator. *(Hint: <span class="math inline">\(\lor\)</span> is the negation of <span class="math inline">\(\mathrm{NOR}\)</span> and part c. shows how to express negation in terms of <span class="math inline">\(\mathrm{NOR}\)</span>).*</p></li>
+<li><p>Prove that <span class="math inline">\(P \land Q\)</span> can be expressed using only the <span class="math inline">\(\mathrm{NOR}\)</span> operator, and therefore, by c. and d. you can express any boolean function using only the <span class="math inline">\(\mathrm{NOR}\)</span> operator. *(Hint: compare the truth tables of <span class="math inline">\(\land\)</span> and <span class="math inline">\(\mathrm{NOR}\)</span>. How do you get one from the other?)*</p></li>
+</ol></li>
 <li><p>During the lecture we discussed a method to derive a boolean expression from its truth table, by looking at the rows whose output is <span class="math inline">\(T\)</span>. Can you come up with an analogous method that involves looking at the rows whose output is <span class="math inline">\(F\)</span>?</p></li>
+<li><p>Define <span class="math inline">\(P \implies Q\)</span> (i.e. “P implies Q”) so that it is False only when <span class="math inline">\(P\)</span> is true but <span class="math inline">\(Q\)</span> is false.</p>
+<ol>
+<li><p>Write a truth table for the <span class="math inline">\(\implies\)</span> operator and derive an expression in terms of only <span class="math inline">\(\land\)</span>, <span class="math inline">\(\lor\)</span>, and <span class="math inline">\(\neg\)</span>.</p></li>
+<li><p>Prove that the earlier expression is equal to <span class="math inline">\(\neg P \lor Q\)</span>.</p></li>
+<li><p>Prove that <span class="math inline">\(P \land Q \implies P\)</span> is always True</p></li>
+<li><p>Prove that <span class="math inline">\((P \implies Q) \land (Q \implies R) \implies (P \implies R)\)</span> is always True</p></li>
+</ol></li>
+<li><p>Define <span class="math inline">\(P \iff Q\)</span> (i.e. “P implies Q”) so that it is True only when <span class="math inline">\(P\)</span> and <span class="math inline">\(Q\)</span> are either both True or both False.</p>
+<ol>
+<li><p>Write a truth table for the <span class="math inline">\(\iff\)</span> operator and derive an expression in terms of only <span class="math inline">\(\land\)</span>, <span class="math inline">\(\lor\)</span>, and <span class="math inline">\(\neg\)</span>.</p></li>
+<li><p>Prove that <span class="math inline">\((P\implies Q) \land (Q \implies P) \implies (P \iff Q)\)</span> is always True</p></li>
+</ol></li>
 </ol>
     </section>
 </article>

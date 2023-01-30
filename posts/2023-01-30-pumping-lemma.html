@@ -46,7 +46,7 @@
 	
       </p>
 
-<p class="date"><strong>&nbsp;Last modified: 04:19 PM - 30 January, 2023 </strong></p>
+<p class="date"><strong>&nbsp;Last modified: 04:21 PM - 30 January, 2023 </strong></p>
 	  
 	  <a href="../posts/pdfs/2023-01-30-pumping-lemma.pdf">PDF version</a>
 	  
@@ -58,7 +58,7 @@
 <p>An automaton works by reading the string one character at a time and depending on the character and its state at the time of reading the character, shifts to a new state. However, an automaton can have only finitely many states, say <span class="math inline">\(N\)</span> states. By the pigeon-hole principle, by the time it reads <span class="math inline">\(N\)</span> characters, it has been in at least one of these states more than once. For example, if the input was <span class="math inline">\(1^N0^{N+1}\)</span>, even before it starts reading the 0s, it has already repeated a state because the 1s are more than <span class="math inline">\(N\)</span> (the number of states).</p>
 <p>Let us look at this more closely: The machine began at the initial state, <span class="math inline">\(q_0\)</span>, but after reading, say <span class="math inline">\(l\)</span>, 1s it ended up in some state <span class="math inline">\(q_r\)</span> which it came back to after reading some more 1s, say <span class="math inline">\(m\)</span> of them. The rest of the string, containing the remaining 1s (<span class="math inline">\(N-l-m\)</span> of them) and the <span class="math inline">\(N+1\)</span> 0s that follow, takes this <span class="math inline">\(q_r\)</span> to a final state. Since <span class="math inline">\(1^N0^{N+1}\)</span> belongs to our language, having more 0s than 1s, the final state must be an accept state for the automaton to recognize this string. To summarize:</p>
 <ol type="1">
-<li>The machine first read <span class="math inline">\(1^l\)</span> and that took it from state <span class="math inline">\(q_0\)</span> to <span class="math inline">\(q_r\)</span>.</li>
+<li>The machine first read <span class="math inline">\(1^l\)</span> and that took it from state <strong><span class="math inline">\(q_0\)</span> to <span class="math inline">\(q_r\)</span>.</strong></li>
 <li>The machine then read <span class="math inline">\(1^m\)</span> which took it from state <span class="math inline">\(q_r\)</span> back again to <span class="math inline">\(q_r\)</span>.</li>
 <li>The machine finally read <span class="math inline">\(1^{N-l-m} 0^{N+1}\)</span> which took it from state <span class="math inline">\(q_r\)</span> to an accept state.</li>
 </ol>

@@ -46,11 +46,11 @@
 	
       </p>
 
-<p class="date"><strong>&nbsp;Last modified: 04:17 PM - 30 January, 2023 </strong></p>
+<p class="date"><strong>&nbsp;Last modified: 04:19 PM - 30 January, 2023 </strong></p>
 	  
 	  <a href="../posts/pdfs/2023-01-30-pumping-lemma.pdf">PDF version</a>
 	  
-<p><strong>Note</strong>: <em>Much of this post explains the idea behind the pumping lemma and tries to warn against some common misconceptions. But in an examination, in a typical proof that uses pumping lemma to show that a language is not regular, you are expected to be much more formal, brief, and to the point. To see an example of how to write such a proof in the examination, check the last section of this post.</em></p>
+<p><strong>Note</strong>: <em>Much of this post explains the idea behind the pumping lemma and tries to warn against some common misconceptions. But in an examination, in a typical proof that uses pumping lemma to show that a language is not regular, you are expected to be formal, brief, and to the point. To see an example of how to write such a proof in the examination, check the last section of this post.</em></p>
 <p>If you suspect that it is impossible to build a finite state automaton to recognize a certain language, the pumping lemma <em>may</em> help you to prove it rigorously. However, it is important to understand the statement of the pumping lemma very precisely to use it correctly.</p>
 <h2 id="an-example">An Example</h2>
 <p>Consider the language, <span class="math inline">\(L\)</span>, consisting of precisely those strings over the alphabet <span class="math inline">\(\{0, 1\}\)</span> such that the number of 0s exceed the number of 1s. You suspect that any machine that attempts to recognize the language will have to “remember” the number of 0s and 1s as it is reading the input, and therefore cannot handle it with finite states. However, such an explanation is certainly not enough (definitely not in the examination!!!) and we need a rigorous proof.</p>

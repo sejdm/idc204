@@ -7,8 +7,16 @@
         <description><![CDATA[Get exercises and announcements]]></description>
         <atom:link href="http://sejdm.github.io/idc204/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>2023-01-28T15:17:04+5:30</lastBuildDate>
+        <lastBuildDate>2023-01-30T14:04:47+5:30</lastBuildDate>
         <item>
+    <title>Detailed look at the pumping lemma</title>
+    <link>http://sejdm.github.io/idc204/posts/2023-01-30-pumping-lemma.html</link>
+    <description><![CDATA[A comment  has been posted.]]></description>
+    <pubDate>Mon, 30 Jan 2023 00:00:00 UT</pubDate>
+    <guid>http://sejdm.github.io/idc204/posts/2023-01-30-pumping-lemma.html</guid>
+    <dc:creator>Shane D'Mello</dc:creator>
+</item>
+<item>
     <title>Exercise sheet 2</title>
     <link>http://sejdm.github.io/idc204/assignments/2023-01-27-exercise02.html</link>
     <description><![CDATA[Exercise sheet 2 has been posted.]]></description>

@@ -8,13 +8,30 @@
         <name>Shane D'Mello</name>
         <email>shane@iisermohali.ac.in</email>
     </author>
-    <updated>2023-01-30T16:23:58+5:30</updated>
+    <updated>2023-02-05T15:39:08+5:30</updated>
     <entry>
+    <title>Announcement</title>
+    <link href="http://sejdm.github.io/idc204/announcements/2023-02-05-quiz.html" />
+    <id>http://sejdm.github.io/idc204/announcements/2023-02-05-quiz.html</id>
+    <published>2023-02-05T00:00:00Z</published>
+    <updated>2023-02-05T15:39:08+5:30</updated>
+    <summary type="html"><![CDATA[<div class="announcement"><p>There will be a <strong>quiz</strong> on Friday, the 10th of February on everything covered after the first-mid-semester examination.</p></div> <br /><span class="date">Last modified: 03:39 PM -  5 February, 2023 </span>
+]]></summary>
+</entry>
+<entry>
+    <title>Exercise sheet 3</title>
+    <link href="http://sejdm.github.io/idc204/assignments/2023-02-05-exercise03.html" />
+    <id>http://sejdm.github.io/idc204/assignments/2023-02-05-exercise03.html</id>
+    <published>2023-02-05T00:00:00Z</published>
+    <updated>2023-02-05T15:37:05+5:30</updated>
+    <summary type="html"><![CDATA[Exercise sheet 3 has been posted.]]></summary>
+</entry>
+<entry>
     <title>A detailed look at the pumping lemma</title>
     <link href="http://sejdm.github.io/idc204/posts/2023-01-30-pumping-lemma.html" />
     <id>http://sejdm.github.io/idc204/posts/2023-01-30-pumping-lemma.html</id>
     <published>2023-01-30T00:00:00Z</published>
-    <updated>2023-01-30T16:23:58+5:30</updated>
+    <updated>2023-02-01T12:51:44+5:30</updated>
     <summary type="html"><![CDATA[A comment  has been posted.]]></summary>
 </entry>
 <entry>

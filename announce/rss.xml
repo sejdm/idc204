@@ -7,8 +7,17 @@
         <description><![CDATA[Get exercises and announcements]]></description>
         <atom:link href="http://sejdm.github.io/idc204/announce/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>2023-02-10T12:04:15+5:30</lastBuildDate>
+        <lastBuildDate>2023-02-27T11:59:19+5:30</lastBuildDate>
         <item>
+    <title>2023-02-27-makeup-lecture</title>
+    <link>http://sejdm.github.io/idc204/announcements/2023-02-27-makeup-lecture.html</link>
+    <description><![CDATA[<div class="announcement"><p>Today’s (Monday, 27th of February) make-up lecture will be at the usual time (<strong>2:00 PM - 3:00 PM</strong>) in the usual room (<strong>LH4</strong>).</p></div> <br /><span class="date">Last modified: 11:59 AM - 27 February, 2023 </span>
+]]></description>
+    <pubDate>Mon, 27 Feb 2023 00:00:00 UT</pubDate>
+    <guid>http://sejdm.github.io/idc204/announcements/2023-02-27-makeup-lecture.html</guid>
+    <dc:creator>Shane D'Mello</dc:creator>
+</item>
+<item>
     <title>2023-02-10-no-change-in-venue</title>
     <link>http://sejdm.github.io/idc204/announcements/2023-02-10-no-change-in-venue.html</link>
     <description><![CDATA[<div class="announcement"><p>Today’s (10th of February) lecture and quiz will be held (<strong>offline</strong>) at the usual time in our <strong>usual lecture room</strong> because our lecture room is not among the three in LH that will be used for the MS22 examinations.</p></div> <br /><span class="date">Last modified: 12:04 PM - 10 February, 2023 </span>

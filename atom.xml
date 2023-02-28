@@ -8,8 +8,16 @@
         <name>Shane D'Mello</name>
         <email>shane@iisermohali.ac.in</email>
     </author>
-    <updated>2023-02-27T11:59:19+5:30</updated>
+    <updated>2023-02-28T13:15:38+5:30</updated>
     <entry>
+    <title>Pumping lemma for context free grammars</title>
+    <link href="http://sejdm.github.io/idc204/posts/2023-02-28-cfg-pumping-lemma.html" />
+    <id>http://sejdm.github.io/idc204/posts/2023-02-28-cfg-pumping-lemma.html</id>
+    <published>2023-02-28T00:00:00Z</published>
+    <updated>2023-02-28T13:15:38+5:30</updated>
+    <summary type="html"><![CDATA[A comment  has been posted.]]></summary>
+</entry>
+<entry>
     <title>Announcement</title>
     <link href="http://sejdm.github.io/idc204/announcements/2023-02-27-makeup-lecture.html" />
     <id>http://sejdm.github.io/idc204/announcements/2023-02-27-makeup-lecture.html</id>

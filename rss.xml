@@ -7,8 +7,16 @@
         <description><![CDATA[Get exercises and announcements]]></description>
         <atom:link href="http://sejdm.github.io/idc204/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>2023-02-28T13:38:40+5:30</lastBuildDate>
+        <lastBuildDate>2023-03-22T13:50:49+5:30</lastBuildDate>
         <item>
+    <title>Exercise sheet 5</title>
+    <link>http://sejdm.github.io/idc204/assignments/2023-03-22-exercise05.html</link>
+    <description><![CDATA[Exercise sheet 5 has been posted.]]></description>
+    <pubDate>Wed, 22 Mar 2023 00:00:00 UT</pubDate>
+    <guid>http://sejdm.github.io/idc204/assignments/2023-03-22-exercise05.html</guid>
+    <dc:creator>Shane D'Mello</dc:creator>
+</item>
+<item>
     <title>Pumping lemma for context free grammars</title>
     <link>http://sejdm.github.io/idc204/posts/2023-02-28-cfg-pumping-lemma.html</link>
     <description><![CDATA[A comment  has been posted.]]></description>

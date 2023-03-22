@@ -8,8 +8,16 @@
         <name>Shane D'Mello</name>
         <email>shane@iisermohali.ac.in</email>
     </author>
-    <updated>2023-02-28T13:38:40+5:30</updated>
+    <updated>2023-03-22T13:50:49+5:30</updated>
     <entry>
+    <title>Exercise sheet 5</title>
+    <link href="http://sejdm.github.io/idc204/assignments/2023-03-22-exercise05.html" />
+    <id>http://sejdm.github.io/idc204/assignments/2023-03-22-exercise05.html</id>
+    <published>2023-03-22T00:00:00Z</published>
+    <updated>2023-03-22T13:50:49+5:30</updated>
+    <summary type="html"><![CDATA[Exercise sheet 5 has been posted.]]></summary>
+</entry>
+<entry>
     <title>Pumping lemma for context free grammars</title>
     <link href="http://sejdm.github.io/idc204/posts/2023-02-28-cfg-pumping-lemma.html" />
     <id>http://sejdm.github.io/idc204/posts/2023-02-28-cfg-pumping-lemma.html</id>

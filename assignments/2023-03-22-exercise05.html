@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>2023-02-05-exercise03 - IDC204</title>
+  <title>2023-03-22-exercise05 - IDC204</title>
   <meta charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet" type="text/css">
@@ -37,40 +37,27 @@
     <section id="pagecontent">
         <article>
     <section class="header">
-        <h1>Exercise sheet 3</h1>
+        <h1>Exercise sheet 5</h1>
     </section>
     <section>
       <p>
 	
-	<a href="../assignments/2023-01-27-exercise02.html" class="prev"><<</a>
+	<a href="../assignments/2023-02-23-exercise04.html" class="prev"><<</a>
 	
-	
-	<a href="../assignments/2023-02-23-exercise04.html" style="float:right" class="next">>></a>
 	
       </p>
-<p class="date"><strong>&nbsp;Last modified: 03:37 PM -  5 February, 2023 </strong></p>
+<p class="date"><strong>&nbsp;Last modified: 01:50 PM - 22 March, 2023 </strong></p>
 	  
-	  <a href="../assignments/pdfs/2023-02-05-exercise03.pdf">PDF version</a>
+	  <a href="../assignments/pdfs/2023-03-22-exercise05.pdf">PDF version</a>
 	  
 	  
         <ol>
-<li><p>If <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span> are both regular languages over an alphabet <span class="math inline">\(\Sigma\)</span>. If <span class="math inline">\(L_1\)</span> can be recognized by a finite state automaton <span class="math inline">\(A_1\)</span> and <span class="math inline">\(L_2\)</span> can be recognized by a finite state automaton <span class="math inline">\(A_2\)</span>, then show that one can use <span class="math inline">\(A_1\)</span> and <span class="math inline">\(A_2\)</span> to design a *non-deterministic* finite state automaton that recognizes,</p>
-<ol>
-<li><p><span class="math inline">\(L_1 \cup L_2\)</span></p></li>
-<li><p><span class="math inline">\(L_1 \circ L_2 = \{s_1s_2 \ |\ s_1 \in L_1, s_2 \in L_2\}\)</span>, i.e., it is obtained by concatenating each string in <span class="math inline">\(L_1\)</span> with a string in <span class="math inline">\(L_2\)</span>.</p></li>
-<li><p><span class="math inline">\(L_1^* = \{s_1s_2\ldots s_n \ |\ s_i \in L_1\}\)</span>.</p></li>
-</ol></li>
-<li><p>Design a *non*-deterministic finite state automaton over the alphabet <span class="math inline">\(\Sigma={0,1}\)</span> that will accept a string if and only if it</p>
-<ol>
-<li><p>is the empty string</p></li>
-<li><p>is not the empty string</p></li>
-<li><p>is precisely the string 111</p></li>
-<li><p>begins with the substring 111</p></li>
-<li><p>is the empty string or begins with the substring 111</p></li>
-<li><p>ends with the substring 111</p></li>
-<li><p>begins with 0 and ends with 1</p></li>
-<li><p>contains the substring 111</p></li>
-</ol></li>
+<li><p>Design a Turing machine over the alphabet <span><span class="math inline">\(\{0, 1\}\)</span></span>, that accepts a string if it has an even number of 1s and rejects a string if it has an odd number of 1s.</p></li>
+<li><p>Design a Turing machine over the alphabet <span><span class="math inline">\(\{0, 1\}\)</span></span>, that shifts any string that is provided as input on the tape, one character to the right.</p></li>
+<li><p>Given a finite state automaton that recognizes a language, how will you design a Turing machine that accepts each string that belongs to the language and rejects each string that does not belong to the language. As usual, the string is entered as input by writing it on the tape.</p></li>
+<li><p>Given a Turing machine that accepts all strings in the languge <span><span class="math inline">\(L\)</span></span> and rejects all strings that are not in it, how will you design a Turing machine that accepts the complement of the language?</p></li>
+<li><p>Given a Turing machine <span><span class="math inline">\(T_1\)</span></span> that accepts all strings in a language <span><span class="math inline">\(L_1\)</span></span> and rejects all strings that are not in it and a Turing machine <span><span class="math inline">\(T_2\)</span></span> that accepts all strings in a language <span><span class="math inline">\(L_2\)</span></span> and rejects all strings that are not in it, how will you design a Turing machine that accepts strings in <span><span class="math inline">\(L_1 \cup L_2\)</span></span> and rejects all the strings that are not it.</p></li>
+<li><p>Design a Turing machine that takes a natural number represented in binary as input and replaces that input on the tape with the binary representation of the number obtained by adding 1 to it.</p></li>
 </ol>
     </section>
 </article>

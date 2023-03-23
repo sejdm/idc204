@@ -48,10 +48,11 @@
 	
       </p>
 
-<p class="date"><strong>&nbsp;Last modified: 03:46 PM - 23 March, 2023 </strong></p>
+<p class="date"><strong>&nbsp;Last modified: 04:40 PM - 23 March, 2023 </strong></p>
 	  
 	  <a href="../posts/pdfs/2023-03-23-turing-shift.pdf">PDF version</a>
 	  
+<p>We will design a Turing machine to shift the contents of the tape. In doing so we will make use of an internal finite capacity memory that will be incorporated in the states. <!--more--></p>
 <p><img src="../files/shift.gif" id="id" class="class" style="width:100.0%" /></p>
 <p>Although the tape serves as an unlimited memory for the computation, it is often used to focus on one part of the tape and then move to another part to use it (either to compare, as in equality, or to print it). While moving to the other part of the tape, one needs to remember what was seen and that information can only be " by the states themselves ". We will now see what that means. This time, let us separate whatever we need to remember from the steps and use more organized notation to help us keep track of all of this.</p>
 <p>We will now look at states in a more organized way by thinking of them as a combination of the steps and a finite memory. This is only to assist in designing the Turing machine, i.e. coming up with the transition table. We can use it for all the previous examples too and the final transition table will be just as before, bearing no evidence of how we figured it out.</p>

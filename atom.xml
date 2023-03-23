@@ -8,8 +8,32 @@
         <name>Shane D'Mello</name>
         <email>shane@iisermohali.ac.in</email>
     </author>
-    <updated>2023-03-22T13:50:49+5:30</updated>
+    <updated>2023-03-23T16:18:23+5:30</updated>
     <entry>
+    <title>Turing machine example - Power of 2</title>
+    <link href="http://sejdm.github.io/idc204/posts/2023-03-23-turing-power.html" />
+    <id>http://sejdm.github.io/idc204/posts/2023-03-23-turing-power.html</id>
+    <published>2023-03-23T00:00:00Z</published>
+    <updated>2023-03-23T16:18:23+5:30</updated>
+    <summary type="html"><![CDATA[A comment  has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Turing machine example - Shifting</title>
+    <link href="http://sejdm.github.io/idc204/posts/2023-03-23-turing-shift.html" />
+    <id>http://sejdm.github.io/idc204/posts/2023-03-23-turing-shift.html</id>
+    <published>2023-03-23T00:00:00Z</published>
+    <updated>2023-03-23T15:46:03+5:30</updated>
+    <summary type="html"><![CDATA[A comment  has been posted.]]></summary>
+</entry>
+<entry>
+    <title>Turing machine example - equality</title>
+    <link href="http://sejdm.github.io/idc204/posts/2023-03-23-turing-equality.html" />
+    <id>http://sejdm.github.io/idc204/posts/2023-03-23-turing-equality.html</id>
+    <published>2023-03-23T00:00:00Z</published>
+    <updated>2023-03-23T15:45:45+5:30</updated>
+    <summary type="html"><![CDATA[A comment  has been posted.]]></summary>
+</entry>
+<entry>
     <title>Exercise sheet 5</title>
     <link href="http://sejdm.github.io/idc204/assignments/2023-03-22-exercise05.html" />
     <id>http://sejdm.github.io/idc204/assignments/2023-03-22-exercise05.html</id>
